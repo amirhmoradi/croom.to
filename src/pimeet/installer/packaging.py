@@ -46,9 +46,12 @@ class Architecture(Enum):
 
 class Distribution(Enum):
     """Supported distributions."""
-    BOOKWORM = "bookworm"
-    TRIXIE = "trixie"
-    BULLSEYE = "bullseye"
+    BOOKWORM = "bookworm"  # Debian 12
+    TRIXIE = "trixie"      # Debian 13
+    BULLSEYE = "bullseye"  # Debian 11
+    JAMMY = "jammy"        # Ubuntu 22.04 LTS
+    NOBLE = "noble"        # Ubuntu 24.04 LTS
+    MANTIC = "mantic"      # Ubuntu 23.10
 
 
 @dataclass
@@ -113,7 +116,42 @@ class PackageInfo:
         return "\n".join(lines)
 
 
-# Package definitions
+# Common dependencies for all platforms
+COMMON_DEPENDS = [
+    "python3 (>= 3.9)",
+    "python3-pip",
+    "python3-venv",
+]
+
+# Platform-specific dependencies
+ARM64_DEPENDS = [
+    "chromium-browser",
+]
+
+AMD64_DEPENDS = [
+    "chromium | chromium-browser | google-chrome-stable",
+    "v4l-utils",
+    "ddcutil",  # For DDC/CI monitor control
+]
+
+AMD64_AI_DEPENDS = [
+    "python3-numpy",
+    "python3-opencv",
+]
+
+AMD64_AI_NVIDIA_RECOMMENDS = [
+    "nvidia-driver-535",  # Or newer
+    "nvidia-cuda-toolkit",
+    "libnvinfer8",  # TensorRT
+]
+
+AMD64_AI_INTEL_RECOMMENDS = [
+    "intel-opencl-icd",
+    "intel-media-va-driver-non-free",
+]
+
+
+# Package definitions for Raspberry Pi (ARM64)
 PACKAGE_DEFINITIONS = {
     PackageType.CORE: PackageInfo(
         name="pimeet-core",
@@ -121,10 +159,7 @@ PACKAGE_DEFINITIONS = {
         architecture=Architecture.ALL,
         distribution=Distribution.BOOKWORM,
         description="PiMeet Core - Base conference room system",
-        depends=[
-            "python3 (>= 3.9)",
-            "python3-pip",
-            "python3-venv",
+        depends=COMMON_DEPENDS + [
             "chromium-browser",
         ],
         recommends=["pimeet-ui", "pimeet-meeting"],
@@ -191,6 +226,115 @@ PACKAGE_DEFINITIONS = {
         ],
     ),
 }
+
+
+# x86_64/AMD64 package definitions
+PACKAGE_DEFINITIONS_AMD64 = {
+    PackageType.CORE: PackageInfo(
+        name="pimeet-core",
+        version="1.0.0",
+        architecture=Architecture.AMD64,
+        distribution=Distribution.BOOKWORM,
+        description="PiMeet Core for x86_64 - Base conference room system",
+        depends=COMMON_DEPENDS + AMD64_DEPENDS,
+        recommends=["pimeet-meeting"],
+    ),
+    PackageType.AI: PackageInfo(
+        name="pimeet-ai",
+        version="1.0.0",
+        architecture=Architecture.AMD64,
+        distribution=Distribution.BOOKWORM,
+        description="PiMeet AI for x86_64 - GPU-accelerated AI features",
+        depends=[
+            "pimeet-core",
+        ] + AMD64_AI_DEPENDS,
+        recommends=AMD64_AI_NVIDIA_RECOMMENDS + AMD64_AI_INTEL_RECOMMENDS + [
+            "libedgetpu1-std",  # Coral USB
+        ],
+        suggests=[
+            "onnxruntime-gpu",  # ONNX with CUDA
+        ],
+    ),
+    PackageType.MEETING: PackageInfo(
+        name="pimeet-meeting",
+        version="1.0.0",
+        architecture=Architecture.AMD64,
+        distribution=Distribution.BOOKWORM,
+        description="PiMeet Meeting Providers - Google Meet, Teams, Zoom, Webex",
+        depends=[
+            "pimeet-core",
+            "chromium | chromium-browser | google-chrome-stable",
+        ],
+    ),
+    PackageType.FULL: PackageInfo(
+        name="pimeet",
+        version="1.0.0",
+        architecture=Architecture.AMD64,
+        distribution=Distribution.BOOKWORM,
+        description="PiMeet for x86_64 - Complete conference room system",
+        depends=[
+            "pimeet-core",
+            "pimeet-meeting",
+        ],
+        recommends=[
+            "pimeet-ai",
+            "pimeet-dashboard",
+        ],
+    ),
+}
+
+
+# Ubuntu-specific package definitions
+PACKAGE_DEFINITIONS_UBUNTU = {
+    PackageType.CORE: PackageInfo(
+        name="pimeet-core",
+        version="1.0.0",
+        architecture=Architecture.AMD64,
+        distribution=Distribution.JAMMY,
+        description="PiMeet Core for Ubuntu - Base conference room system",
+        depends=COMMON_DEPENDS + [
+            "chromium-browser | google-chrome-stable",
+            "v4l-utils",
+            "ddcutil",
+        ],
+        recommends=["pimeet-meeting"],
+    ),
+    PackageType.AI: PackageInfo(
+        name="pimeet-ai",
+        version="1.0.0",
+        architecture=Architecture.AMD64,
+        distribution=Distribution.JAMMY,
+        description="PiMeet AI for Ubuntu - GPU-accelerated AI features",
+        depends=[
+            "pimeet-core",
+            "python3-numpy",
+            "python3-opencv",
+        ],
+        recommends=[
+            "nvidia-driver-535",
+            "intel-opencl-icd",
+        ],
+    ),
+}
+
+
+def get_package_definitions(arch: Architecture, dist: Distribution) -> Dict:
+    """
+    Get package definitions for a specific architecture and distribution.
+
+    Args:
+        arch: Target architecture
+        dist: Target distribution
+
+    Returns:
+        Package definitions dictionary
+    """
+    if arch == Architecture.AMD64:
+        if dist in (Distribution.JAMMY, Distribution.NOBLE, Distribution.MANTIC):
+            return PACKAGE_DEFINITIONS_UBUNTU
+        return PACKAGE_DEFINITIONS_AMD64
+
+    return PACKAGE_DEFINITIONS
 
 
 class DebianPackageBuilder:

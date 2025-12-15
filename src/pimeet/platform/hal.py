@@ -171,6 +171,63 @@ class RaspberryPiGPIO(GPIOInterface):
             self._gpio.cleanup()
 
 
+class StubGPIO(GPIOInterface):
+    """
+    Stub GPIO implementation for systems without GPIO hardware.
+
+    Used on x86_64 PCs and servers where GPIO is not available.
+    All operations succeed but do nothing.
+    """
+
+    def __init__(self):
+        self._pins: Dict[int, GPIOPin] = {}
+        logger.info("Using StubGPIO - no physical GPIO available")
+
+    def setup(self, pin: int, mode: GPIOMode, pull: GPIOPull = GPIOPull.NONE) -> bool:
+        """Configure a GPIO pin (no-op)."""
+        self._pins[pin] = GPIOPin(number=pin, mode=mode, pull=pull)
+        logger.debug(f"StubGPIO: setup pin {pin} as {mode.value}")
+        return True
+
+    def read(self, pin: int) -> int:
+        """Read GPIO pin state (always returns 0)."""
+        return self._pins.get(pin, GPIOPin(number=pin)).value
+
+    def write(self, pin: int, value: int) -> None:
+        """Write GPIO pin state (stores in memory only)."""
+        if pin in self._pins:
+            self._pins[pin].value = value
+        logger.debug(f"StubGPIO: write pin {pin} = {value}")
+
+    def pwm_start(self, pin: int, frequency: int, duty_cycle: float) -> None:
+        """Start PWM on a pin (no-op)."""
+        if pin in self._pins:
+            self._pins[pin].pwm_frequency = frequency
+            self._pins[pin].pwm_duty_cycle = duty_cycle
+        logger.debug(f"StubGPIO: PWM start pin {pin}, freq={frequency}, duty={duty_cycle}")
+
+    def pwm_stop(self, pin: int) -> None:
+        """Stop PWM on a pin (no-op)."""
+        if pin in self._pins:
+            self._pins[pin].pwm_frequency = 0
+            self._pins[pin].pwm_duty_cycle = 0
+
+    def add_event_detect(
+        self,
+        pin: int,
+        edge: GPIOEdge,
+        callback: Callable[[int], None],
+        bouncetime: int = 200,
+    ) -> None:
+        """Add edge detection callback (no-op)."""
+        logger.debug(f"StubGPIO: event detect on pin {pin} (no physical GPIO)")
+
+    def cleanup(self) -> None:
+        """Release GPIO resources (no-op)."""
+        self._pins.clear()
+        logger.debug("StubGPIO: cleanup complete")
+
+
 class LinuxGPIO(GPIOInterface):
     """GPIO implementation using Linux sysfs or gpiod."""
 
@@ -598,9 +655,10 @@ class HardwareAbstractionLayer:
         Initialize HAL.
 
         Args:
-            platform: Platform type (auto, raspberry_pi, linux)
+            platform: Platform type (auto, raspberry_pi, linux, x86_64)
         """
         self._platform = platform if platform != "auto" else self._detect_platform()
+        self._arch = self._detect_arch()
 
         # Initialize interfaces
         self._gpio: Optional[GPIOInterface] = None
@@ -612,25 +670,63 @@ class HardwareAbstractionLayer:
 
     def _detect_platform(self) -> str:
         """Detect current platform."""
+        import platform as plat
+
+        # Check for Raspberry Pi
         if Path("/proc/device-tree/model").exists():
             try:
                 model = Path("/proc/device-tree/model").read_text()
                 if "Raspberry Pi" in model:
                     return "raspberry_pi"
+                elif "Jetson" in model:
+                    return "jetson"
             except Exception:
                 pass
+
+        # Check architecture
+        if plat.machine() in ("x86_64", "amd64"):
+            return "x86_64"
+
         return "linux"
 
+    def _detect_arch(self) -> str:
+        """Detect CPU architecture."""
+        import platform as plat
+        return plat.machine()
+
+    def _has_gpio_hardware(self) -> bool:
+        """Check if GPIO hardware is available."""
+        # GPIO is typically only on SBCs like Raspberry Pi
+        if self._platform == "raspberry_pi":
+            return True
+        if self._platform == "jetson":
+            return True
+        # x86_64 systems typically don't have GPIO
+        if self._arch in ("x86_64", "amd64"):
+            return Path("/dev/gpiochip0").exists()
+        return Path("/sys/class/gpio").exists()
+
     def _init_interfaces(self) -> None:
-        """Initialize hardware interfaces."""
+        """Initialize hardware interfaces based on detected platform."""
+        # GPIO initialization
         if self._platform == "raspberry_pi":
             self._gpio = RaspberryPiGPIO()
-        else:
+        elif self._has_gpio_hardware():
             self._gpio = LinuxGPIO()
+        else:
+            # Use stub for x86_64 and systems without GPIO
+            self._gpio = StubGPIO()
 
+        # I2C - works on all Linux systems if available
         self._i2c = LinuxI2C()
+
+        # Camera - V4L2 works on all Linux
         self._camera = V4L2Camera()
+
+        # Display
         self._display = LinuxDisplay()
+
+        logger.info(f"HAL initialized: platform={self._platform}, arch={self._arch}")
 
     @property
     def gpio(self) -> GPIOInterface:

@@ -224,31 +224,94 @@ Quick reference for all planned features with their status, priority, and docume
 
 ---
 
+## x86_64/PC Hardware Support ⭐ NEW
+
+### Linux x86_64 Platform Support
+
+| Feature | Priority | Status | Notes |
+|---------|----------|--------|-------|
+| Intel NUC support | P1 | Complete | Mini PC deployment |
+| Generic x86_64 PC | P1 | Complete | Desktop/server class |
+| Ubuntu 22.04/24.04 | P1 | Complete | LTS releases |
+| Debian 12/13 | P1 | Complete | Bookworm/Trixie |
+| NVIDIA GPU acceleration | P1 | Complete | TensorRT + CUDA |
+| Intel OpenVINO | P1 | Complete | CPU + iGPU |
+| DDC/CI display control | P1 | Complete | Monitor control |
+| USB webcam support | P0 | Complete | Logitech, etc. |
+| StubGPIO for PC | P1 | Complete | Graceful fallback |
+| Hardware profiles | P1 | Complete | Auto-detection |
+
+### x86_64 AI Acceleration
+
+| Accelerator | TOPS | Status | Notes |
+|-------------|------|--------|-------|
+| NVIDIA RTX 4090 | 80+ | Supported | TensorRT FP16 |
+| NVIDIA RTX 3080 | 40 | Supported | TensorRT |
+| NVIDIA RTX 3060 | 20 | Supported | TensorRT |
+| Intel Arc A770 | 20 | Supported | OpenVINO |
+| Intel Iris Xe | 5 | Supported | OpenVINO |
+| Intel UHD | 2 | Supported | OpenVINO |
+| Google Coral USB | 4 | Supported | Edge TPU |
+| CPU (AVX2/AVX-512) | 0.5 | Fallback | ONNX Runtime |
+
+### x86_64 Use Cases
+
+| Use Case | Hardware | Notes |
+|----------|----------|-------|
+| Conference room | Intel NUC | Small form factor |
+| Meeting room | Mini PC | Cost-effective |
+| Training room | Desktop + GPU | High performance |
+| Enterprise server | Server | VM/container |
+| Development | Any x86_64 | Testing/dev |
+
+---
+
 ## Hardware Support Matrix
 
 | Hardware | Status | Notes |
 |----------|--------|-------|
+| **Raspberry Pi** | | |
 | Raspberry Pi 5 (4GB/8GB) | Primary | Best performance |
 | Raspberry Pi 4B (4GB/8GB) | Primary | Widely deployed |
 | Raspberry Pi 4B (2GB) | Secondary | Limited AI |
 | Raspberry Pi 3B+ | Limited | No AI, basic only |
-| Pi AI Kit (Hailo-8L) | Primary | Full AI features |
-| Coral USB Accelerator | Secondary | Most AI features |
+| **x86_64 Systems** | | |
+| Intel NUC | Primary | Mini PC target |
+| Generic x86_64 PC | Supported | Desktop/Server |
+| NVIDIA Jetson | Supported | ARM64 + NVIDIA |
+| **AI Accelerators** | | |
+| Pi AI Kit (Hailo-8L) | Primary | 13 TOPS |
+| NVIDIA GPU (x86_64) | Primary | TensorRT |
+| Intel GPU (OpenVINO) | Supported | iGPU/Arc |
+| Coral USB Accelerator | Secondary | 4 TOPS |
+| **Displays** | | |
 | Official 7" Touch | Primary | Full UI support |
 | HDMI Touch Displays | Secondary | Varies by model |
-| Logitech C920/C922 | Recommended | Camera |
+| DDC/CI Monitors | Supported | x86_64 only |
+| **Cameras** | | |
+| Logitech C920/C922 | Recommended | USB webcam |
+| Logitech BRIO | Recommended | 4K USB |
+| Microsoft LifeCam | Supported | USB webcam |
 | PTZ Cameras | Optional | Speaker tracking |
+| Raspberry Pi Camera | Supported | Pi only |
 
 ---
 
 ## OS Support Matrix
 
-| Operating System | Status | Notes |
-|------------------|--------|-------|
-| Raspberry Pi OS Bookworm (64-bit) | Primary | Current stable |
-| Raspberry Pi OS Trixie (64-bit) | Planned | Coming 2025 |
-| Raspberry Pi OS Bookworm (32-bit) | Limited | Pi 3/Zero 2 |
-| Ubuntu 24.04 arm64 | Secondary | Server option |
+| Operating System | Architecture | Status | Notes |
+|------------------|--------------|--------|-------|
+| **Raspberry Pi OS** | | | |
+| Bookworm (64-bit) | arm64 | Primary | Current stable |
+| Trixie (64-bit) | arm64 | Supported | Debian 13 |
+| Bookworm (32-bit) | armhf | Limited | Pi 3/Zero 2 |
+| **Debian** | | | |
+| Debian 12 (Bookworm) | amd64 | Primary | x86_64 target |
+| Debian 13 (Trixie) | amd64 | Supported | Testing |
+| **Ubuntu** | | | |
+| Ubuntu 22.04 LTS (Jammy) | amd64 | Primary | Long-term support |
+| Ubuntu 24.04 LTS (Noble) | amd64 | Primary | Latest LTS |
+| Ubuntu 24.04 arm64 | arm64 | Secondary | Server option |
 
 ---
 
@@ -293,3 +356,12 @@ Quick reference for all planned features with their status, priority, and docume
 | 2025-12-15 | Completed PRD-006: AI Features (auto-framing, speaker tracking, PTZ control) |
 | 2025-12-15 | Completed PRD-007: Installation System (component installer, dependency management) |
 | 2025-12-15 | Completed PRD-008: Cross-Platform HAL (GPIO, I2C, Camera, Display abstraction) |
+| 2025-12-15 | **x86_64 Linux Hardware Expansion:** |
+| 2025-12-15 | - Enhanced platform detector with Intel/AMD GPU detection |
+| 2025-12-15 | - Added StubGPIO for systems without GPIO hardware |
+| 2025-12-15 | - Implemented DDC/CI display control for x86_64 monitors |
+| 2025-12-15 | - Added NVIDIA TensorRT AI backend for GPU acceleration |
+| 2025-12-15 | - Created Intel OpenVINO AI backend for CPU/iGPU |
+| 2025-12-15 | - Updated installer packaging for x86_64 (Debian/Ubuntu) |
+| 2025-12-15 | - Created hardware profiles for x86_64, NUC, NVIDIA, Intel |
+| 2025-12-15 | - Added USB camera auto-configuration service |

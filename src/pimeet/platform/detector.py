@@ -18,7 +18,18 @@ class DeviceType(Enum):
     RASPBERRY_PI_4 = "rpi4"
     RASPBERRY_PI_3 = "rpi3"
     PC = "pc"
+    NUC = "nuc"  # Intel NUC or mini PCs
+    SERVER = "server"  # Server/workstation class
+    JETSON = "jetson"  # NVIDIA Jetson
     UNKNOWN = "unknown"
+
+
+class GPUVendor(Enum):
+    """GPU vendors for AI acceleration."""
+    NVIDIA = "nvidia"
+    INTEL = "intel"
+    AMD = "amd"
+    NONE = "none"
 
 
 class Architecture(Enum):
@@ -27,6 +38,21 @@ class Architecture(Enum):
     AMD64 = "x86_64"
     ARM32 = "armv7l"
     UNKNOWN = "unknown"
+
+
+@dataclass
+class GPUInfo:
+    """GPU information."""
+    vendor: GPUVendor = GPUVendor.NONE
+    name: str = ""
+    driver_version: str = ""
+    memory_mb: int = 0
+    cuda_cores: int = 0  # NVIDIA
+    compute_units: int = 0  # AMD/Intel
+    supports_cuda: bool = False
+    supports_opencl: bool = False
+    supports_openvino: bool = False
+    supports_rocm: bool = False
 
 
 @dataclass
@@ -46,6 +72,13 @@ class PlatformInfo:
     has_hdmi_cec: bool = False
     has_camera_module: bool = False
     has_touch_display: bool = False
+    # x86_64 specific
+    gpu: Optional[GPUInfo] = None
+    has_ddc_ci: bool = False  # DDC/CI monitor control
+    has_usb_camera: bool = False
+    cpu_vendor: str = ""  # intel, amd
+    has_avx2: bool = False  # Advanced Vector Extensions
+    has_avx512: bool = False
 
     @property
     def is_raspberry_pi(self) -> bool:
@@ -56,8 +89,17 @@ class PlatformInfo:
         )
 
     @property
+    def is_x86_64(self) -> bool:
+        return self.arch == Architecture.AMD64
+
+    @property
     def is_64bit(self) -> bool:
         return self.arch in (Architecture.ARM64, Architecture.AMD64)
+
+    @property
+    def is_desktop_class(self) -> bool:
+        """Check if this is a desktop/server class machine."""
+        return self.device in (DeviceType.PC, DeviceType.NUC, DeviceType.SERVER)
 
     @property
     def supports_hailo(self) -> bool:
@@ -68,6 +110,36 @@ class PlatformInfo:
     def supports_coral(self) -> bool:
         """Coral USB works on any platform with USB 3.0."""
         return self.is_64bit
+
+    @property
+    def supports_nvidia_gpu(self) -> bool:
+        """Check if NVIDIA GPU acceleration is available."""
+        return self.gpu is not None and self.gpu.vendor == GPUVendor.NVIDIA
+
+    @property
+    def supports_intel_gpu(self) -> bool:
+        """Check if Intel GPU (Arc/Xe) acceleration is available."""
+        return self.gpu is not None and self.gpu.vendor == GPUVendor.INTEL
+
+    @property
+    def supports_amd_gpu(self) -> bool:
+        """Check if AMD GPU (ROCm) acceleration is available."""
+        return self.gpu is not None and self.gpu.vendor == GPUVendor.AMD
+
+    @property
+    def best_ai_accelerator(self) -> str:
+        """Return the best available AI accelerator."""
+        if "hailo" in self.ai_accelerators:
+            return "hailo"
+        if "nvidia" in self.ai_accelerators:
+            return "nvidia"
+        if "coral" in self.ai_accelerators:
+            return "coral"
+        if "intel" in self.ai_accelerators:
+            return "intel"
+        if "amd" in self.ai_accelerators:
+            return "amd"
+        return "cpu"
 
 
 class PlatformDetector:
@@ -104,9 +176,18 @@ class PlatformDetector:
         # Detect CPU
         info.cpu_model = cls._detect_cpu_model()
         info.cpu_cores = os.cpu_count() or 1
+        info.cpu_vendor = cls._detect_cpu_vendor()
 
         # Detect memory
         info.memory_total_mb = cls._detect_memory()
+
+        # x86_64 specific detection
+        if info.arch == Architecture.AMD64:
+            info.gpu = cls._detect_gpu()
+            info.has_avx2 = cls._detect_avx2()
+            info.has_avx512 = cls._detect_avx512()
+            info.has_ddc_ci = cls._detect_ddc_ci()
+            info.has_usb_camera = cls._detect_usb_camera()
 
         # Detect AI accelerators
         info.ai_accelerators = cls._detect_ai_accelerators(info)
@@ -154,7 +235,7 @@ class PlatformDetector:
 
     @staticmethod
     def _detect_device() -> DeviceType:
-        """Detect Raspberry Pi model or PC."""
+        """Detect device type (Pi, PC, NUC, Server, Jetson, etc.)."""
         # Check for Raspberry Pi device tree
         model_path = "/proc/device-tree/model"
         if os.path.exists(model_path):
@@ -168,14 +249,70 @@ class PlatformDetector:
                     return DeviceType.RASPBERRY_PI_4
                 elif "Raspberry Pi 3" in model:
                     return DeviceType.RASPBERRY_PI_3
+                elif "Jetson" in model or "NVIDIA" in model:
+                    return DeviceType.JETSON
             except Exception:
                 pass
 
-        # Check for x86_64 architecture (PC)
+        # Check for x86_64 architecture (PC/NUC/Server)
         if platform.machine() in ("x86_64", "amd64"):
-            return DeviceType.PC
+            # Detect specific x86_64 device types
+            return PlatformDetector._detect_x86_device_type()
 
         return DeviceType.UNKNOWN
+
+    @staticmethod
+    def _detect_x86_device_type() -> DeviceType:
+        """Detect specific x86_64 device type."""
+        # Check DMI information for device identification
+        dmi_paths = {
+            "product_name": "/sys/class/dmi/id/product_name",
+            "board_vendor": "/sys/class/dmi/id/board_vendor",
+            "sys_vendor": "/sys/class/dmi/id/sys_vendor",
+            "chassis_type": "/sys/class/dmi/id/chassis_type",
+        }
+
+        dmi_info = {}
+        for key, path in dmi_paths.items():
+            if os.path.exists(path):
+                try:
+                    with open(path) as f:
+                        dmi_info[key] = f.read().strip().lower()
+                except Exception:
+                    pass
+
+        product = dmi_info.get("product_name", "")
+        vendor = dmi_info.get("sys_vendor", "") or dmi_info.get("board_vendor", "")
+        chassis = dmi_info.get("chassis_type", "")
+
+        # Intel NUC detection
+        if "nuc" in product or "nuc" in vendor:
+            return DeviceType.NUC
+
+        # Other mini PCs (Beelink, Minisforum, etc.)
+        mini_pc_keywords = ["beelink", "minisforum", "acepc", "chuwi", "gmk", "trigkey"]
+        if any(kw in product or kw in vendor for kw in mini_pc_keywords):
+            return DeviceType.NUC
+
+        # Server detection (based on chassis type)
+        # Chassis type 17=Rack Mount, 23=Rack Mount Chassis
+        server_chassis_types = ["17", "23", "7", "25"]  # 7=Tower server, 25=Multi-system chassis
+        if chassis in server_chassis_types:
+            return DeviceType.SERVER
+
+        # Server vendor detection
+        server_vendors = ["dell", "hp", "hpe", "lenovo", "supermicro", "gigabyte"]
+        server_keywords = ["server", "proliant", "poweredge", "thinksystem"]
+        if any(sv in vendor for sv in server_vendors):
+            if any(sk in product for sk in server_keywords):
+                return DeviceType.SERVER
+
+        # VM/Cloud detection (treat as server)
+        vm_vendors = ["qemu", "vmware", "virtualbox", "kvm", "xen", "microsoft corporation"]
+        if any(vm in vendor for vm in vm_vendors):
+            return DeviceType.SERVER
+
+        return DeviceType.PC
 
     @staticmethod
     def _detect_cpu_model() -> str:
@@ -203,6 +340,229 @@ class PlatformDetector:
         return 0
 
     @staticmethod
+    def _detect_cpu_vendor() -> str:
+        """Detect CPU vendor (Intel, AMD, ARM)."""
+        try:
+            with open("/proc/cpuinfo") as f:
+                for line in f:
+                    if line.startswith("vendor_id"):
+                        vendor = line.split(":")[1].strip().lower()
+                        if "intel" in vendor or "genuineintel" in vendor:
+                            return "intel"
+                        elif "amd" in vendor or "authenticamd" in vendor:
+                            return "amd"
+                    elif line.startswith("CPU implementer"):
+                        # ARM CPUs
+                        return "arm"
+        except Exception:
+            pass
+        return "unknown"
+
+    @staticmethod
+    def _detect_gpu() -> Optional[GPUInfo]:
+        """Detect GPU information for x86_64 systems."""
+        gpu_info = None
+
+        # Try NVIDIA first
+        gpu_info = PlatformDetector._detect_nvidia_gpu()
+        if gpu_info:
+            return gpu_info
+
+        # Try Intel GPU
+        gpu_info = PlatformDetector._detect_intel_gpu()
+        if gpu_info:
+            return gpu_info
+
+        # Try AMD GPU
+        gpu_info = PlatformDetector._detect_amd_gpu()
+        if gpu_info:
+            return gpu_info
+
+        return None
+
+    @staticmethod
+    def _detect_nvidia_gpu() -> Optional[GPUInfo]:
+        """Detect NVIDIA GPU."""
+        try:
+            result = subprocess.run(
+                ["nvidia-smi", "--query-gpu=name,driver_version,memory.total",
+                 "--format=csv,noheader,nounits"],
+                capture_output=True,
+                timeout=5,
+                text=True
+            )
+            if result.returncode == 0 and result.stdout.strip():
+                parts = result.stdout.strip().split(", ")
+                if len(parts) >= 3:
+                    return GPUInfo(
+                        vendor=GPUVendor.NVIDIA,
+                        name=parts[0].strip(),
+                        driver_version=parts[1].strip(),
+                        memory_mb=int(float(parts[2].strip())),
+                        supports_cuda=True,
+                        supports_opencl=True,
+                    )
+        except Exception:
+            pass
+        return None
+
+    @staticmethod
+    def _detect_intel_gpu() -> Optional[GPUInfo]:
+        """Detect Intel integrated/discrete GPU (Arc, Xe, UHD)."""
+        try:
+            # Check for Intel GPU via lspci
+            result = subprocess.run(
+                ["lspci", "-v"],
+                capture_output=True,
+                timeout=5,
+                text=True
+            )
+            if result.returncode == 0:
+                output = result.stdout.lower()
+                if "intel" in output and ("vga" in output or "display" in output):
+                    # Extract GPU name
+                    for line in result.stdout.split("\n"):
+                        if "VGA" in line and "Intel" in line:
+                            name = line.split(":")[-1].strip()
+
+                            # Check for Arc/Xe (discrete)
+                            is_arc = "arc" in name.lower()
+
+                            # Check if OpenVINO is available
+                            has_openvino = PlatformDetector._check_openvino()
+
+                            return GPUInfo(
+                                vendor=GPUVendor.INTEL,
+                                name=name,
+                                supports_opencl=True,
+                                supports_openvino=has_openvino,
+                                compute_units=96 if is_arc else 32,  # Approximate
+                            )
+        except Exception:
+            pass
+        return None
+
+    @staticmethod
+    def _detect_amd_gpu() -> Optional[GPUInfo]:
+        """Detect AMD GPU (RDNA, CDNA)."""
+        try:
+            # Check for AMD GPU via lspci
+            result = subprocess.run(
+                ["lspci", "-v"],
+                capture_output=True,
+                timeout=5,
+                text=True
+            )
+            if result.returncode == 0:
+                output = result.stdout.lower()
+                if "amd" in output and ("vga" in output or "display" in output):
+                    # Extract GPU name
+                    for line in result.stdout.split("\n"):
+                        if "VGA" in line and ("AMD" in line or "ATI" in line):
+                            name = line.split(":")[-1].strip()
+
+                            # Check for ROCm
+                            has_rocm = PlatformDetector._check_rocm()
+
+                            return GPUInfo(
+                                vendor=GPUVendor.AMD,
+                                name=name,
+                                supports_opencl=True,
+                                supports_rocm=has_rocm,
+                            )
+        except Exception:
+            pass
+        return None
+
+    @staticmethod
+    def _check_openvino() -> bool:
+        """Check if OpenVINO is available."""
+        try:
+            result = subprocess.run(
+                ["python3", "-c", "import openvino"],
+                capture_output=True,
+                timeout=5
+            )
+            return result.returncode == 0
+        except Exception:
+            return False
+
+    @staticmethod
+    def _check_rocm() -> bool:
+        """Check if ROCm is available."""
+        try:
+            result = subprocess.run(
+                ["rocm-smi", "--version"],
+                capture_output=True,
+                timeout=5
+            )
+            return result.returncode == 0
+        except Exception:
+            return False
+
+    @staticmethod
+    def _detect_avx2() -> bool:
+        """Check if CPU supports AVX2."""
+        try:
+            with open("/proc/cpuinfo") as f:
+                content = f.read()
+                return "avx2" in content.lower()
+        except Exception:
+            return False
+
+    @staticmethod
+    def _detect_avx512() -> bool:
+        """Check if CPU supports AVX-512."""
+        try:
+            with open("/proc/cpuinfo") as f:
+                content = f.read()
+                return "avx512" in content.lower()
+        except Exception:
+            return False
+
+    @staticmethod
+    def _detect_ddc_ci() -> bool:
+        """Check if DDC/CI monitor control is available."""
+        try:
+            result = subprocess.run(
+                ["which", "ddcutil"],
+                capture_output=True,
+                timeout=5
+            )
+            if result.returncode == 0:
+                # Try to detect monitors
+                detect_result = subprocess.run(
+                    ["ddcutil", "detect", "--brief"],
+                    capture_output=True,
+                    timeout=10
+                )
+                return detect_result.returncode == 0 and b"Display" in detect_result.stdout
+        except Exception:
+            pass
+        return False
+
+    @staticmethod
+    def _detect_usb_camera() -> bool:
+        """Detect USB webcam."""
+        try:
+            result = subprocess.run(
+                ["v4l2-ctl", "--list-devices"],
+                capture_output=True,
+                timeout=5,
+                text=True
+            )
+            if result.returncode == 0:
+                output = result.stdout.lower()
+                # Look for USB camera identifiers
+                usb_indicators = ["usb", "webcam", "logitech", "microsoft", "hd pro", "c920", "c930"]
+                return any(ind in output for ind in usb_indicators)
+        except Exception:
+            pass
+
+        # Fallback: check for video devices
+        return os.path.exists("/dev/video0")
+
+    @staticmethod
     def _detect_ai_accelerators(info: PlatformInfo) -> List[str]:
         """Detect available AI accelerators."""
         accelerators = []
@@ -210,7 +570,6 @@ class PlatformDetector:
         # Check for Hailo (Pi 5 only, via PCIe)
         if info.device == DeviceType.RASPBERRY_PI_5:
             try:
-                # Check for Hailo device
                 result = subprocess.run(
                     ["hailortcli", "fw-control", "identify"],
                     capture_output=True,
@@ -221,9 +580,12 @@ class PlatformDetector:
             except Exception:
                 pass
 
-        # Check for Coral EdgeTPU (USB)
+        # Check for NVIDIA Jetson
+        if info.device == DeviceType.JETSON:
+            accelerators.append("nvidia")
+
+        # Check for Coral EdgeTPU (USB) - works on all platforms
         try:
-            # Look for Coral USB device
             if os.path.exists("/dev/bus/usb"):
                 result = subprocess.run(
                     ["lsusb", "-d", "1a6e:089a"],  # Coral USB Accelerator
@@ -231,7 +593,8 @@ class PlatformDetector:
                     timeout=5
                 )
                 if result.returncode == 0 and result.stdout:
-                    accelerators.append("coral")
+                    if "coral" not in accelerators:
+                        accelerators.append("coral")
 
                 # Also check for Coral M.2
                 result = subprocess.run(
@@ -240,22 +603,20 @@ class PlatformDetector:
                     timeout=5
                 )
                 if result.returncode == 0 and result.stdout:
-                    accelerators.append("coral")
+                    if "coral" not in accelerators:
+                        accelerators.append("coral")
         except Exception:
             pass
 
-        # Check for NVIDIA GPU (PC)
-        if info.arch == Architecture.AMD64:
-            try:
-                result = subprocess.run(
-                    ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"],
-                    capture_output=True,
-                    timeout=5
-                )
-                if result.returncode == 0 and result.stdout:
+        # x86_64 GPU-based accelerators
+        if info.arch == Architecture.AMD64 and info.gpu:
+            if info.gpu.vendor == GPUVendor.NVIDIA:
+                if "nvidia" not in accelerators:
                     accelerators.append("nvidia")
-            except Exception:
-                pass
+            elif info.gpu.vendor == GPUVendor.INTEL:
+                accelerators.append("intel")
+            elif info.gpu.vendor == GPUVendor.AMD:
+                accelerators.append("amd")
 
         # CPU is always available as fallback
         accelerators.append("cpu")
