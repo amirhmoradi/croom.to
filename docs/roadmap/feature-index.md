@@ -130,15 +130,17 @@ Quick reference for all planned features with their status, priority, and docume
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| Credential encryption | P0 | Planned | [PRD-004](../prd/004-security-compliance.md) | AES-256 |
-| TLS 1.3 | P0 | Planned | [PRD-004](../prd/004-security-compliance.md) | All connections |
-| MFA | P0 | Planned | [PRD-004](../prd/004-security-compliance.md) | Dashboard |
-| SAML SSO | P1 | Planned | [PRD-004](../prd/004-security-compliance.md) | Enterprise auth |
-| OIDC SSO | P1 | Planned | [PRD-004](../prd/004-security-compliance.md) | Enterprise auth |
-| LDAP integration | P1 | Planned | [PRD-004](../prd/004-security-compliance.md) | AD/LDAP |
-| RBAC | P1 | Planned | [PRD-004](../prd/004-security-compliance.md) | Role permissions |
-| Audit logging | P0 | Planned | [PRD-004](../prd/004-security-compliance.md) | All actions |
-| SOC 2 readiness | P2 | Planned | [PRD-004](../prd/004-security-compliance.md) | Compliance |
+| Credential encryption | P0 | Complete | [PRD-004](../prd/004-security-compliance.md) | AES-256-GCM |
+| TLS 1.3 | P0 | Complete | [PRD-004](../prd/004-security-compliance.md) | All connections |
+| MFA | P0 | Complete | [PRD-004](../prd/004-security-compliance.md) | TOTP, WebAuthn |
+| SAML SSO | P1 | Complete | [PRD-004](../prd/004-security-compliance.md) | Enterprise auth |
+| OIDC SSO | P1 | Complete | [PRD-004](../prd/004-security-compliance.md) | Enterprise auth |
+| LDAP integration | P1 | Complete | [PRD-004](../prd/004-security-compliance.md) | AD/LDAP |
+| RBAC | P1 | Complete | [PRD-004](../prd/004-security-compliance.md) | 6 default roles |
+| Audit logging | P0 | Complete | [PRD-004](../prd/004-security-compliance.md) | Tamper-evident |
+| JWT API Auth | P0 | Complete | [PRD-004](../prd/004-security-compliance.md) | API security |
+| Rate limiting | P1 | Complete | [PRD-004](../prd/004-security-compliance.md) | Per-client limits |
+| SOC 2 readiness | P2 | In Progress | [PRD-004](../prd/004-security-compliance.md) | Compliance |
 
 ### Monitoring & Analytics
 
@@ -148,7 +150,7 @@ Quick reference for all planned features with their status, priority, and docume
 | Meeting quality metrics | P1 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Audio/video |
 | Room utilization | P2 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Analytics |
 | Report generation | P2 | Planned | [PRD-001](../prd/001-management-dashboard.md) | PDF/CSV |
-| SIEM integration | P2 | Planned | [PRD-004](../prd/004-security-compliance.md) | Log export |
+| SIEM integration | P2 | Complete | [PRD-004](../prd/004-security-compliance.md) | CEF/LEEF/JSON |
 
 ### Remote Management
 
@@ -279,3 +281,5 @@ Quick reference for all planned features with their status, priority, and docume
 | 2025-12-15 | Completed Phase 1 implementation (Touch UI, Dashboard, Multi-Platform) |
 | 2025-12-15 | Completed AI backends (Hailo, Coral, ONNX CPU) |
 | 2025-12-15 | Completed Calendar integration (Google + Microsoft 365) |
+| 2025-12-15 | Implemented PRD-003: Device Provisioning (captive portal, USB config, setup wizard) |
+| 2025-12-15 | Implemented PRD-004: Security & Compliance (encryption, MFA, SSO, RBAC, audit) |
