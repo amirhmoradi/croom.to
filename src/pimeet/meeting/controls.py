@@ -886,12 +886,267 @@ class ZoomControls(BaseMeetingControls):
             return False
 
 
+class WebexControls(BaseMeetingControls):
+    """Cisco Webex specific controls."""
+
+    def __init__(self, browser_automation):
+        super().__init__()
+        self._browser = browser_automation
+        self._capabilities = [
+            ControlCapability.MUTE,
+            ControlCapability.CAMERA,
+            ControlCapability.SCREEN_SHARE,
+            ControlCapability.HAND_RAISE,
+            ControlCapability.REACTIONS,
+            ControlCapability.RECORDING,
+            ControlCapability.CHAT,
+            ControlCapability.LAYOUT,
+            ControlCapability.BREAKOUT_ROOMS,
+            ControlCapability.WHITEBOARD,
+            ControlCapability.CAPTIONS,
+            ControlCapability.VIRTUAL_BACKGROUND,
+            ControlCapability.PARTICIPANTS,
+            ControlCapability.NOISE_SUPPRESSION,
+        ]
+
+    async def start_screen_share(
+        self,
+        share_type: ShareType = ShareType.SCREEN,
+        audio: bool = True,
+    ) -> bool:
+        try:
+            # Click share button
+            await self._browser.click('[data-test="share-button"], [aria-label*="share" i]')
+            await asyncio.sleep(0.5)
+
+            # Select share type
+            if share_type == ShareType.SCREEN:
+                await self._browser.click('[data-test="share-screen"], :has-text("Your Screen")')
+            elif share_type == ShareType.WINDOW:
+                await self._browser.click('[data-test="share-window"], :has-text("Window")')
+            elif share_type == ShareType.TAB:
+                await self._browser.click('[data-test="share-tab"], :has-text("Browser Tab")')
+
+            # Enable audio sharing if requested
+            if audio:
+                audio_checkbox = await self._browser.query_selector(
+                    '[data-test="share-audio"], [aria-label*="audio" i]'
+                )
+                if audio_checkbox:
+                    await audio_checkbox.click()
+
+            # Confirm share
+            await self._browser.click('[data-test="share-confirm"], button:has-text("Share")')
+
+            self._screen_share.is_active = True
+            self._screen_share.share_type = share_type
+            self._screen_share.is_audio_shared = audio
+            self._screen_share.started_at = datetime.utcnow()
+            self._emit_screen_share_changed()
+            return True
+        except Exception as e:
+            logger.error(f"Failed to start Webex screen share: {e}")
+            return False
+
+    async def stop_screen_share(self) -> bool:
+        try:
+            await self._browser.click(
+                '[data-test="stop-share"], [aria-label*="stop sharing" i], button:has-text("Stop")'
+            )
+
+            self._screen_share.is_active = False
+            self._screen_share.stopped_at = datetime.utcnow()
+            self._emit_screen_share_changed()
+            return True
+        except Exception as e:
+            logger.error(f"Failed to stop Webex screen share: {e}")
+            return False
+
+    async def start_recording(self, cloud: bool = True) -> bool:
+        try:
+            # Open more menu
+            await self._browser.click('[data-test="more-button"], [aria-label="More options"]')
+            await asyncio.sleep(0.3)
+
+            # Click record
+            await self._browser.click('[data-test="record"], :has-text("Record")')
+            await asyncio.sleep(0.3)
+
+            # Select recording type
+            if cloud:
+                await self._browser.click('[data-test="record-cloud"], :has-text("Record to cloud")')
+            else:
+                await self._browser.click('[data-test="record-local"], :has-text("Record to computer")')
+
+            self._recording.state = RecordingState.RECORDING
+            self._recording.started_at = datetime.utcnow()
+            self._recording.is_cloud_recording = cloud
+            self._emit_recording_changed()
+            return True
+        except Exception as e:
+            logger.error(f"Failed to start Webex recording: {e}")
+            return False
+
+    async def stop_recording(self) -> bool:
+        try:
+            await self._browser.click('[data-test="more-button"], [aria-label="More options"]')
+            await asyncio.sleep(0.3)
+            await self._browser.click('[data-test="stop-record"], :has-text("Stop recording")')
+
+            self._recording.state = RecordingState.STOPPED
+            self._emit_recording_changed()
+            return True
+        except Exception as e:
+            logger.error(f"Failed to stop Webex recording: {e}")
+            return False
+
+    async def raise_hand(self) -> bool:
+        try:
+            await self._browser.click(
+                '[data-test="raise-hand"], [aria-label*="raise hand" i], button:has-text("Raise")'
+            )
+            self._hand_raised = True
+            return True
+        except Exception as e:
+            logger.error(f"Failed to raise hand in Webex: {e}")
+            return False
+
+    async def lower_hand(self) -> bool:
+        try:
+            await self._browser.click(
+                '[data-test="lower-hand"], [aria-label*="lower hand" i], button:has-text("Lower")'
+            )
+            self._hand_raised = False
+            return True
+        except Exception as e:
+            logger.error(f"Failed to lower hand in Webex: {e}")
+            return False
+
+    async def send_reaction(self, reaction: Reaction) -> bool:
+        try:
+            # Open reactions panel
+            await self._browser.click('[data-test="reactions-button"], [aria-label*="reaction" i]')
+            await asyncio.sleep(0.3)
+
+            reaction_map = {
+                Reaction.THUMBS_UP: "thumbs-up",
+                Reaction.THUMBS_DOWN: "thumbs-down",
+                Reaction.HEART: "heart",
+                Reaction.CLAP: "clap",
+                Reaction.LAUGH: "haha",
+                Reaction.SURPRISE: "wow",
+            }
+
+            reaction_id = reaction_map.get(reaction)
+            if reaction_id:
+                await self._browser.click(f'[data-test="reaction-{reaction_id}"], [aria-label*="{reaction_id}" i]')
+                return True
+            return False
+        except Exception as e:
+            logger.error(f"Failed to send Webex reaction: {e}")
+            return False
+
+    async def set_layout(self, layout: LayoutMode) -> bool:
+        try:
+            # Open layout options
+            await self._browser.click('[data-test="layout-button"], [aria-label*="layout" i]')
+            await asyncio.sleep(0.3)
+
+            layout_map = {
+                LayoutMode.GALLERY: "grid",
+                LayoutMode.SPEAKER: "stack",
+                LayoutMode.SPOTLIGHT: "focus",
+                LayoutMode.SIDEBAR: "side-by-side",
+            }
+
+            layout_id = layout_map.get(layout, "grid")
+            await self._browser.click(f'[data-test="layout-{layout_id}"], [aria-label*="{layout_id}" i]')
+
+            self._current_layout = layout
+            return True
+        except Exception as e:
+            logger.error(f"Failed to set Webex layout: {e}")
+            return False
+
+    async def mute_participant(self, participant_id: str) -> bool:
+        try:
+            # Open participants panel
+            await self._browser.click('[data-test="participants-button"], [aria-label*="participant" i]')
+            await asyncio.sleep(0.3)
+
+            # Find participant and mute
+            await self._browser.click(
+                f'[data-participant-id="{participant_id}"] [data-test="mute"], '
+                f'[data-participant="{participant_id}"] [aria-label*="mute" i]'
+            )
+            return True
+        except Exception as e:
+            logger.error(f"Failed to mute Webex participant: {e}")
+            return False
+
+    async def remove_participant(self, participant_id: str) -> bool:
+        try:
+            await self._browser.click('[data-test="participants-button"], [aria-label*="participant" i]')
+            await asyncio.sleep(0.3)
+
+            # Open participant options
+            await self._browser.click(
+                f'[data-participant-id="{participant_id}"] [data-test="more"], '
+                f'[data-participant="{participant_id}"] [aria-label="More"]'
+            )
+            await asyncio.sleep(0.3)
+
+            # Remove from meeting
+            await self._browser.click('[data-test="expel"], :has-text("Expel"), :has-text("Remove")')
+            return True
+        except Exception as e:
+            logger.error(f"Failed to remove Webex participant: {e}")
+            return False
+
+    async def enable_captions(self) -> bool:
+        try:
+            await self._browser.click(
+                '[data-test="captions-button"], [aria-label*="caption" i], button:has-text("Caption")'
+            )
+            return True
+        except Exception as e:
+            logger.error(f"Failed to enable Webex captions: {e}")
+            return False
+
+    async def send_chat_message(self, message: str, to: Optional[str] = None) -> bool:
+        try:
+            # Open chat panel
+            await self._browser.click('[data-test="chat-button"], [aria-label*="chat" i]')
+            await asyncio.sleep(0.3)
+
+            # Type message
+            await self._browser.fill('[data-test="chat-input"], [aria-label*="message" i]', message)
+
+            # Send
+            await self._browser.click('[data-test="send-chat"], [aria-label*="send" i]')
+
+            chat_msg = ChatMessage(
+                id=f"msg_{datetime.utcnow().timestamp()}",
+                sender="self",
+                content=message,
+                timestamp=datetime.utcnow(),
+                is_private=to is not None,
+                recipient=to,
+            )
+            self._chat_messages.append(chat_msg)
+            self._emit_chat_message(chat_msg)
+            return True
+        except Exception as e:
+            logger.error(f"Failed to send Webex chat message: {e}")
+            return False
+
+
 def get_controls_for_provider(provider_name: str, browser_automation) -> BaseMeetingControls:
     """
     Get controls instance for a meeting provider.
 
     Args:
-        provider_name: Provider name (google_meet, teams, zoom)
+        provider_name: Provider name (google_meet, teams, zoom, webex)
         browser_automation: Browser automation instance
 
     Returns:
@@ -901,6 +1156,7 @@ def get_controls_for_provider(provider_name: str, browser_automation) -> BaseMee
         "google_meet": GoogleMeetControls,
         "teams": TeamsControls,
         "zoom": ZoomControls,
+        "webex": WebexControls,
     }
 
     cls = controls_map.get(provider_name, BaseMeetingControls)

@@ -34,15 +34,15 @@ Quick reference for all planned features with their status, priority, and docume
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
 | One-line installer | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | `curl \| bash` |
-| APT package repository | P0 | In Progress | [PRD-007](../prd/007-modern-installation.md) | Debian packages |
+| APT package repository | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | Debian packages |
 | Bookworm OS support | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | Debian 12 |
-| Trixie OS support | P1 | Planned | [PRD-007](../prd/007-modern-installation.md) | Debian 13 (2025) |
+| Trixie OS support | P1 | Complete | [PRD-007](../prd/007-modern-installation.md) | Debian 13 (2025) |
 | Raspberry Pi 5 support | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | Primary target |
 | Raspberry Pi 4B support | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | Primary target |
 | Non-destructive install | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | Preserve user data |
-| apt update system | P1 | In Progress | [PRD-007](../prd/007-modern-installation.md) | Standard updates |
-| Rollback support | P2 | Planned | [PRD-007](../prd/007-modern-installation.md) | Version downgrade |
-| Legacy migration tool | P2 | Planned | [PRD-007](../prd/007-modern-installation.md) | Image→Package |
+| apt update system | P1 | Complete | [PRD-007](../prd/007-modern-installation.md) | Standard updates |
+| Rollback support | P2 | Complete | [PRD-007](../prd/007-modern-installation.md) | Version downgrade |
+| Legacy migration tool | P2 | Complete | [PRD-007](../prd/007-modern-installation.md) | Image→Package |
 
 ### Touch Screen Room UI ⭐ NEW
 
@@ -55,10 +55,10 @@ Quick reference for all planned features with their status, priority, and docume
 | Quick join screen | P0 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Ad-hoc meetings |
 | On-screen keyboard | P0 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Touch input |
 | Settings screens | P1 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Room/network config |
-| Diagnostics screen | P1 | In Progress | [PRD-005](../prd/005-touch-screen-room-ui.md) | System health |
-| Local web interface | P1 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Browser access |
-| IR remote navigation | P2 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | TV remote support |
-| Admin PIN protection | P1 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Secure settings |
+| Diagnostics screen | P1 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | System health |
+| Local web interface | P1 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Browser access |
+| IR remote navigation | P2 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | TV remote support |
+| Admin PIN protection | P1 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Secure settings |
 
 ### Management Dashboard
 
@@ -79,7 +79,7 @@ Quick reference for all planned features with their status, priority, and docume
 | Google Meet | P0 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | Playwright-based |
 | Microsoft Teams | P0 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | Browser-based |
 | Zoom | P1 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | Browser-based |
-| Webex | P2 | Planned | [PRD-002](../prd/002-multi-platform-support.md) | Browser-based |
+| Webex | P2 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | Browser-based |
 | Platform auto-detection | P0 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | From calendar |
 | Provider architecture | P0 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | Modular design |
 
@@ -120,11 +120,11 @@ Quick reference for all planned features with their status, priority, and docume
 | Occupancy counting | P2 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | All |
 | Hand raise detection | P2 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | AI accelerator |
 | PTZ speaker tracking | P2 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | AI + PTZ camera |
-| Gesture recognition | P3 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | AI accelerator |
+| Gesture recognition | P3 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | AI accelerator |
 | Pi AI Kit (Hailo) support | P0 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | 13 TOPS |
 | Coral USB support | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | 4 TOPS |
 | CPU fallback | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | Basic features |
-| Privacy mode | P1 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | Disable AI |
+| Privacy mode | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | Disable AI |
 
 ### Security & Compliance
 
@@ -140,7 +140,7 @@ Quick reference for all planned features with their status, priority, and docume
 | Audit logging | P0 | Complete | [PRD-004](../prd/004-security-compliance.md) | Tamper-evident |
 | JWT API Auth | P0 | Complete | [PRD-004](../prd/004-security-compliance.md) | API security |
 | Rate limiting | P1 | Complete | [PRD-004](../prd/004-security-compliance.md) | Per-client limits |
-| SOC 2 readiness | P2 | In Progress | [PRD-004](../prd/004-security-compliance.md) | Compliance |
+| SOC 2 readiness | P2 | Complete | [PRD-004](../prd/004-security-compliance.md) | Compliance |
 
 ### Monitoring & Analytics
 

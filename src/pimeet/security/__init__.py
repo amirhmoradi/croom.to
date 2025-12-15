@@ -89,6 +89,18 @@ from pimeet.security.api import (
     CSRFProtection,
     create_api_security,
 )
+from pimeet.security.compliance import (
+    TrustServiceCategory,
+    ComplianceStatus,
+    ControlFamily,
+    ControlPoint,
+    ComplianceEvidence,
+    ComplianceCheckResult,
+    ComplianceReport,
+    ComplianceCheck,
+    SOC2ComplianceService,
+    SOC2_CONTROL_POINTS,
+)
 
 __all__ = [
     # Credentials
@@ -162,4 +174,15 @@ __all__ = [
     "InputValidator",
     "CSRFProtection",
     "create_api_security",
+    # SOC 2 Compliance
+    "TrustServiceCategory",
+    "ComplianceStatus",
+    "ControlFamily",
+    "ControlPoint",
+    "ComplianceEvidence",
+    "ComplianceCheckResult",
+    "ComplianceReport",
+    "ComplianceCheck",
+    "SOC2ComplianceService",
+    "SOC2_CONTROL_POINTS",
 ]

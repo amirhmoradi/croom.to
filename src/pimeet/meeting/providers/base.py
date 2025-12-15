@@ -256,5 +256,7 @@ def detect_platform(url: str) -> Optional[str]:
         return "teams"
     elif "zoom.us" in url_lower or "zoomgov.com" in url_lower:
         return "zoom"
+    elif "webex.com" in url_lower:
+        return "webex"
 
     return None

@@ -924,7 +924,30 @@ async def install_pimeet(
     return await installer.install()
 
 
+from pimeet.installer.packaging import (
+    PackageType,
+    Architecture,
+    Distribution,
+    PackageInfo,
+    DebianPackageBuilder,
+    APTRepository,
+    APTUpdateService,
+    PACKAGE_DEFINITIONS,
+)
+
+from pimeet.installer.os_support import (
+    OSType,
+    OSRelease,
+    OSInfo,
+    VersionSnapshot,
+    OSDetector,
+    TrixieSupport,
+    RollbackService,
+    LegacyMigration,
+)
+
 __all__ = [
+    # Core installation
     "InstallationType",
     "PlatformType",
     "ComponentStatus",
@@ -936,4 +959,22 @@ __all__ = [
     "Installer",
     "Uninstaller",
     "install_pimeet",
+    # Packaging
+    "PackageType",
+    "Architecture",
+    "Distribution",
+    "PackageInfo",
+    "DebianPackageBuilder",
+    "APTRepository",
+    "APTUpdateService",
+    "PACKAGE_DEFINITIONS",
+    # OS Support
+    "OSType",
+    "OSRelease",
+    "OSInfo",
+    "VersionSnapshot",
+    "OSDetector",
+    "TrixieSupport",
+    "RollbackService",
+    "LegacyMigration",
 ]

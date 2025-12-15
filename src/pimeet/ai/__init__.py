@@ -42,6 +42,27 @@ from pimeet.ai.ptz_control import (
     PTZService,
 )
 
+from pimeet.ai.gesture_recognition import (
+    GestureType,
+    GestureAction,
+    HandLandmarks,
+    GestureEvent,
+    GestureConfig,
+    GestureClassifier,
+    GestureActionMapper,
+    GestureRecognitionService,
+    GestureMeetingController,
+)
+
+from pimeet.ai.privacy_mode import (
+    AIFeature,
+    PrivacyLevel,
+    PrivacySchedule,
+    PrivacyConfig,
+    PrivacyModeService,
+    PrivacyIndicator,
+)
+
 __all__ = [
     # Core
     "AIService",
@@ -68,4 +89,21 @@ __all__ = [
     "VISCAController",
     "SoftwarePTZController",
     "PTZService",
+    # Gesture recognition
+    "GestureType",
+    "GestureAction",
+    "HandLandmarks",
+    "GestureEvent",
+    "GestureConfig",
+    "GestureClassifier",
+    "GestureActionMapper",
+    "GestureRecognitionService",
+    "GestureMeetingController",
+    # Privacy mode
+    "AIFeature",
+    "PrivacyLevel",
+    "PrivacySchedule",
+    "PrivacyConfig",
+    "PrivacyModeService",
+    "PrivacyIndicator",
 ]

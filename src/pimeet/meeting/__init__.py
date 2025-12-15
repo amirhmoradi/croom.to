@@ -27,6 +27,7 @@ from pimeet.meeting.controls import (
     GoogleMeetControls,
     TeamsControls,
     ZoomControls,
+    WebexControls,
     get_controls_for_provider,
 )
 
@@ -63,6 +64,7 @@ __all__ = [
     "GoogleMeetControls",
     "TeamsControls",
     "ZoomControls",
+    "WebexControls",
     "get_controls_for_provider",
     # Quality
     "QualityLevel",

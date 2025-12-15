@@ -9,6 +9,7 @@ from pimeet.meeting.providers.base import MeetingProvider, MeetingInfo, MeetingS
 from pimeet.meeting.providers.google_meet import GoogleMeetProvider
 from pimeet.meeting.providers.teams import TeamsProvider
 from pimeet.meeting.providers.zoom import ZoomProvider
+from pimeet.meeting.providers.webex import WebexProvider
 
 
 def get_provider(platform: str) -> type:
@@ -16,7 +17,7 @@ def get_provider(platform: str) -> type:
     Get provider class for platform name.
 
     Args:
-        platform: Platform name ('google_meet', 'teams', 'zoom')
+        platform: Platform name ('google_meet', 'teams', 'zoom', 'webex')
 
     Returns:
         Provider class
@@ -25,6 +26,7 @@ def get_provider(platform: str) -> type:
         "google_meet": GoogleMeetProvider,
         "teams": TeamsProvider,
         "zoom": ZoomProvider,
+        "webex": WebexProvider,
     }
     return providers.get(platform)
 
@@ -35,6 +37,7 @@ def get_all_providers() -> dict:
         "google_meet": GoogleMeetProvider,
         "teams": TeamsProvider,
         "zoom": ZoomProvider,
+        "webex": WebexProvider,
     }
 
 
@@ -45,6 +48,7 @@ __all__ = [
     "GoogleMeetProvider",
     "TeamsProvider",
     "ZoomProvider",
+    "WebexProvider",
     "get_provider",
     "get_all_providers",
 ]
