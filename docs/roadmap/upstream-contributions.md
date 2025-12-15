@@ -3,14 +3,14 @@
 ## Overview
 
 This document tracks contributions to and from upstream repositories:
-- **Main Upstream:** [pmansour/pimeet](https://github.com/pmansour/pimeet)
-- **Fork Reference:** [xaghy/pimeet](https://github.com/xaghy/pimeet)
+- **Main Upstream:** [pmansour/croom](https://github.com/pmansour/croom)
+- **Fork Reference:** [xaghy/croom](https://github.com/xaghy/croom)
 
 ---
 
 ## Pull Requests to Implement
 
-### From pmansour/pimeet
+### From pmansour/croom
 
 #### PR #15: Samsung Keymap File
 **Status:** Open (pending implementation)
@@ -82,9 +82,9 @@ Convert existing scripts and applications into Debian packages for easier distri
 - Version tracking
 
 **Our Implementation Plan:**
-- [ ] Create pimeet-agent package
-- [ ] Create pimeet-browser package
-- [ ] Create pimeet-config package
+- [ ] Create croom-agent package
+- [ ] Create croom-browser package
+- [ ] Create croom-config package
 - [ ] Set up apt repository
 - [ ] Implement OTA updates
 
@@ -131,7 +131,7 @@ Align the project codebase with the official Raspberry Pi pi-gen build tool.
 
 **Our Implementation Plan:**
 - [ ] Study pi-gen architecture
-- [ ] Create PiMeet stage for pi-gen
+- [ ] Create Croom stage for pi-gen
 - [ ] Migrate build scripts to pi-gen stages
 - [ ] Test and validate
 - [ ] Document build process
@@ -179,7 +179,7 @@ Align the project codebase with the official Raspberry Pi pi-gen build tool.
 
 ---
 
-## Fork Integration (xaghy/pimeet)
+## Fork Integration (xaghy/croom)
 
 ### Changes to Merge
 
@@ -212,7 +212,7 @@ Updates README for clarity and new setup process.
 
 ### For Upstream Contributions
 
-When contributing back to pmansour/pimeet:
+When contributing back to pmansour/croom:
 
 1. **Create focused PRs** - One feature/fix per PR
 2. **Follow existing style** - Match project conventions
@@ -245,8 +245,8 @@ Fixes #XX
 ## Upstream Communication
 
 ### Contact Information
-- **Repository Issues:** https://github.com/pmansour/pimeet/issues
-- **Help Group:** pimeet-help@googlegroups.com
+- **Repository Issues:** https://github.com/pmansour/croom/issues
+- **Help Group:** croom-help@googlegroups.com
 
 ### Planned Upstream Contributions
 

@@ -1,6 +1,6 @@
 ---
 name: Feature Request
-about: Suggest an idea for PiMeet
+about: Suggest an idea for Croom
 title: '[FEATURE] '
 labels: enhancement
 assignees: ''

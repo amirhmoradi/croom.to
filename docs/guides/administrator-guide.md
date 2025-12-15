@@ -1,8 +1,8 @@
-# PiMeet Administrator Guide
+# Croom Administrator Guide
 
 ## Overview
 
-This guide is for IT administrators responsible for deploying, configuring, and maintaining PiMeet devices across an organization.
+This guide is for IT administrators responsible for deploying, configuring, and maintaining Croom devices across an organization.
 
 ---
 
@@ -25,7 +25,7 @@ This guide is for IT administrators responsible for deploying, configuring, and 
 
 ### 1.1 Hardware Requirements
 
-#### PiMeet Device
+#### Croom Device
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
 | Device | Raspberry Pi 4B 2GB | Raspberry Pi 4B 4GB |
@@ -93,7 +93,7 @@ TCP 443  → dashboard.yourcompany.com
               │            │            │
               ▼            ▼            ▼
          ┌─────────┐  ┌─────────┐  ┌─────────┐
-         │ PiMeet  │  │ PiMeet  │  │ PiMeet  │
+         │ Croom  │  │ Croom  │  │ Croom  │
          │ Device 1│  │ Device 2│  │ Device N│
          └─────────┘  └─────────┘  └─────────┘
 ```
@@ -108,7 +108,7 @@ TCP 443  → dashboard.yourcompany.com
 │         Chromium Browser                │
 │  (Hardware accelerated, extensions)    │
 ├─────────────────────────────────────────┤
-│         PiMeet Agent                    │
+│         Croom Agent                    │
 │  (Device management, metrics, config)  │
 ├─────────────────────────────────────────┤
 │         System Services                 │
@@ -127,16 +127,16 @@ TCP 443  → dashboard.yourcompany.com
 ### 3.1 Image Preparation
 
 #### Option A: Pre-built Image
-Download the latest PiMeet image from releases:
+Download the latest Croom image from releases:
 ```bash
-wget https://github.com/your-org/pimeet/releases/latest/pimeet.img.gz
-gunzip pimeet.img.gz
+wget https://github.com/your-org/croom/releases/latest/croom.img.gz
+gunzip croom.img.gz
 ```
 
 #### Option B: Build from Source
 ```bash
-git clone https://github.com/your-org/pimeet.git
-cd pimeet/build
+git clone https://github.com/your-org/croom.git
+cd croom/build
 ./download-img.sh
 ./prep-img.sh
 ```
@@ -149,7 +149,7 @@ cd pimeet/build
 lsblk
 
 # Flash image (replace /dev/sdX with your device)
-sudo dd if=pimeet.img of=/dev/sdX bs=4M status=progress
+sudo dd if=croom.img of=/dev/sdX bs=4M status=progress
 sync
 ```
 
@@ -158,7 +158,7 @@ Use tools like Balena Etcher for multiple cards, or:
 ```bash
 # Flash multiple cards in parallel
 for dev in /dev/sd{b,c,d}; do
-  sudo dd if=pimeet.img of=$dev bs=4M &
+  sudo dd if=croom.img of=$dev bs=4M &
 done
 wait
 ```
@@ -167,13 +167,13 @@ wait
 
 #### Method 1: Captive Portal (Recommended)
 1. Insert SD card and power on device
-2. Connect to `PiMeet-Setup-XXXX` WiFi
+2. Connect to `Croom-Setup-XXXX` WiFi
 3. Browser opens setup wizard automatically
 4. Configure WiFi, credentials, and room name
 5. Device reboots and registers with dashboard
 
 #### Method 2: USB Configuration
-Create `pimeet-config.yaml` on USB drive:
+Create `croom-config.yaml` on USB drive:
 ```yaml
 version: 1
 device:
@@ -193,7 +193,7 @@ meeting:
     password: "meeting-account-password"
 
 dashboard:
-  url: "https://pimeet.yourcompany.com"
+  url: "https://croom.yourcompany.com"
   enrollment_token: "your-enrollment-token"
 ```
 
@@ -213,14 +213,14 @@ Insert USB before booting, device auto-configures.
 docker-compose -f docker-compose.prod.yml up -d
 
 # Initial setup
-docker exec -it pimeet-dashboard ./manage.py createsuperuser
+docker exec -it croom-dashboard ./manage.py createsuperuser
 ```
 
 #### Manual Installation
 ```bash
 # Clone repository
-git clone https://github.com/your-org/pimeet-dashboard.git
-cd pimeet-dashboard
+git clone https://github.com/your-org/croom-dashboard.git
+cd croom-dashboard
 
 # Install dependencies
 npm install
@@ -491,8 +491,8 @@ idp:
     ...
     -----END CERTIFICATE-----
 sp:
-  entity_id: "https://pimeet.company.com"
-  acs_url: "https://pimeet.company.com/auth/saml/acs"
+  entity_id: "https://croom.company.com"
+  acs_url: "https://croom.company.com/auth/saml/acs"
 ```
 
 ### 7.3 Credential Security
@@ -508,7 +508,7 @@ sp:
 secrets:
   provider: hashicorp_vault
   vault_addr: "https://vault.company.com"
-  vault_path: "secret/pimeet"
+  vault_path: "secret/croom"
   auth_method: kubernetes  # or approle, token
 ```
 
@@ -546,7 +546,7 @@ curl https://dashboard/api/v1/audit-logs \
 | No network | WiFi credentials | Re-run setup wizard |
 | Can't reach dashboard | Firewall rules | Open TCP 443 outbound |
 | Certificate error | System time | Sync NTP |
-| Agent not running | Service status | Restart pimeet-agent |
+| Agent not running | Service status | Restart croom-agent |
 
 ```bash
 # SSH to device and check
@@ -557,10 +557,10 @@ ping -c 3 8.8.8.8
 ping -c 3 dashboard.company.com
 
 # Check agent status
-sudo systemctl status pimeet-agent
+sudo systemctl status croom-agent
 
 # Check logs
-sudo journalctl -u pimeet-agent -f
+sudo journalctl -u croom-agent -f
 ```
 
 #### Meeting Join Failures
@@ -688,7 +688,7 @@ git pull
 npm install
 pip install -r requirements.txt
 ./manage.py migrate
-systemctl restart pimeet-dashboard
+systemctl restart croom-dashboard
 ```
 
 ### 9.3 Backup & Recovery
@@ -696,7 +696,7 @@ systemctl restart pimeet-dashboard
 #### Dashboard Backup
 ```bash
 # Database backup
-pg_dump pimeet > backup-$(date +%Y%m%d).sql
+pg_dump croom > backup-$(date +%Y%m%d).sql
 
 # Full backup (database + config)
 ./scripts/backup.sh /backup/location
@@ -711,7 +711,7 @@ Dashboard → Devices → Export → All Configurations
 #### Recovery
 ```bash
 # Restore database
-psql pimeet < backup-20250115.sql
+psql croom < backup-20250115.sql
 
 # Restore device config
 Dashboard → Devices → Import → Upload backup file
@@ -761,12 +761,12 @@ Dashboard → Devices → Import → Upload backup file
 
 ```bash
 # Agent CLI
-pimeet-cli status          # Show device status
-pimeet-cli config show     # Show current config
-pimeet-cli config set      # Update config
-pimeet-cli logs            # View logs
-pimeet-cli restart         # Restart agent
-pimeet-cli update          # Check for updates
+croom-cli status          # Show device status
+croom-cli config show     # Show current config
+croom-cli config set      # Update config
+croom-cli logs            # View logs
+croom-cli restart         # Restart agent
+croom-cli update          # Check for updates
 ```
 
 ### B. API Reference
@@ -777,7 +777,7 @@ See [API Documentation](../api-reference.md) for complete API reference.
 
 | Term | Definition |
 |------|------------|
-| Agent | Software running on PiMeet device |
+| Agent | Software running on Croom device |
 | Dashboard | Web-based management interface |
 | Platform | Meeting service (Meet, Teams, Zoom) |
 | Provisioning | Initial device setup process |

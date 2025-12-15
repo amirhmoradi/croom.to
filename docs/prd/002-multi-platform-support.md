@@ -16,7 +16,7 @@
 ## 1. Overview
 
 ### 1.1 Problem Statement
-PiMeet currently only supports Google Meet, limiting its adoption in enterprises that use:
+Croom currently only supports Google Meet, limiting its adoption in enterprises that use:
 - Microsoft Teams (dominant in enterprise)
 - Zoom (popular for external meetings)
 - Webex (Cisco shops)
@@ -25,7 +25,7 @@ PiMeet currently only supports Google Meet, limiting its adoption in enterprises
 Organizations often use multiple platforms, requiring rooms to support all of them.
 
 ### 1.2 Solution
-Implement a modular meeting platform architecture that allows PiMeet to join meetings on any major video conferencing platform automatically.
+Implement a modular meeting platform architecture that allows Croom to join meetings on any major video conferencing platform automatically.
 
 ### 1.3 Success Metrics
 - Support at least 4 major platforms (Google Meet, Teams, Zoom, Webex)
@@ -180,7 +180,7 @@ Support multiple calendar sources:
 
 ### 4.1 Platform Detection (P0)
 
-**User Story:** As a PiMeet device, I need to automatically detect which platform a meeting is on.
+**User Story:** As a Croom device, I need to automatically detect which platform a meeting is on.
 
 **Detection Methods:**
 1. Calendar event body parsing

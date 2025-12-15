@@ -3,14 +3,14 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pimeet"
+name = "croom"
 version = "2.0.0.dev0"
 description = "Enterprise video conferencing for Raspberry Pi"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.10"
 authors = [
-    {name = "PiMeet Team", email = "pimeet@example.com"}
+    {name = "Croom Team", email = "croom@example.com"}
 ]
 keywords = [
     "raspberry-pi",
@@ -60,21 +60,21 @@ dev = [
 ]
 
 [project.scripts]
-pimeet = "pimeet.core.agent:main"
-pimeet-ui = "pimeet_ui.main:main"
+croom = "croom.core.agent:main"
+croom-ui = "croom_ui.main:main"
 
 [project.urls]
-Homepage = "https://github.com/your-org/pimeet-enhanced"
-Documentation = "https://github.com/your-org/pimeet-enhanced/tree/main/docs"
-Repository = "https://github.com/your-org/pimeet-enhanced.git"
-Issues = "https://github.com/your-org/pimeet-enhanced/issues"
+Homepage = "https://github.com/your-org/croom"
+Documentation = "https://github.com/your-org/croom/tree/main/docs"
+Repository = "https://github.com/your-org/croom.git"
+Issues = "https://github.com/your-org/croom/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["pimeet*"]
+include = ["croom*"]
 
 [tool.setuptools.package-data]
-pimeet = ["py.typed"]
+croom = ["py.typed"]
 
 [tool.black]
 line-length = 100

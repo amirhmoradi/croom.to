@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎥 PiMeet Enterprise
+# 🎥 Croom
 
 ### Turn Any Raspberry Pi Into a Professional Video Conferencing System
 
@@ -10,7 +10,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5%20|%204-red.svg)](https://www.raspberrypi.com/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![GitHub Stars](https://img.shields.io/github/stars/amirhmoradi/pimeet-enhanced?style=social)](https://github.com/amirhmoradi/pimeet-enhanced)
+[![GitHub Stars](https://img.shields.io/github/stars/amirhmoradi/croom?style=social)](https://github.com/amirhmoradi/croom)
 [![Made in France](https://img.shields.io/badge/Made%20in-France-blue.svg)](https://en.wikipedia.org/wiki/French_Tech)
 [![Digital Sovereignty](https://img.shields.io/badge/Digital-Sovereignty-purple.svg)](#-digital-sovereignty--data-privacy)
 
@@ -18,7 +18,7 @@
 
 ---
 
-<img src="docs/assets/hero-banner.png" alt="PiMeet Enterprise Dashboard" width="800"/>
+<img src="docs/assets/hero-banner.png" alt="Croom Dashboard" width="800"/>
 
 *Transform conference rooms with enterprise-grade video conferencing at a fraction of the cost*
 
@@ -28,9 +28,9 @@
 
 ## 🇫🇷 Digital Sovereignty & Data Privacy
 
-> **PiMeet is a French initiative** committed to digital resilience, data privacy, and technological independence.
+> **Croom is a French initiative** committed to digital resilience, data privacy, and technological independence.
 
-In a world where video conferencing has become critical infrastructure, organizations deserve **control over their communication systems**. PiMeet was created to break free from:
+In a world where video conferencing has become critical infrastructure, organizations deserve **control over their communication systems**. Croom was created to break free from:
 
 - **Vendor Lock-in**: No dependency on single cloud providers
 - **Data Exploitation**: Your meetings, your data — processed locally on your hardware
@@ -39,7 +39,7 @@ In a world where video conferencing has become critical infrastructure, organiza
 
 ### Our Principles
 
-| Principle | How PiMeet Delivers |
+| Principle | How Croom Delivers |
 |-----------|---------------------|
 | **Data Sovereignty** | All processing happens on YOUR hardware. No cloud required. |
 | **Privacy by Design** | AI runs locally via Hailo/Coral. No data leaves your network. |
@@ -49,15 +49,15 @@ In a world where video conferencing has become critical infrastructure, organiza
 
 ### Self-Hosted & Air-Gapped Ready
 
-PiMeet can operate **completely offline** in air-gapped environments:
+Croom can operate **completely offline** in air-gapped environments:
 - No internet required for core functionality
 - Local AI processing with Hailo-8L or Coral TPU
 - On-premise management dashboard
 - Full functionality without external dependencies
 
-## 💰 Why PiMeet?
+## 💰 Why Croom?
 
-| | Cisco Room Kit | Poly Studio | **PiMeet Enterprise** |
+| | Cisco Room Kit | Poly Studio | **Croom** |
 |---|:---:|:---:|:---:|
 | **Hardware Cost** | $3,000 - $15,000 | $2,000 - $8,000 | **< $250** |
 | **Monthly License** | $15/device | $12/device | **Free forever** |
@@ -135,9 +135,9 @@ PiMeet can operate **completely offline** in air-gapped environments:
 
 ## 🎙️ Meeting Intelligence with Vexa Integration
 
-PiMeet integrates with [**Vexa**](https://github.com/Vexa-ai/vexa) — the open-source, self-hosted meeting transcription platform — for advanced meeting intelligence features while keeping **all data on your infrastructure**.
+Croom integrates with [**Vexa**](https://github.com/Vexa-ai/vexa) — the open-source, self-hosted meeting transcription platform — for advanced meeting intelligence features while keeping **all data on your infrastructure**.
 
-### What Vexa Adds to PiMeet
+### What Vexa Adds to Croom
 
 | Feature | Description |
 |---------|-------------|
@@ -147,16 +147,16 @@ PiMeet integrates with [**Vexa**](https://github.com/Vexa-ai/vexa) — the open-
 | **Translation** | Real-time translation between 100 languages |
 | **Self-Hosted** | Run on your infrastructure — no cloud dependency |
 
-### Why Vexa + PiMeet?
+### Why Vexa + Croom?
 
 Both projects share the same values:
-- **Open Source** (Vexa: Apache 2.0, PiMeet: MIT)
+- **Open Source** (Vexa: Apache 2.0, Croom: MIT)
 - **Self-Hosted First** — Your data never leaves your network
 - **Privacy by Design** — No third-party data processing
 - **Enterprise Ready** — Built for organizations that take security seriously
 
 ```bash
-# Deploy Vexa alongside PiMeet
+# Deploy Vexa alongside Croom
 git clone https://github.com/Vexa-ai/vexa
 cd vexa && make all  # CPU mode (add GPU=1 for GPU acceleration)
 ```
@@ -168,7 +168,7 @@ cd vexa && make all  # CPU mode (add GPU=1 for GPU acceleration)
 │                    Your Infrastructure                          │
 │                                                                 │
 │  ┌─────────────┐          ┌─────────────┐                      │
-│  │   PiMeet    │◄────────►│    Vexa     │                      │
+│  │   Croom    │◄────────►│    Vexa     │                      │
 │  │   Device    │ WebSocket│  Instance   │                      │
 │  │             │          │             │                      │
 │  │ • Camera    │          │ • Whisper   │                      │
@@ -185,21 +185,21 @@ cd vexa && make all  # CPU mode (add GPU=1 for GPU acceleration)
 ### One-Line Installation
 
 ```bash
-curl -sSL https://pimeet.dev/install.sh | sudo bash
+curl -sSL https://croom.to/install.sh | sudo bash
 ```
 
 ### Manual Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/amirhmoradi/pimeet-enhanced.git
-cd pimeet-enhanced
+git clone https://github.com/amirhmoradi/croom.git
+cd croom
 
-# Install PiMeet
+# Install Croom
 pip install -e .
 
 # Start the agent
-pimeet --config /etc/pimeet/config.yaml
+croom --config /etc/croom/config.yaml
 ```
 
 ### Docker (Dashboard)
@@ -237,7 +237,7 @@ Open `http://localhost:3000` to access the management dashboard.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        PiMeet Device                            │
+│                        Croom Device                            │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐             │
 │  │  Touch UI   │  │   Agent     │  │  AI Engine  │             │
 │  │   (Qt6)     │  │  (Python)   │  │  (Hailo/    │             │
@@ -273,12 +273,12 @@ Open `http://localhost:3000` to access the management dashboard.
 
 ## 🤝 Contributing
 
-We love contributions! PiMeet is built by the community, for the community.
+We love contributions! Croom is built by the community, for the community.
 
 ### Ways to Contribute
 
-- 🐛 **Report Bugs** - Found an issue? [Open a bug report](https://github.com/amirhmoradi/pimeet-enhanced/issues/new?template=bug_report.md)
-- 💡 **Request Features** - Have an idea? [Submit a feature request](https://github.com/amirhmoradi/pimeet-enhanced/issues/new?template=feature_request.md)
+- 🐛 **Report Bugs** - Found an issue? [Open a bug report](https://github.com/amirhmoradi/croom/issues/new?template=bug_report.md)
+- 💡 **Request Features** - Have an idea? [Submit a feature request](https://github.com/amirhmoradi/croom/issues/new?template=feature_request.md)
 - 📝 **Improve Docs** - Help us make documentation better
 - 💻 **Submit PRs** - Code contributions are welcome!
 - ⭐ **Star the Repo** - Show your support!
@@ -289,8 +289,8 @@ See our [Contributing Guide](CONTRIBUTING.md) for detailed instructions.
 
 ```bash
 # Clone and setup
-git clone https://github.com/amirhmoradi/pimeet-enhanced.git
-cd pimeet-enhanced
+git clone https://github.com/amirhmoradi/croom.git
+cd croom
 
 # Install dev dependencies
 pip install -e ".[dev]"
@@ -304,22 +304,22 @@ make dev
 
 ## 🌟 Community
 
-- 💬 [GitHub Discussions](https://github.com/amirhmoradi/pimeet-enhanced/discussions) - Ask questions, share ideas
-- 🐛 [Issue Tracker](https://github.com/amirhmoradi/pimeet-enhanced/issues) - Report bugs, request features
-- 📧 [Mailing List](mailto:pimeet-help@googlegroups.com) - Stay updated
+- 💬 [GitHub Discussions](https://github.com/amirhmoradi/croom/discussions) - Ask questions, share ideas
+- 🐛 [Issue Tracker](https://github.com/amirhmoradi/croom/issues) - Report bugs, request features
+- 📧 [Mailing List](mailto:croom-help@googlegroups.com) - Stay updated
 
 ### Contributors
 
-<a href="https://github.com/amirhmoradi/pimeet-enhanced/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=amirhmoradi/pimeet-enhanced" />
+<a href="https://github.com/amirhmoradi/croom/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=amirhmoradi/croom" />
 </a>
 
 ## 🏢 Enterprise Offerings (Coming Soon)
 
-While PiMeet is and will always be **100% open source**, we're planning optional enterprise services for organizations that need additional support:
+While Croom is and will always be **100% open source**, we're planning optional enterprise services for organizations that need additional support:
 
 ### Open Source (Free Forever)
-- Full PiMeet functionality
+- Full Croom functionality
 - Community support via GitHub
 - Self-hosted deployment
 - All core features included
@@ -349,18 +349,117 @@ While PiMeet is and will always be **100% open source**, we're planning optional
 | **Compliance Recording** | Automated retention policies, legal hold |
 | **API Access** | Programmatic access to transcripts and insights |
 
-> **Interested in enterprise offerings?** [Contact us](mailto:enterprise@pimeet.dev) or [open a discussion](https://github.com/amirhmoradi/pimeet-enhanced/discussions) to share your requirements.
+> **Interested in enterprise offerings?** [Contact us](mailto:enterprise@croom.to) or [open a discussion](https://github.com/amirhmoradi/croom/discussions) to share your requirements.
 
 ## 📜 License
 
-PiMeet Enterprise is [MIT licensed](LICENSE). Use it freely in personal and commercial projects.
+Croom is [MIT licensed](LICENSE). Use it freely in personal and commercial projects.
 
 ## 🙏 Acknowledgments
 
 - Built on the foundation of the original [PiMeet](https://github.com/pmansour/pimeet) project
 - Inspired by enterprise solutions like Cisco Webex Room Kit and Poly Studio
 - Meeting intelligence powered by [Vexa](https://github.com/Vexa-ai/vexa) — open-source transcription
-- Thanks to all [contributors](https://github.com/amirhmoradi/pimeet-enhanced/graphs/contributors) who make this possible
+- Thanks to all [contributors](https://github.com/amirhmoradi/croom/graphs/contributors) who make this possible
+
+---
+
+## 📜 Upstream Inspiration
+
+Croom is built upon and extends the excellent work of the original **[PiMeet](https://github.com/pmansour/pimeet)** project created by [Peter Mansour](https://github.com/pmansour).
+
+### About the Original PiMeet
+
+The original PiMeet project pioneered the concept of turning a Raspberry Pi into a dedicated video conferencing appliance. It demonstrated that affordable, single-board computers could effectively replace expensive commercial room systems for basic video conferencing needs.
+
+**Original PiMeet Features:**
+- Raspberry Pi-based video conferencing
+- Google Meet support via Chromium
+- Basic HDMI-CEC display control
+- Simple bash-based automation
+
+### What Croom Adds
+
+Croom takes the original vision and expands it into a full enterprise-grade platform:
+
+| Capability | Original PiMeet | Croom |
+|------------|-----------------|-------|
+| Meeting Platforms | Google Meet | Meet, Teams, Zoom, Webex |
+| Hardware Support | Raspberry Pi 4 | Pi 4/5, x86_64 PCs, NUCs |
+| AI Features | None | Auto-framing, speaker tracking, noise reduction |
+| Management | Manual SSH | Fleet dashboard, zero-touch provisioning |
+| Security | Basic | RBAC, audit logs, SSO, encryption |
+| UI | None | Touch screen room control interface |
+| Transcription | None | Vexa integration for meeting intelligence |
+
+### Contributing Back
+
+We believe in giving back to the open-source community. Improvements that benefit the original project scope will be contributed upstream where appropriate. See our [upstream contributions guide](docs/roadmap/upstream-contributions.md) for details.
+
+**Thank you, Peter, for creating the foundation that made Croom possible!**
+
+---
+
+## 🔍 SEO & Search Keywords
+
+<details>
+<summary><b>Click to expand: What people search for when looking for solutions like Croom</b></summary>
+
+### Conference Room Solutions
+- **Open source video conferencing room system** - Croom is a fully open-source alternative to proprietary room systems
+- **Raspberry Pi conference room** - Transform any Pi into a professional meeting room device
+- **DIY video conferencing appliance** - Build your own enterprise-grade conferencing system
+- **Self-hosted meeting room device** - Keep all your data on-premise with Croom
+- **Linux conference room system** - Native Linux support for Pi and x86_64
+
+### Alternatives & Comparisons
+- **Cisco Webex Room Kit alternative** - Save 90%+ with equivalent features
+- **Poly Studio alternative open source** - Full-featured replacement at fraction of cost
+- **Zoom Rooms alternative self-hosted** - Multi-platform support without vendor lock-in
+- **Microsoft Teams Room alternative** - Works with Teams, Meet, Zoom, and Webex
+- **Neat Bar alternative** - Edge AI features without the price tag
+- **Logitech Rally alternative** - Professional conferencing without expensive hardware
+
+### Technical Features
+- **Edge AI video conferencing** - Local AI processing with Hailo, Coral, NVIDIA
+- **Auto-framing camera software** - Keep participants in frame automatically
+- **Speaker tracking open source** - AI-powered active speaker detection
+- **Meeting room noise reduction** - Crystal clear audio processing
+- **HDMI-CEC meeting room** - Automatic display power management
+- **WebRTC conference room** - Browser-based meeting platform support
+
+### Enterprise & IT
+- **Enterprise video conferencing fleet management** - Centralized dashboard for all devices
+- **Zero-touch provisioning video conferencing** - QR code enrollment, automatic setup
+- **GDPR compliant video conferencing** - European data sovereignty by design
+- **SOC 2 video conferencing solution** - Enterprise security compliance ready
+- **On-premise video conferencing** - Air-gapped deployment support
+- **Meeting room analytics dashboard** - Usage reports and device monitoring
+
+### Hardware & Setup
+- **Raspberry Pi 5 video conferencing** - Optimized for latest Pi hardware
+- **Raspberry Pi Google Meet** - Native Meet support with calendar integration
+- **Raspberry Pi Microsoft Teams** - Full Teams meeting support
+- **Raspberry Pi Zoom room** - Zoom web client integration
+- **Intel NUC conference room** - x86_64 support for more powerful setups
+- **USB webcam conference room software** - Works with any V4L2-compatible camera
+
+### Use Cases
+- **Small business video conferencing** - Affordable solution for SMBs
+- **Huddle room video system** - Perfect for small meeting spaces
+- **Education video conferencing** - Schools and universities deployment
+- **Healthcare video conferencing HIPAA** - Compliance-ready for medical use
+- **Government video conferencing** - Digital sovereignty for public sector
+- **Remote office video conferencing** - Branch office deployment at scale
+
+### Integration & Ecosystem
+- **Meeting transcription self-hosted** - Vexa integration for AI transcription
+- **Google Calendar meeting room** - Automatic calendar sync
+- **Microsoft 365 meeting room** - Azure AD and calendar integration
+- **Open source meeting room booking** - Calendar provider agnostic
+- **Video conferencing API** - REST and WebSocket APIs for integration
+
+</details>
 
 ---
 
@@ -368,7 +467,7 @@ PiMeet Enterprise is [MIT licensed](LICENSE). Use it freely in personal and comm
 
 **⭐ Star us on GitHub — it motivates us a lot!**
 
-[Report Bug](https://github.com/amirhmoradi/pimeet-enhanced/issues) · [Request Feature](https://github.com/amirhmoradi/pimeet-enhanced/issues) · [Join Discussion](https://github.com/amirhmoradi/pimeet-enhanced/discussions)
+[Report Bug](https://github.com/amirhmoradi/croom/issues) · [Request Feature](https://github.com/amirhmoradi/croom/issues) · [Join Discussion](https://github.com/amirhmoradi/croom/discussions)
 
 ---
 
@@ -376,6 +475,6 @@ PiMeet Enterprise is [MIT licensed](LICENSE). Use it freely in personal and comm
 
 *Breaking vendor lock-in. Protecting data privacy. Empowering organizations.*
 
-Made with ❤️ by the PiMeet Community
+Made with ❤️ by the Croom Community
 
 </div>

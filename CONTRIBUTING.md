@@ -1,8 +1,8 @@
-# Contributing to PiMeet Enterprise
+# Contributing to Croom
 
-First off, thank you for considering contributing to PiMeet! 🎉
+First off, thank you for considering contributing to Croom! 🎉
 
-It's people like you that make PiMeet such a great tool for transforming conference rooms around the world. We welcome contributions from everyone, whether it's:
+It's people like you that make Croom such a great tool for transforming conference rooms around the world. We welcome contributions from everyone, whether it's:
 
 - 🐛 Reporting a bug
 - 💡 Suggesting a feature
@@ -54,14 +54,14 @@ For device testing:
 2. **Clone** your fork locally:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/pimeet-enhanced.git
-cd pimeet-enhanced
+git clone https://github.com/YOUR-USERNAME/croom.git
+cd croom
 ```
 
 3. **Add upstream** remote:
 
 ```bash
-git remote add upstream https://github.com/amirhmoradi/pimeet-enhanced.git
+git remote add upstream https://github.com/amirhmoradi/croom.git
 ```
 
 4. **Keep your fork synced**:
@@ -85,13 +85,13 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -e ".[dev]"
 
 # Verify installation
-pimeet --version
+croom --version
 ```
 
 ### Dashboard Backend (Node.js)
 
 ```bash
-cd src/pimeet-dashboard/backend
+cd src/croom-dashboard/backend
 
 # Install dependencies
 npm install
@@ -103,7 +103,7 @@ npm run dev
 ### Dashboard Frontend (React)
 
 ```bash
-cd src/pimeet-dashboard/frontend
+cd src/croom-dashboard/frontend
 
 # Install dependencies
 npm install
@@ -120,7 +120,7 @@ sudo apt install python3-pyside6.qtcore python3-pyside6.qtgui \
     python3-pyside6.qtwidgets python3-pyside6.qtqml python3-pyside6.qtquick
 
 # Run Touch UI
-python -m pimeet_ui.main --windowed --debug
+python -m croom_ui.main --windowed --debug
 ```
 
 ### All-in-One Development
@@ -130,7 +130,7 @@ python -m pimeet_ui.main --windowed --debug
 make dev
 
 # Or individually:
-make dev-agent      # Start PiMeet agent
+make dev-agent      # Start Croom agent
 make dev-dashboard  # Start dashboard backend + frontend
 make dev-ui         # Start Touch UI
 ```
@@ -362,7 +362,7 @@ npm run format
 ```python
 # tests/unit/test_detector.py
 import pytest
-from pimeet.platform.detector import PlatformDetector
+from croom.platform.detector import PlatformDetector
 
 def test_detect_raspberry_pi(mock_pi_environment):
     """Test detection on Raspberry Pi hardware."""
@@ -384,7 +384,7 @@ async def test_ai_inference():
 pytest
 
 # With coverage
-pytest --cov=pimeet
+pytest --cov=croom
 
 # Specific module
 pytest tests/unit/test_meeting.py
@@ -400,7 +400,7 @@ pytest -v
 pytest tests/integration/ --hardware
 
 # Dashboard tests
-cd src/pimeet-dashboard/backend
+cd src/croom-dashboard/backend
 npm test
 ```
 
@@ -434,17 +434,17 @@ docs/
 ## Project Structure
 
 ```
-pimeet-enhanced/
+croom/
 ├── src/
-│   ├── pimeet/                 # Core Python package
+│   ├── croom/                 # Core Python package
 │   │   ├── core/               # Agent, config, services
 │   │   ├── platform/           # Platform detection
 │   │   ├── ai/                 # AI backends
 │   │   ├── meeting/            # Meeting providers
 │   │   ├── audio/              # Audio handling
 │   │   └── video/              # Video handling
-│   ├── pimeet-ui/              # Touch UI (Qt6/QML)
-│   └── pimeet-dashboard/       # Management dashboard
+│   ├── croom-ui/              # Touch UI (Qt6/QML)
+│   └── croom-dashboard/       # Management dashboard
 │       ├── backend/            # Node.js API
 │       └── frontend/           # React app
 ├── tests/                      # Test suite
@@ -458,7 +458,7 @@ pimeet-enhanced/
 ### Getting Help
 
 - 💬 **GitHub Discussions** - Ask questions, share ideas
-- 📧 **Mailing List** - pimeet-help@googlegroups.com
+- 📧 **Mailing List** - croom-help@googlegroups.com
 - 🐛 **Issue Tracker** - Report bugs, request features
 
 ### Recognition
@@ -479,6 +479,6 @@ Want to become a maintainer? Consistent, quality contributions over time may lea
 
 ## Thank You! 🙏
 
-Every contribution matters, no matter how small. Thank you for helping make PiMeet better for everyone!
+Every contribution matters, no matter how small. Thank you for helping make Croom better for everyone!
 
 **Happy Contributing!** 🎥🍰

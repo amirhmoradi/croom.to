@@ -23,7 +23,7 @@ Enterprise customers require:
 - Integration with enterprise identity systems
 - Meeting regulatory requirements (SOC 2, GDPR, HIPAA)
 
-Current PiMeet stores credentials in plaintext and lacks enterprise security features.
+Current Croom stores credentials in plaintext and lacks enterprise security features.
 
 ### 1.2 Solution
 Implement comprehensive security framework including:
@@ -325,7 +325,7 @@ TLS_AES_128_GCM_SHA256
               ▼                ▼                ▼
 ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
 │   IoT/AV VLAN    │ │   Server VLAN    │ │   User VLAN      │
-│   (PiMeet        │ │   (Dashboard)    │ │                  │
+│   (Croom        │ │   (Dashboard)    │ │                  │
 │    Devices)      │ │                  │ │                  │
 └──────────────────┘ └──────────────────┘ └──────────────────┘
 ```

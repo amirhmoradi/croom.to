@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the implementation plan for the PiMeet Management Dashboard, the core infrastructure component for enterprise deployment.
+This document outlines the implementation plan for the Croom Management Dashboard, the core infrastructure component for enterprise deployment.
 
 ---
 
@@ -34,7 +34,7 @@ After evaluating options, the recommended stack is:
 ## Project Structure
 
 ```
-pimeet-dashboard/
+croom-dashboard/
 ├── README.md
 ├── docker-compose.yml
 ├── docker-compose.prod.yml
@@ -103,7 +103,7 @@ pimeet-dashboard/
 ├── agent/                      # Device Agent (Python)
 │   ├── requirements.txt
 │   ├── setup.py
-│   ├── pimeet_agent/
+│   ├── croom_agent/
 │   │   ├── __init__.py
 │   │   ├── main.py
 │   │   ├── config.py
@@ -117,7 +117,7 @@ pimeet-dashboard/
 │   │       ├── teams.py
 │   │       └── zoom.py
 │   ├── tests/
-│   └── pimeet-agent.service    # systemd unit
+│   └── croom-agent.service    # systemd unit
 │
 ├── migrations/                 # Database migrations
 │   ├── 001_initial.sql
@@ -363,7 +363,7 @@ socket.connect('wss://dashboard/ws', {
 
 ```python
 # Main agent loop
-class PiMeetAgent:
+class CroomAgent:
     def __init__(self, config):
         self.config = config
         self.ws_client = WebSocketClient(config.dashboard_url)
@@ -431,7 +431,7 @@ class CommandHandler:
         raise ValueError(f"Unknown command: {command['action']}")
 
     async def restart(self, params):
-        subprocess.run(['sudo', 'systemctl', 'restart', 'pimeet-browser'])
+        subprocess.run(['sudo', 'systemctl', 'restart', 'croom-browser'])
         return {'success': True}
 
     async def screenshot(self, params):
@@ -551,7 +551,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=postgresql://pimeet:password@db:5432/pimeet
+      - DATABASE_URL=postgresql://croom:password@db:5432/croom
       - REDIS_URL=redis://redis:6379
     depends_on:
       - db
@@ -567,9 +567,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=pimeet
+      - POSTGRES_USER=croom
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=pimeet
+      - POSTGRES_DB=croom
 
   redis:
     image: redis:7-alpine

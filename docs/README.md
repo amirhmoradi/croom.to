@@ -1,19 +1,19 @@
-# PiMeet Enterprise Documentation
+# Croom Documentation
 
 ## Overview
 
-Welcome to the PiMeet Enterprise documentation. This documentation covers the enhanced version of PiMeet, designed to be an enterprise-grade video conferencing solution comparable to Cisco Webex Room Kit at a fraction of the cost.
+Welcome to the Croom documentation. This documentation covers the enhanced version of Croom, designed to be an enterprise-grade video conferencing solution comparable to Cisco Webex Room Kit at a fraction of the cost.
 
 ---
 
 ## Quick Links
 
 ### For Users
-- [User Guide](guides/user-guide.md) - How to use PiMeet in meeting rooms
+- [User Guide](guides/user-guide.md) - How to use Croom in meeting rooms
 
 ### For Administrators
-- [Administrator Guide](guides/administrator-guide.md) - Managing PiMeet devices
-- [Deployment Guide](guides/deployment-guide.md) - Setting up PiMeet
+- [Administrator Guide](guides/administrator-guide.md) - Managing Croom devices
+- [Deployment Guide](guides/deployment-guide.md) - Setting up Croom
 
 ### For Developers/Product
 - [Enterprise Roadmap](roadmap/enterprise-roadmap.md) - Product vision and phases
@@ -59,7 +59,7 @@ docs/
 ## Project Vision
 
 ### Goal
-Transform PiMeet from a simple conference room automation tool into an enterprise-grade video conferencing solution that:
+Transform Croom from a simple conference room automation tool into an enterprise-grade video conferencing solution that:
 - **Installs on existing Raspberry Pi OS** without reformatting
 - **Supports modern OS versions** (Bookworm, Trixie)
 - Provides **local touch screen management UI** for room control
@@ -77,7 +77,7 @@ Transform PiMeet from a simple conference room automation tool into an enterpris
 - **Facilities Managers:** Room utilization tracking
 
 ### Competitive Position
-| Feature | Cisco Room Kit | PiMeet Enterprise |
+| Feature | Cisco Room Kit | Croom |
 |---------|---------------|-------------------|
 | Hardware Cost | $3,000-15,000 | <$250 (with AI) |
 | Multi-Platform | Yes | Yes (Phase 1) |
@@ -121,7 +121,7 @@ Transform PiMeet from a simple conference room automation tool into an enterpris
 
 ## Getting Started
 
-### New to PiMeet?
+### New to Croom?
 1. Read the [Project Overview](../README.md)
 2. Review the [Enterprise Roadmap](roadmap/enterprise-roadmap.md)
 3. Check the [Deployment Guide](guides/deployment-guide.md)
@@ -146,5 +146,5 @@ Transform PiMeet from a simple conference room automation tool into an enterpris
 
 ## Contact
 
-- **Issues:** [GitHub Issues](https://github.com/your-org/pimeet-enhanced/issues)
-- **Support:** pimeet-help@googlegroups.com
+- **Issues:** [GitHub Issues](https://github.com/your-org/croom/issues)
+- **Support:** croom-help@googlegroups.com

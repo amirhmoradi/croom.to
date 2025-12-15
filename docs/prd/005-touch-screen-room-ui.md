@@ -16,7 +16,7 @@
 ## 1. Overview
 
 ### 1.1 Problem Statement
-Currently, PiMeet devices require:
+Currently, Croom devices require:
 - SSH access for configuration changes
 - Central dashboard for management (requires network/internet)
 - No local interface for room administrators or users
@@ -390,7 +390,7 @@ Mode 3: TV Only with Remote (Simple Rooms)
 ### 5.1 Application Structure
 
 ```
-pimeet-ui/
+croom-ui/
 ├── main.py                 # Application entry point
 ├── qml/
 │   ├── main.qml           # Root QML file
@@ -420,7 +420,7 @@ pimeet-ui/
 │   ├── icons/
 │   ├── fonts/
 │   └── images/
-└── pimeet-ui.service      # systemd service file
+└── croom-ui.service      # systemd service file
 ```
 
 ### 5.2 Integration with Agent
@@ -434,7 +434,7 @@ pimeet-ui/
                           D-Bus / IPC
                                │
 ┌─────────────────────────────────────────────────────────────────┐
-│                      PiMeet Agent                                │
+│                      Croom Agent                                │
 │   (Meeting control, config, metrics, dashboard connection)      │
 └─────────────────────────────────────────────────────────────────┘
                                │
@@ -452,7 +452,7 @@ pimeet-ui/
 
 ```python
 # Agent exposes D-Bus interface for UI
-interface com.pimeet.Agent {
+interface com.croom.Agent {
     # Properties
     property string Status;
     property string MeetingState;
@@ -479,7 +479,7 @@ interface com.pimeet.Agent {
 
 For network access without touch:
 - Same UI served via local web server
-- Accessible at `http://pimeet.local:8080` or `http://<ip>:8080`
+- Accessible at `http://croom.local:8080` or `http://<ip>:8080`
 - WebSocket for real-time updates
 - Responsive design for various screen sizes
 

@@ -1,8 +1,8 @@
-# PiMeet Enterprise Roadmap
+# Croom Roadmap
 
 ## Vision Statement
 
-Transform PiMeet from a simple, cost-effective conference room solution into an enterprise-grade video conferencing platform that rivals Cisco Webex Room Kit at a fraction of the cost, while maintaining its core philosophy of simplicity and reliability.
+Transform Croom from a simple, cost-effective conference room solution into an enterprise-grade video conferencing platform that rivals Cisco Webex Room Kit at a fraction of the cost, while maintaining its core philosophy of simplicity and reliability.
 
 ## Target Market
 
@@ -23,7 +23,7 @@ Transform PiMeet from a simple, cost-effective conference room solution into an 
 ## Competitive Analysis
 
 ### Cisco Webex Room Kit (Enterprise Standard)
-| Feature | Cisco Room Kit | PiMeet Current | PiMeet Target |
+| Feature | Cisco Room Kit | Croom Current | Croom Target |
 |---------|---------------|----------------|---------------|
 | Hardware Cost | $3,000-15,000 | <$100 | <$250 (with AI) |
 | AI Speaker Tracking | Yes | No | Phase 2 |
@@ -45,7 +45,7 @@ Transform PiMeet from a simple, cost-effective conference room solution into an 
 **Priority: P0 - Critical** | **PRD:** [PRD-007](../prd/007-modern-installation.md)
 
 Replace image-based deployment with modern package installation:
-- **One-line installer:** `curl -fsSL https://get.pimeet.io | bash`
+- **One-line installer:** `curl -fsSL https://get.croom.io | bash`
 - **APT packages:** Standard Debian package management
 - **Non-destructive:** Install on existing Raspberry Pi OS
 - **OS Support:** Bookworm (Debian 12), Trixie (Debian 13) ready
@@ -54,10 +54,10 @@ Replace image-based deployment with modern package installation:
 - **Migration:** Tools for legacy (image-based) to modern installation
 
 **Packages:**
-- `pimeet-core` - Agent and meeting functionality
-- `pimeet-browser` - Chromium configuration and extensions
-- `pimeet-ui` - Touch screen interface (optional)
-- `pimeet-ai` - AI features (optional)
+- `croom-core` - Agent and meeting functionality
+- `croom-browser` - Chromium configuration and extensions
+- `croom-ui` - Touch screen interface (optional)
+- `croom-ai` - AI features (optional)
 
 ### 1.2 Touch Screen Room UI ⭐ NEW
 **Priority: P1 - High** | **PRD:** [PRD-005](../prd/005-touch-screen-room-ui.md)
@@ -73,7 +73,7 @@ Local management interface for room administrators:
   - Diagnostics and troubleshooting
 - **Framework:** Qt6/QML with PySide6
 - **Accessibility:** Touch-first design, remote/keyboard navigation
-- **Local Web Interface:** Same UI accessible via browser at `http://pimeet.local:8080`
+- **Local Web Interface:** Same UI accessible via browser at `http://croom.local:8080`
 
 ### 1.3 Management Dashboard MVP
 **Priority: P0 - Critical** | **PRD:** [PRD-001](../prd/001-management-dashboard.md)
@@ -305,7 +305,7 @@ Enterprise integrations:
 3. **Issue #6:** Dynamic device setup → PRD-003
 4. **Issue #5:** Re-base on pi-gen → PRD-007 (alternative approach)
 
-### Fork Integration (xaghy/pimeet)
+### Fork Integration (xaghy/croom)
 - On-Pi setup functionality
 - Documentation improvements
 

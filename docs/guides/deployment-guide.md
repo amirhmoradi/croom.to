@@ -1,8 +1,8 @@
-# PiMeet Deployment Guide
+# Croom Deployment Guide
 
 ## Introduction
 
-This guide provides step-by-step instructions for deploying PiMeet in your organization, from initial planning through to production deployment.
+This guide provides step-by-step instructions for deploying Croom in your organization, from initial planning through to production deployment.
 
 ---
 
@@ -40,7 +40,7 @@ For each conference room, document:
 ```
 Network Requirements Checklist:
 [ ] WiFi coverage in all rooms
-[ ] SSID and credentials for PiMeet devices
+[ ] SSID and credentials for Croom devices
 [ ] Firewall rules approved (see below)
 [ ] DHCP reservations or static IPs (optional)
 [ ] Network monitoring configured
@@ -167,8 +167,8 @@ sudo apt install -y git wget xz-utils tree
 
 ```bash
 # Clone repository
-git clone https://github.com/your-org/pimeet-dashboard.git
-cd pimeet-dashboard
+git clone https://github.com/your-org/croom-dashboard.git
+cd croom-dashboard
 
 # Configure environment
 cp .env.example .env
@@ -179,16 +179,16 @@ nano .env
 ```bash
 # Database
 POSTGRES_PASSWORD=your-secure-password
-DATABASE_URL=postgresql://pimeet:your-secure-password@db:5432/pimeet
+DATABASE_URL=postgresql://croom:your-secure-password@db:5432/croom
 
 # Security
 SECRET_KEY=your-very-long-random-secret-key
-ALLOWED_HOSTS=pimeet.yourcompany.com
+ALLOWED_HOSTS=croom.yourcompany.com
 
 # Email (for alerts)
 EMAIL_HOST=smtp.yourcompany.com
 EMAIL_PORT=587
-EMAIL_USER=pimeet@yourcompany.com
+EMAIL_USER=croom@yourcompany.com
 EMAIL_PASSWORD=email-password
 
 # Admin
@@ -201,7 +201,7 @@ ADMIN_EMAIL=admin@yourcompany.com
 docker-compose up -d
 
 # Create admin user
-docker exec -it pimeet-dashboard ./manage.py createsuperuser
+docker exec -it croom-dashboard ./manage.py createsuperuser
 
 # Verify running
 docker-compose ps
@@ -216,17 +216,17 @@ curl https://localhost/health
 sudo apt install certbot
 
 # Get certificate
-sudo certbot certonly --standalone -d pimeet.yourcompany.com
+sudo certbot certonly --standalone -d croom.yourcompany.com
 
 # Update nginx config
-# Certificates are at /etc/letsencrypt/live/pimeet.yourcompany.com/
+# Certificates are at /etc/letsencrypt/live/croom.yourcompany.com/
 ```
 
 **Using Internal CA:**
 ```bash
 # Place certificates in
-/etc/pimeet/certs/server.crt
-/etc/pimeet/certs/server.key
+/etc/croom/certs/server.crt
+/etc/croom/certs/server.key
 
 # Update docker-compose.yml to mount certificates
 ```
@@ -235,7 +235,7 @@ sudo certbot certonly --standalone -d pimeet.yourcompany.com
 
 1. **Login to Dashboard**
    ```
-   URL: https://pimeet.yourcompany.com
+   URL: https://croom.yourcompany.com
    User: admin@yourcompany.com
    Password: [created during setup]
    ```
@@ -263,15 +263,15 @@ sudo certbot certonly --standalone -d pimeet.yourcompany.com
 **Option A: Download Pre-built Image**
 ```bash
 # Download latest release
-wget https://github.com/your-org/pimeet/releases/latest/download/pimeet-latest.img.gz
-gunzip pimeet-latest.img.gz
+wget https://github.com/your-org/croom/releases/latest/download/croom-latest.img.gz
+gunzip croom-latest.img.gz
 ```
 
 **Option B: Build Custom Image**
 ```bash
 # Clone repository
-git clone https://github.com/your-org/pimeet.git
-cd pimeet/build
+git clone https://github.com/your-org/croom.git
+cd croom/build
 
 # Download base OS
 ./download-img.sh
@@ -294,7 +294,7 @@ During `prep-img.sh`, you'll be prompted for:
 lsblk
 
 # Flash image (CAREFUL: this erases the device!)
-sudo dd if=pimeet-latest.img of=/dev/sdX bs=4M status=progress
+sudo dd if=croom-latest.img of=/dev/sdX bs=4M status=progress
 sync
 ```
 
@@ -303,7 +303,7 @@ sync
 # Using Balena Etcher (GUI)
 # Or parallel dd:
 for dev in /dev/sd{b,c,d,e}; do
-    sudo dd if=pimeet-latest.img of=$dev bs=4M status=progress &
+    sudo dd if=croom-latest.img of=$dev bs=4M status=progress &
 done
 wait
 sync
@@ -314,7 +314,7 @@ sync
 Create labels for each device:
 ```
 ┌────────────────────────┐
-│ PiMeet Device          │
+│ Croom Device          │
 │ Room: Conference A     │
 │ MAC: aa:bb:cc:dd:ee:ff │
 │ Serial: PI-2025-001    │
@@ -356,9 +356,9 @@ Attach label to device and keep record in inventory.
 
 **If using Captive Portal:**
 ```
-1. Device boots and creates WiFi network "PiMeet-Setup-XXXX"
+1. Device boots and creates WiFi network "Croom-Setup-XXXX"
 2. TV displays setup instructions and QR code
-3. Connect phone/laptop to PiMeet-Setup network
+3. Connect phone/laptop to Croom-Setup network
 4. Browser auto-opens or navigate to 192.168.4.1
 5. Complete setup wizard:
    - Select WiFi network
@@ -508,7 +508,7 @@ Subject: New Video Conferencing System Coming to Meeting Rooms
 Dear team,
 
 We're excited to announce that [Conference Room Names] will be
-upgraded with PiMeet, a new video conferencing system.
+upgraded with Croom, a new video conferencing system.
 
 What's changing:
 - Rooms will automatically join scheduled meetings
@@ -520,7 +520,7 @@ What you need to do:
 - The system handles the rest!
 
 Training sessions:
-- [Date/Time] - Introduction to PiMeet
+- [Date/Time] - Introduction to Croom
 - [Date/Time] - Q&A Session
 
 Quick reference guides will be posted in each room.
@@ -531,7 +531,7 @@ Questions? Contact IT at [email/phone]
 ### 7.3 Training Materials
 
 **User Training (15 minutes):**
-1. How PiMeet works (2 min)
+1. How Croom works (2 min)
 2. Scheduling meetings with room (3 min)
 3. What to expect when entering room (3 min)
 4. Basic controls (5 min)
@@ -655,7 +655,7 @@ PI-003,aa:bb:cc:dd:ee:03,Board Room,Bldg 1 Fl 3,2025-01-16,Active
 
 ```
 ╔════════════════════════════════════════════════╗
-║              PiMeet Quick Guide                ║
+║              Croom Quick Guide                ║
 ╠════════════════════════════════════════════════╣
 ║                                                ║
 ║  STARTING A MEETING                            ║
@@ -686,7 +686,7 @@ Meeting not joining?
 ├── Is correct HDMI input selected?
 │   └── No → Select correct input
 │   └── Yes → Continue
-├── Does screen show PiMeet?
+├── Does screen show Croom?
 │   └── No → Check device power
 │   └── Yes → Continue
 ├── Does screen show "Offline"?

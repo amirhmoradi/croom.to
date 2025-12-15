@@ -16,7 +16,7 @@
 ## 1. Overview
 
 ### 1.1 Problem Statement
-PiMeet needs to support multiple hardware platforms:
+Croom needs to support multiple hardware platforms:
 - **Raspberry Pi 5** (primary) - ARM64, limited compute, edge AI accelerators
 - **Raspberry Pi 4** (secondary) - ARM64, more limited
 - **Ubuntu/Debian PCs** (future) - x86_64, powerful GPUs for AI
@@ -338,7 +338,7 @@ class ModelRegistry:
 ### 6.1 Python Package Layout
 
 ```
-pimeet/
+croom/
 ├── __init__.py
 ├── core/
 │   ├── __init__.py
@@ -401,7 +401,7 @@ pimeet/
 ### 7.1 Platform-Aware Configuration
 
 ```yaml
-# /etc/pimeet/config.yaml
+# /etc/croom/config.yaml
 version: 2
 
 platform:
@@ -442,7 +442,7 @@ display:
 ```yaml
 # Build matrix
 packages:
-  - name: pimeet
+  - name: croom
     architectures:
       - arm64   # Raspberry Pi
       - amd64   # PC (future)
@@ -518,7 +518,7 @@ To add PC support in Phase 2:
 
 1. **Add NVIDIA backend:**
    ```python
-   # pimeet/ai/backends/nvidia.py
+   # croom/ai/backends/nvidia.py
    class NvidiaBackend(AIBackend):
        def is_available(self):
            return torch.cuda.is_available()

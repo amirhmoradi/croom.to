@@ -4,7 +4,7 @@
 | Field | Value |
 |-------|-------|
 | PRD ID | PRD-001 |
-| Title | PiMeet Management Dashboard |
+| Title | Croom Management Dashboard |
 | Author | Engineering Team |
 | Created | 2025-12-15 |
 | Status | Draft |
@@ -16,7 +16,7 @@
 ## 1. Overview
 
 ### 1.1 Problem Statement
-Currently, PiMeet devices are managed individually via SSH, requiring technical expertise and significant time investment. There is no centralized way to:
+Currently, Croom devices are managed individually via SSH, requiring technical expertise and significant time investment. There is no centralized way to:
 - Monitor device health and status
 - Deploy configuration changes across multiple devices
 - Troubleshoot issues remotely
@@ -26,7 +26,7 @@ Currently, PiMeet devices are managed individually via SSH, requiring technical 
 This limits scalability and makes enterprise deployment impractical.
 
 ### 1.2 Solution
-Build a web-based management dashboard that provides centralized control and visibility over all PiMeet devices in an organization.
+Build a web-based management dashboard that provides centralized control and visibility over all Croom devices in an organization.
 
 ### 1.3 Success Metrics
 - Reduce device setup time by 75%
@@ -39,7 +39,7 @@ Build a web-based management dashboard that provides centralized control and vis
 ## 2. User Personas
 
 ### 2.1 IT Administrator
-**Role:** Manages all PiMeet devices in organization
+**Role:** Manages all Croom devices in organization
 **Goals:**
 - Monitor all devices from single dashboard
 - Quickly identify and resolve issues
@@ -352,14 +352,14 @@ Build a web-based management dashboard that provides centralized control and vis
          │                     │                     │
          ▼                     ▼                     ▼
 ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
-│   PiMeet Agent   │ │   PiMeet Agent   │ │   PiMeet Agent   │
+│   Croom Agent   │ │   Croom Agent   │ │   Croom Agent   │
 │   (Device 1)     │ │   (Device 2)     │ │   (Device N)     │
 └──────────────────┘ └──────────────────┘ └──────────────────┘
 ```
 
 ### 4.2 Device Agent
 
-A lightweight agent running on each PiMeet device:
+A lightweight agent running on each Croom device:
 
 **Responsibilities:**
 - Report device status and metrics
@@ -515,7 +515,7 @@ DELETE /api/v1/users/{id}           - Delete user
 ## 9. Appendix
 
 ### 9.1 Competitive Analysis
-| Feature | Cisco Control Hub | PiMeet Dashboard |
+| Feature | Cisco Control Hub | Croom Dashboard |
 |---------|-------------------|------------------|
 | Device Management | Yes | Yes |
 | Real-time Monitoring | Yes | Yes |

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# PiMeet Enterprise Installer
+# Croom Installer
 #
 # Non-destructive installation on existing Raspberry Pi OS
 # Supports: Bookworm, Trixie
@@ -16,16 +16,16 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-PIMEET_VERSION="2.0.0-dev"
-INSTALL_DIR="/opt/pimeet"
-CONFIG_DIR="/etc/pimeet"
-DATA_DIR="/var/lib/pimeet"
-LOG_DIR="/var/log/pimeet"
-PIMEET_USER="pimeet"
+CROOM_VERSION="2.0.0-dev"
+INSTALL_DIR="/opt/croom"
+CONFIG_DIR="/etc/croom"
+DATA_DIR="/var/lib/croom"
+LOG_DIR="/var/log/croom"
+CROOM_USER="croom"
 
 # Log function
 log() {
-    echo -e "${GREEN}[PiMeet]${NC} $1"
+    echo -e "${GREEN}[Croom]${NC} $1"
 }
 
 warn() {
@@ -120,19 +120,19 @@ install_dependencies() {
     log "Dependencies installed"
 }
 
-# Create pimeet user
+# Create croom user
 create_user() {
-    log "Creating pimeet user..."
+    log "Creating croom user..."
 
-    if id "$PIMEET_USER" &>/dev/null; then
-        log "User $PIMEET_USER already exists"
+    if id "$CROOM_USER" &>/dev/null; then
+        log "User $CROOM_USER already exists"
     else
-        useradd -r -s /bin/false -d "$INSTALL_DIR" "$PIMEET_USER"
-        log "User $PIMEET_USER created"
+        useradd -r -s /bin/false -d "$INSTALL_DIR" "$CROOM_USER"
+        log "User $CROOM_USER created"
     fi
 
     # Add to required groups
-    usermod -a -G video,audio,input,dialout,gpio "$PIMEET_USER" 2>/dev/null || true
+    usermod -a -G video,audio,input,dialout,gpio "$CROOM_USER" 2>/dev/null || true
 }
 
 # Create directory structure
@@ -145,32 +145,32 @@ create_directories() {
     mkdir -p "$LOG_DIR"
     mkdir -p "$INSTALL_DIR/models"
 
-    chown -R "$PIMEET_USER:$PIMEET_USER" "$INSTALL_DIR"
-    chown -R "$PIMEET_USER:$PIMEET_USER" "$DATA_DIR"
-    chown -R "$PIMEET_USER:$PIMEET_USER" "$LOG_DIR"
+    chown -R "$CROOM_USER:$CROOM_USER" "$INSTALL_DIR"
+    chown -R "$CROOM_USER:$CROOM_USER" "$DATA_DIR"
+    chown -R "$CROOM_USER:$CROOM_USER" "$LOG_DIR"
 }
 
-# Install PiMeet Python package
-install_pimeet() {
-    log "Installing PiMeet..."
+# Install Croom Python package
+install_croom() {
+    log "Installing Croom..."
 
     # Create virtual environment
     python3 -m venv "$INSTALL_DIR/venv"
 
     # Install package
     "$INSTALL_DIR/venv/bin/pip" install --upgrade pip
-    "$INSTALL_DIR/venv/bin/pip" install pimeet || {
+    "$INSTALL_DIR/venv/bin/pip" install croom || {
         # If package not on PyPI, install from source
         log "Installing from source..."
-        "$INSTALL_DIR/venv/bin/pip" install /usr/local/src/pimeet 2>/dev/null || \
-        "$INSTALL_DIR/venv/bin/pip" install git+https://github.com/your-org/pimeet-enhanced.git
+        "$INSTALL_DIR/venv/bin/pip" install /usr/local/src/croom 2>/dev/null || \
+        "$INSTALL_DIR/venv/bin/pip" install git+https://github.com/your-org/croom.git
     }
 
     # Install browser automation
     "$INSTALL_DIR/venv/bin/pip" install playwright
     "$INSTALL_DIR/venv/bin/playwright" install chromium
 
-    log "PiMeet installed"
+    log "Croom installed"
 }
 
 # Create default configuration
@@ -183,7 +183,7 @@ create_config() {
     fi
 
     cat > "$CONFIG_DIR/config.yaml" << 'EOF'
-# PiMeet Configuration
+# Croom Configuration
 version: 2
 
 room:
@@ -258,7 +258,7 @@ security:
   require_encryption: true
 EOF
 
-    chown "$PIMEET_USER:$PIMEET_USER" "$CONFIG_DIR/config.yaml"
+    chown "$CROOM_USER:$CROOM_USER" "$CONFIG_DIR/config.yaml"
     chmod 640 "$CONFIG_DIR/config.yaml"
 
     log "Configuration created at $CONFIG_DIR/config.yaml"
@@ -268,18 +268,18 @@ EOF
 create_service() {
     log "Creating systemd service..."
 
-    cat > /etc/systemd/system/pimeet.service << EOF
+    cat > /etc/systemd/system/croom.service << EOF
 [Unit]
-Description=PiMeet Conference Room Agent
+Description=Croom Conference Room Agent
 After=network-online.target pulseaudio.service
 Wants=network-online.target
 
 [Service]
 Type=simple
-User=$PIMEET_USER
-Group=$PIMEET_USER
+User=$CROOM_USER
+Group=$CROOM_USER
 WorkingDirectory=$INSTALL_DIR
-ExecStart=$INSTALL_DIR/venv/bin/python -m pimeet.core.agent -c $CONFIG_DIR/config.yaml
+ExecStart=$INSTALL_DIR/venv/bin/python -m croom.core.agent -c $CONFIG_DIR/config.yaml
 Restart=always
 RestartSec=10
 Environment=DISPLAY=:0
@@ -290,18 +290,18 @@ WantedBy=multi-user.target
 EOF
 
     # Touch UI service (optional)
-    cat > /etc/systemd/system/pimeet-ui.service << EOF
+    cat > /etc/systemd/system/croom-ui.service << EOF
 [Unit]
-Description=PiMeet Touch UI
-After=pimeet.service
-Wants=pimeet.service
+Description=Croom Touch UI
+After=croom.service
+Wants=croom.service
 
 [Service]
 Type=simple
-User=$PIMEET_USER
-Group=$PIMEET_USER
+User=$CROOM_USER
+Group=$CROOM_USER
 WorkingDirectory=$INSTALL_DIR
-ExecStart=$INSTALL_DIR/venv/bin/python -m pimeet_ui.main -c $CONFIG_DIR/config.yaml --fullscreen
+ExecStart=$INSTALL_DIR/venv/bin/python -m croom_ui.main -c $CONFIG_DIR/config.yaml --fullscreen
 Restart=always
 RestartSec=10
 Environment=DISPLAY=:0
@@ -320,11 +320,11 @@ EOF
 enable_services() {
     log "Enabling services..."
 
-    systemctl enable pimeet.service
+    systemctl enable croom.service
 
     # Only enable UI service if touch display is detected
     if [[ -e /dev/input/touchscreen* ]] || [[ "$ENABLE_UI" == "yes" ]]; then
-        systemctl enable pimeet-ui.service
+        systemctl enable croom-ui.service
         log "Touch UI service enabled"
     fi
 }
@@ -333,23 +333,23 @@ enable_services() {
 print_completion() {
     echo ""
     echo -e "${GREEN}========================================${NC}"
-    echo -e "${GREEN}  PiMeet Installation Complete!${NC}"
+    echo -e "${GREEN}  Croom Installation Complete!${NC}"
     echo -e "${GREEN}========================================${NC}"
     echo ""
-    echo "Version: $PIMEET_VERSION"
+    echo "Version: $CROOM_VERSION"
     echo "Install directory: $INSTALL_DIR"
     echo "Configuration: $CONFIG_DIR/config.yaml"
     echo ""
     echo "Next steps:"
     echo "1. Edit configuration: sudo nano $CONFIG_DIR/config.yaml"
-    echo "2. Start service: sudo systemctl start pimeet"
-    echo "3. Check status: sudo systemctl status pimeet"
-    echo "4. View logs: sudo journalctl -u pimeet -f"
+    echo "2. Start service: sudo systemctl start croom"
+    echo "3. Check status: sudo systemctl status croom"
+    echo "4. View logs: sudo journalctl -u croom -f"
     echo ""
     echo "To connect to management dashboard:"
     echo "1. Get enrollment token from dashboard"
     echo "2. Add to config: dashboard.enrollment_token"
-    echo "3. Restart: sudo systemctl restart pimeet"
+    echo "3. Restart: sudo systemctl restart croom"
     echo ""
 }
 
@@ -357,7 +357,7 @@ print_completion() {
 main() {
     echo ""
     echo -e "${BLUE}========================================${NC}"
-    echo -e "${BLUE}  PiMeet Enterprise Installer v$PIMEET_VERSION${NC}"
+    echo -e "${BLUE}  Croom Installer v$CROOM_VERSION${NC}"
     echo -e "${BLUE}========================================${NC}"
     echo ""
 
@@ -366,7 +366,7 @@ main() {
     create_user
     create_directories
     install_dependencies
-    install_pimeet
+    install_croom
     create_config
     create_service
     enable_services

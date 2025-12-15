@@ -16,7 +16,7 @@
 ## 1. Overview
 
 ### 1.1 Problem Statement
-Current PiMeet deployment requires:
+Current Croom deployment requires:
 1. Pre-imaging SD cards with credentials baked in
 2. Technical expertise to run build scripts
 3. Manual SSH access for configuration changes
@@ -26,7 +26,7 @@ This approach doesn't scale for enterprise deployments of 50+ devices.
 
 ### 1.2 Solution
 Implement zero-touch provisioning where:
-- Generic PiMeet images can be flashed to SD cards
+- Generic Croom images can be flashed to SD cards
 - Devices self-configure via web interface or management dashboard
 - No technical expertise required for deployment
 - Devices can be reassigned without reimaging
@@ -54,9 +54,9 @@ Implement zero-touch provisioning where:
 ### 2.2 Supported Workflows
 
 #### Workflow A: Captive Portal (Primary)
-1. Flash generic PiMeet image to SD card
-2. Boot device (connects to PiMeet-Setup WiFi AP)
-3. Connect phone/laptop to PiMeet-Setup network
+1. Flash generic Croom image to SD card
+2. Boot device (connects to Croom-Setup WiFi AP)
+3. Connect phone/laptop to Croom-Setup network
 4. Browser auto-opens setup wizard
 5. Configure WiFi, credentials, room name
 6. Device reboots and connects to real network
@@ -103,7 +103,7 @@ Implement zero-touch provisioning where:
 
 **Image Contents:**
 - Raspberry Pi OS 64-bit
-- PiMeet agent software
+- Croom agent software
 - Setup wizard web server
 - Platform provider modules
 - WiFi AP capabilities
@@ -152,7 +152,7 @@ Implement zero-touch provisioning where:
 
 **Config File Format:**
 ```yaml
-# pimeet-config.yaml
+# croom-config.yaml
 version: 1
 device:
   name: "Conference Room A"
@@ -172,7 +172,7 @@ meeting:
     password: "encrypted:xxxxx"
 
 dashboard:
-  url: "https://pimeet.company.com"
+  url: "https://croom.company.com"
   enrollment_token: "xxxx-xxxx-xxxx"
 ```
 
@@ -224,7 +224,7 @@ Device                          Dashboard
 **QR Code Contents:**
 ```json
 {
-  "type": "pimeet-setup",
+  "type": "croom-setup",
   "device_id": "pi-xxxx",
   "local_ip": "192.168.4.1",
   "setup_url": "http://192.168.4.1:8080/setup",
@@ -304,7 +304,7 @@ aa:bb:cc:dd:ee:ff,Room A,Building 1,CorpWiFi,secret,google_meet,room-a@co.com,pa
                                ▼
                     ┌─────────────────────┐
                     │ Check Configuration │
-                    │    /etc/pimeet/     │
+                    │    /etc/croom/     │
                     └─────────────────────┘
                                │
               ┌────────────────┴────────────────┐
@@ -364,7 +364,7 @@ aa:bb:cc:dd:ee:ff,Room A,Building 1,CorpWiFi,secret,google_meet,room-a@co.com,pa
 ### 5.3 Configuration Storage
 
 ```
-/etc/pimeet/
+/etc/croom/
 ├── config.yaml          # Main configuration
 ├── credentials/         # Encrypted credentials
 │   ├── google.enc
@@ -388,7 +388,7 @@ aa:bb:cc:dd:ee:ff,Room A,Building 1,CorpWiFi,secret,google_meet,room-a@co.com,pa
 #### Screen 1: Welcome
 ```
 ┌─────────────────────────────────────────┐
-│         Welcome to PiMeet Setup         │
+│         Welcome to Croom Setup         │
 │                                         │
 │   This wizard will help you configure   │
 │   your conference room device.          │
@@ -460,7 +460,7 @@ aa:bb:cc:dd:ee:ff,Room A,Building 1,CorpWiFi,secret,google_meet,room-a@co.com,pa
 │   Timezone:   [ America/Los_Angeles ▼ ] │
 │                                         │
 │   Management Dashboard (optional):      │
-│   URL:        [https://pimeet.co.com]   │
+│   URL:        [https://croom.co.com]   │
 │                                         │
 │    [ ← Back ]        [ Finish → ]       │
 └─────────────────────────────────────────┘
@@ -471,7 +471,7 @@ aa:bb:cc:dd:ee:ff,Room A,Building 1,CorpWiFi,secret,google_meet,room-a@co.com,pa
 ┌─────────────────────────────────────────┐
 │         Setup Complete! ✓               │
 │                                         │
-│   Your PiMeet device is configured.     │
+│   Your Croom device is configured.     │
 │                                         │
 │   Room: Conference Room A               │
 │   Platform: Google Meet                 │
@@ -489,7 +489,7 @@ aa:bb:cc:dd:ee:ff,Room A,Building 1,CorpWiFi,secret,google_meet,room-a@co.com,pa
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                                                                 │
-│                     PiMeet Setup Mode                           │
+│                     Croom Setup Mode                           │
 │                                                                 │
 │                        ┌─────────┐                              │
 │                        │ QR Code │                              │
@@ -500,7 +500,7 @@ aa:bb:cc:dd:ee:ff,Room A,Building 1,CorpWiFi,secret,google_meet,room-a@co.com,pa
 │                                                                 │
 │                           - OR -                                │
 │                                                                 │
-│            Connect to WiFi: PiMeet-Setup-A7B3                   │
+│            Connect to WiFi: Croom-Setup-A7B3                   │
 │            Password: 847291                                     │
 │                                                                 │
 │            Setup will timeout in 28:45                          │

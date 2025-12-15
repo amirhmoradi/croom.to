@@ -1,8 +1,8 @@
-# PiMeet User Guide
+# Croom User Guide
 
-## Welcome to PiMeet
+## Welcome to Croom
 
-PiMeet transforms any conference room with a TV into a smart meeting room. Simply turn on the device, and it will automatically join your next scheduled meeting.
+Croom transforms any conference room with a TV into a smart meeting room. Simply turn on the device, and it will automatically join your next scheduled meeting.
 
 ---
 
@@ -11,10 +11,10 @@ PiMeet transforms any conference room with a TV into a smart meeting room. Simpl
 ### Starting a Meeting
 
 1. **Turn on the TV** using the power button or remote
-2. **Wait for PiMeet to start** (approximately 30 seconds)
+2. **Wait for Croom to start** (approximately 30 seconds)
 3. **Your meeting joins automatically** when it's time
 
-That's it! PiMeet handles everything else.
+That's it! Croom handles everything else.
 
 ### During a Meeting
 
@@ -57,12 +57,12 @@ If your room has an IR remote control configured:
 If you need to join a meeting that's not on the calendar:
 
 1. Use a laptop or phone to add the meeting to the room's calendar
-2. PiMeet will detect the new meeting and join automatically
+2. Croom will detect the new meeting and join automatically
 3. Alternatively, contact IT for manual meeting entry
 
 ### Changing Meeting Platforms
 
-PiMeet automatically detects which platform to use based on the calendar invite. No action needed from you.
+Croom automatically detects which platform to use based on the calendar invite. No action needed from you.
 
 ### Sharing Your Screen
 
@@ -114,13 +114,13 @@ If the camera isn't working:
 
 ## Troubleshooting
 
-### PiMeet Won't Turn On
+### Croom Won't Turn On
 
 | Check | Solution |
 |-------|----------|
 | TV power | Ensure TV is plugged in and turned on |
 | HDMI input | Make sure TV is on correct HDMI input |
-| Device power | Check that PiMeet device has power (look for lights) |
+| Device power | Check that Croom device has power (look for lights) |
 | Restart | Turn TV off and on again |
 
 ### Meeting Didn't Join Automatically
@@ -174,11 +174,11 @@ When contacting IT, please provide:
 
 ## Frequently Asked Questions
 
-### Q: How does PiMeet know when I have a meeting?
-A: PiMeet monitors the room's calendar. When you invite the room to a meeting, PiMeet sees it and joins automatically at the scheduled time.
+### Q: How does Croom know when I have a meeting?
+A: Croom monitors the room's calendar. When you invite the room to a meeting, Croom sees it and joins automatically at the scheduled time.
 
-### Q: Can I use PiMeet for personal calls?
-A: PiMeet is configured for the room's calendar only. For personal calls, use your laptop or phone.
+### Q: Can I use Croom for personal calls?
+A: Croom is configured for the room's calendar only. For personal calls, use your laptop or phone.
 
 ### Q: Why is the camera always on?
 A: The camera indicator (if present) shows when the camera is active. It's only used during meetings and is not recording otherwise.
@@ -187,16 +187,16 @@ A: The camera indicator (if present) shows when the camera is active. It's only 
 A: Yes, use the TV remote to adjust volume, or use the volume controls in the meeting interface.
 
 ### Q: What happens if my meeting runs over?
-A: PiMeet will stay in the meeting until you leave. Be mindful of the next scheduled meeting in the room.
+A: Croom will stay in the meeting until you leave. Be mindful of the next scheduled meeting in the room.
 
-### Q: Can I use PiMeet with my own laptop?
-A: PiMeet is designed to work standalone. If you need to share content from your laptop, use screen sharing within the meeting.
+### Q: Can I use Croom with my own laptop?
+A: Croom is designed to work standalone. If you need to share content from your laptop, use screen sharing within the meeting.
 
 ### Q: Is my meeting private?
-A: Yes. PiMeet only joins meetings on the room's calendar. No data is stored locally after meetings end.
+A: Yes. Croom only joins meetings on the room's calendar. No data is stored locally after meetings end.
 
-### Q: What meeting platforms work with PiMeet?
-A: PiMeet supports Google Meet, Microsoft Teams, Zoom, and Webex. The platform is detected automatically from your calendar invite.
+### Q: What meeting platforms work with Croom?
+A: Croom supports Google Meet, Microsoft Teams, Zoom, and Webex. The platform is detected automatically from your calendar invite.
 
 ---
 
@@ -206,7 +206,7 @@ Print this section and post in your meeting room:
 
 ```
 ╔═══════════════════════════════════════════════════════╗
-║                 PiMeet Quick Reference                 ║
+║                 Croom Quick Reference                 ║
 ╠═══════════════════════════════════════════════════════╣
 ║                                                        ║
 ║  TO START:   Turn on TV → Meeting joins automatically ║

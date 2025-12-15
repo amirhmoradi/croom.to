@@ -1,0 +1,1 @@
+"""Display module tests."""

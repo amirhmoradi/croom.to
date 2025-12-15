@@ -16,7 +16,7 @@
 ## 1. Overview
 
 ### 1.1 Problem Statement
-Current PiMeet installation requires:
+Current Croom installation requires:
 - Pre-imaging SD cards with custom images
 - Specific OS version (2022-09-22 Bullseye)
 - Complete system replacement to install
@@ -92,16 +92,16 @@ Create a modern installation system that:
 
 ### 3.1 One-Line Installer (Primary)
 
-**User Story:** As a user, I want to install PiMeet with a single command.
+**User Story:** As a user, I want to install Croom with a single command.
 
 ```bash
-curl -fsSL https://get.pimeet.io | bash
+curl -fsSL https://get.croom.io | bash
 ```
 
 **Installer Flow:**
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    PiMeet Installer                              │
+│                    Croom Installer                              │
 └─────────────────────────────────────────────────────────────────┘
                                │
                                ▼
@@ -115,7 +115,7 @@ curl -fsSL https://get.pimeet.io | bash
                                │
                                ▼
                     ┌─────────────────────┐
-                    │ Add PiMeet Repo     │
+                    │ Add Croom Repo     │
                     │ - GPG key           │
                     │ - APT source        │
                     └─────────────────────┘
@@ -123,9 +123,9 @@ curl -fsSL https://get.pimeet.io | bash
                                ▼
                     ┌─────────────────────┐
                     │ Install Packages    │
-                    │ - pimeet-core       │
-                    │ - pimeet-ui         │
-                    │ - pimeet-ai (opt)   │
+                    │ - croom-core       │
+                    │ - croom-ui         │
+                    │ - croom-ai (opt)   │
                     └─────────────────────┘
                                │
                                ▼
@@ -146,15 +146,15 @@ curl -fsSL https://get.pimeet.io | bash
 **Interactive Mode:**
 ```bash
 # Interactive with prompts
-curl -fsSL https://get.pimeet.io | bash
+curl -fsSL https://get.croom.io | bash
 
 # Non-interactive with defaults
-curl -fsSL https://get.pimeet.io | bash -s -- --non-interactive
+curl -fsSL https://get.croom.io | bash -s -- --non-interactive
 
 # Specify options
-curl -fsSL https://get.pimeet.io | bash -s -- \
+curl -fsSL https://get.croom.io | bash -s -- \
   --with-ai \
-  --dashboard-url https://pimeet.company.com \
+  --dashboard-url https://croom.company.com \
   --room-name "Conference Room A"
 ```
 
@@ -164,24 +164,24 @@ curl -fsSL https://get.pimeet.io | bash -s -- \
 
 ```bash
 # Add repository
-curl -fsSL https://repo.pimeet.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/pimeet.gpg
-echo "deb [signed-by=/usr/share/keyrings/pimeet.gpg] https://repo.pimeet.io/apt stable main" | \
-  sudo tee /etc/apt/sources.list.d/pimeet.list
+curl -fsSL https://repo.croom.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/croom.gpg
+echo "deb [signed-by=/usr/share/keyrings/croom.gpg] https://repo.croom.io/apt stable main" | \
+  sudo tee /etc/apt/sources.list.d/croom.list
 
 # Install
 sudo apt update
-sudo apt install pimeet
+sudo apt install croom
 
 # Optional packages
-sudo apt install pimeet-ai        # AI features
-sudo apt install pimeet-ui        # Touch screen UI
-sudo apt install pimeet-dev       # Development tools
+sudo apt install croom-ai        # AI features
+sudo apt install croom-ui        # Touch screen UI
+sudo apt install croom-dev       # Development tools
 ```
 
 ### 3.3 Snap Package (Alternative)
 
 ```bash
-sudo snap install pimeet
+sudo snap install croom
 ```
 
 **Pros:**
@@ -200,11 +200,11 @@ For air-gapped environments:
 
 ```bash
 # Download packages
-wget https://repo.pimeet.io/packages/pimeet_2.0.0_arm64.deb
-wget https://repo.pimeet.io/packages/pimeet-ai_2.0.0_arm64.deb
+wget https://repo.croom.io/packages/croom_2.0.0_arm64.deb
+wget https://repo.croom.io/packages/croom-ai_2.0.0_arm64.deb
 
 # Install
-sudo dpkg -i pimeet_2.0.0_arm64.deb pimeet-ai_2.0.0_arm64.deb
+sudo dpkg -i croom_2.0.0_arm64.deb croom-ai_2.0.0_arm64.deb
 sudo apt-get install -f  # Install dependencies
 ```
 
@@ -215,37 +215,37 @@ sudo apt-get install -f  # Install dependencies
 ### 4.1 Package Structure
 
 ```
-pimeet (metapackage)
-├── pimeet-core           # Core agent and meeting functionality
-│   ├── /usr/bin/pimeet-agent
-│   ├── /usr/bin/pimeet-cli
-│   ├── /usr/lib/pimeet/
-│   ├── /etc/pimeet/
-│   └── /lib/systemd/system/pimeet-agent.service
+croom (metapackage)
+├── croom-core           # Core agent and meeting functionality
+│   ├── /usr/bin/croom-agent
+│   ├── /usr/bin/croom-cli
+│   ├── /usr/lib/croom/
+│   ├── /etc/croom/
+│   └── /lib/systemd/system/croom-agent.service
 │
-├── pimeet-browser        # Chromium configuration and extensions
-│   ├── /usr/lib/pimeet/browser/
-│   ├── /usr/lib/pimeet/extensions/
-│   └── /lib/systemd/system/pimeet-browser.service
+├── croom-browser        # Chromium configuration and extensions
+│   ├── /usr/lib/croom/browser/
+│   ├── /usr/lib/croom/extensions/
+│   └── /lib/systemd/system/croom-browser.service
 │
-├── pimeet-ui             # Touch screen UI
-│   ├── /usr/bin/pimeet-ui
-│   ├── /usr/lib/pimeet/ui/
-│   └── /lib/systemd/system/pimeet-ui.service
+├── croom-ui             # Touch screen UI
+│   ├── /usr/bin/croom-ui
+│   ├── /usr/lib/croom/ui/
+│   └── /lib/systemd/system/croom-ui.service
 │
-├── pimeet-ai             # AI features and models
-│   ├── /usr/lib/pimeet/ai/
-│   ├── /usr/share/pimeet/models/
-│   └── /lib/systemd/system/pimeet-ai.service
+├── croom-ai             # AI features and models
+│   ├── /usr/lib/croom/ai/
+│   ├── /usr/share/croom/models/
+│   └── /lib/systemd/system/croom-ai.service
 │
-└── pimeet-dev            # Development and debugging tools
-    ├── /usr/bin/pimeet-debug
-    └── /usr/share/pimeet/examples/
+└── croom-dev            # Development and debugging tools
+    ├── /usr/bin/croom-debug
+    └── /usr/share/croom/examples/
 ```
 
 ### 4.2 Dependencies
 
-**pimeet-core:**
+**croom-core:**
 ```
 Depends: python3 (>= 3.11),
          python3-pip,
@@ -253,21 +253,21 @@ Depends: python3 (>= 3.11),
          pulseaudio | pipewire-pulse,
          libcec6,
          network-manager
-Recommends: pimeet-browser
+Recommends: croom-browser
 ```
 
-**pimeet-ai:**
+**croom-ai:**
 ```
-Depends: pimeet-core,
+Depends: croom-core,
          python3-numpy,
          python3-opencv
 Recommends: hailo-all | libedgetpu1-std
-Suggests: pimeet-models-full
+Suggests: croom-models-full
 ```
 
-**pimeet-ui:**
+**croom-ui:**
 ```
-Depends: pimeet-core,
+Depends: croom-core,
          python3-pyside6,
          qml6-module-qtquick
 ```
@@ -276,11 +276,11 @@ Depends: pimeet-core,
 
 | File | Purpose | Managed By |
 |------|---------|------------|
-| `/etc/pimeet/config.yaml` | Main configuration | Admin/Installer |
-| `/etc/pimeet/credentials/` | Encrypted credentials | Agent |
-| `/var/lib/pimeet/` | Runtime data | Agent |
-| `/var/log/pimeet/` | Log files | Agent |
-| `~/.config/pimeet/` | User preferences | UI |
+| `/etc/croom/config.yaml` | Main configuration | Admin/Installer |
+| `/etc/croom/credentials/` | Encrypted credentials | Agent |
+| `/var/lib/croom/` | Runtime data | Agent |
+| `/var/log/croom/` | Log files | Agent |
+| `~/.config/croom/` | User preferences | UI |
 
 ---
 
@@ -320,13 +320,13 @@ class PreInstallChecker:
 **Services Installed:**
 | Service | Purpose | Auto-start |
 |---------|---------|------------|
-| pimeet-agent | Core agent | Yes |
-| pimeet-browser | Meeting browser | Yes |
-| pimeet-ui | Touch interface | Optional |
-| pimeet-ai | AI processing | Optional |
+| croom-agent | Core agent | Yes |
+| croom-browser | Meeting browser | Yes |
+| croom-ui | Touch interface | Optional |
+| croom-ai | AI processing | Optional |
 
 **System Changes:**
-- Adds PiMeet user group
+- Adds Croom user group
 - Configures auto-login (optional)
 - Sets up audio devices
 - Enables required GPIO/I2C (if needed)
@@ -335,9 +335,9 @@ class PreInstallChecker:
 ### 5.3 Permissions
 
 ```
-# /etc/polkit-1/rules.d/50-pimeet.rules
+# /etc/polkit-1/rules.d/50-croom.rules
 polkit.addRule(function(action, subject) {
-    if (subject.user == "pimeet" &&
+    if (subject.user == "croom" &&
         action.id.indexOf("org.freedesktop.NetworkManager") == 0) {
         return polkit.Result.YES;
     }
@@ -352,12 +352,12 @@ polkit.addRule(function(action, subject) {
 
 **APT Updates (Standard):**
 ```bash
-sudo apt update && sudo apt upgrade pimeet
+sudo apt update && sudo apt upgrade croom
 ```
 
 **Automatic Updates:**
 ```yaml
-# /etc/pimeet/config.yaml
+# /etc/croom/config.yaml
 updates:
   auto_check: true
   auto_install: false  # or true for automatic
@@ -422,7 +422,7 @@ updates:
 
 ```bash
 # Manual rollback
-sudo apt install pimeet=1.9.0
+sudo apt install croom=1.9.0
 
 # Automatic rollback on failure
 # Agent detects post-update failures and reverts
@@ -442,7 +442,7 @@ sudo apt install pimeet=1.9.0
 
 ### 7.1 Bookworm → Trixie Migration
 
-PiMeet should survive OS upgrades:
+Croom should survive OS upgrades:
 
 ```bash
 # Standard Debian upgrade process
@@ -452,7 +452,7 @@ sudo apt update && sudo apt full-upgrade
 ```
 
 **Post-Upgrade:**
-- PiMeet packages rebuilt for Trixie
+- Croom packages rebuilt for Trixie
 - Automatic compatibility adjustments
 - Config preserved
 
@@ -484,18 +484,18 @@ class OSCompatibility:
 ### 8.1 Clean Removal
 
 ```bash
-# Remove PiMeet but keep config
-sudo apt remove pimeet
+# Remove Croom but keep config
+sudo apt remove croom
 
 # Complete removal including config
-sudo apt purge pimeet
-sudo rm -rf /etc/pimeet /var/lib/pimeet /var/log/pimeet
+sudo apt purge croom
+sudo rm -rf /etc/croom /var/lib/croom /var/log/croom
 ```
 
 ### 8.2 Uninstaller Script
 
 ```bash
-curl -fsSL https://get.pimeet.io/uninstall | bash
+curl -fsSL https://get.croom.io/uninstall | bash
 ```
 
 **Uninstaller Actions:**
@@ -511,11 +511,11 @@ curl -fsSL https://get.pimeet.io/uninstall | bash
 
 ### 9.1 From Pre-Imaged Installation
 
-For users with existing PiMeet (old image-based):
+For users with existing Croom (old image-based):
 
 ```bash
 # Migration script
-curl -fsSL https://get.pimeet.io/migrate | bash
+curl -fsSL https://get.croom.io/migrate | bash
 ```
 
 **Migration Process:**
@@ -539,7 +539,7 @@ class ConfigMigrator:
         new_config = {
             'version': 2,
             'room': {
-                'name': legacy.get('hostname', 'PiMeet'),
+                'name': legacy.get('hostname', 'Croom'),
                 'location': legacy.get('location', '')
             },
             'meeting': {
@@ -592,7 +592,7 @@ class ConfigMigrator:
 - [ ] Create Debian package structure
 - [ ] Set up package repository
 - [ ] GPG key management
-- [ ] Basic pimeet-core package
+- [ ] Basic croom-core package
 
 ### Sprint 2: Installer Script (Week 3-4)
 - [ ] Pre-install checks
