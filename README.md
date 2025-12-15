@@ -1,135 +1,257 @@
-# PiMeet Enterprise
+<div align="center">
 
-Transform a Raspberry Pi into an enterprise-grade video conferencing appliance comparable to Cisco Webex Room Kit — at a fraction of the cost.
+# 🎥 PiMeet Enterprise
 
-> **Note**: This is an enhanced enterprise version building on the original [PiMeet project](https://github.com/pmansour/pimeet).
+### Turn Any Raspberry Pi Into a Professional Video Conferencing System
 
-## Features
+**The open-source alternative to Cisco Webex Room Kit — for 1/50th the price**
 
-- **Multi-Platform Support**: Google Meet, Microsoft Teams, Zoom
-- **Edge AI Processing**: Auto-framing, noise reduction, occupancy counting (with optional AI accelerator)
-- **Touch Screen UI**: Local room management interface
-- **Fleet Management**: Centralized dashboard for managing all devices
-- **Zero-Touch Provisioning**: Easy deployment at scale
-- **Modern Installation**: Non-destructive install on existing Raspberry Pi OS
-- **Cross-Platform Architecture**: Pi-first with abstraction for future PC support
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5%20|%204-red.svg)](https://www.raspberrypi.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![GitHub Stars](https://img.shields.io/github/stars/amirhmoradi/pimeet-enhanced?style=social)](https://github.com/amirhmoradi/pimeet-enhanced)
 
-## Quick Start
+[Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](#-contributing) • [Community](#-community)
+
+---
+
+<img src="docs/assets/hero-banner.png" alt="PiMeet Enterprise Dashboard" width="800"/>
+
+*Transform conference rooms with enterprise-grade video conferencing at a fraction of the cost*
+
+</div>
+
+## 💰 Why PiMeet?
+
+| | Cisco Room Kit | Poly Studio | **PiMeet Enterprise** |
+|---|:---:|:---:|:---:|
+| **Hardware Cost** | $3,000 - $15,000 | $2,000 - $8,000 | **< $250** |
+| **Monthly License** | $15/device | $12/device | **Free forever** |
+| **10 Rooms (Year 1)** | $31,800+ | $21,440+ | **$2,500** |
+| **Multi-platform** | Limited | Limited | **✅ Meet, Teams, Zoom** |
+| **AI Features** | ✅ | ✅ | **✅** |
+| **Open Source** | ❌ | ❌ | **✅** |
+
+> **Save $29,000+ per year** on a 10-room deployment while getting the same enterprise features.
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🖥️ Multi-Platform Support
+- **Google Meet** - Full support with calendar integration
+- **Microsoft Teams** - Join any Teams meeting
+- **Zoom** - Works with Zoom web client
+- Auto-detect platform from meeting URL
+
+</td>
+<td width="50%">
+
+### 🤖 Edge AI Processing
+- **Auto-framing** - Keeps participants in frame
+- **Noise reduction** - Crystal clear audio
+- **Occupancy counting** - Room analytics
+- Works with Hailo-8L, Coral, or CPU fallback
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 📱 Touch Screen UI
+- Beautiful room control interface
+- One-tap meeting join
+- Calendar view for scheduled meetings
+- Camera/mic controls
+
+</td>
+<td width="50%">
+
+### 🏢 Fleet Management
+- Centralized dashboard for all devices
+- Real-time device status monitoring
+- Remote configuration & updates
+- Usage analytics & reporting
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🔧 Zero-Touch Provisioning
+- QR code based device enrollment
+- Automatic configuration sync
+- No manual setup per device
+- Scale to hundreds of rooms
+
+</td>
+<td width="50%">
+
+### 🔒 Enterprise Security
+- End-to-end encryption
+- Role-based access control
+- Audit logging
+- On-premise deployment option
+
+</td>
+</tr>
+</table>
+
+## 🚀 Quick Start
 
 ### One-Line Installation
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/your-org/pimeet-enhanced/main/installer/install.sh | sudo bash
+curl -sSL https://pimeet.dev/install.sh | sudo bash
 ```
 
 ### Manual Installation
 
 ```bash
-git clone https://github.com/your-org/pimeet-enhanced.git
+# Clone the repository
+git clone https://github.com/amirhmoradi/pimeet-enhanced.git
 cd pimeet-enhanced
+
+# Install PiMeet
 pip install -e .
-pimeet -c /etc/pimeet/config.yaml
+
+# Start the agent
+pimeet --config /etc/pimeet/config.yaml
 ```
 
-## Cost Comparison
+### Docker (Dashboard)
 
-| Feature | Cisco Room Kit | PiMeet Enterprise |
-|---------|---------------|-------------------|
-| Hardware Cost | $3,000-15,000 | <$250 (with AI) |
-| Multi-Platform | Limited | Yes (Meet, Teams, Zoom) |
-| Central Management | Control Hub | Dashboard |
-| AI Features | Yes | Yes (with accelerator) |
-| Monthly Fee | $15/device | Free (open source) |
+```bash
+docker-compose up -d
+```
+
+Open `http://localhost:3000` to access the management dashboard.
+
+## 🛠️ Hardware Requirements
+
+### Recommended Setup (~$200)
+
+| Component | Model | Price |
+|-----------|-------|-------|
+| Computer | Raspberry Pi 5 (4GB) | $60 |
+| Case | Argon ONE V3 | $25 |
+| Camera | Logitech C920 | $60 |
+| AI Accelerator | Hailo-8L AI Kit | $70 |
+| Storage | 32GB microSD | $10 |
+| **Total** | | **~$225** |
+
+### Minimum Setup (~$100)
+
+| Component | Model | Price |
+|-----------|-------|-------|
+| Computer | Raspberry Pi 4 (4GB) | $55 |
+| Camera | Generic USB Webcam | $20 |
+| Storage | 32GB microSD | $10 |
+| Power + Cables | | $15 |
+| **Total** | | **~$100** |
+
+## 📐 Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        PiMeet Device                            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐             │
+│  │  Touch UI   │  │   Agent     │  │  AI Engine  │             │
+│  │   (Qt6)     │  │  (Python)   │  │  (Hailo/    │             │
+│  │             │  │             │  │   Coral)    │             │
+│  └─────────────┘  └─────────────┘  └─────────────┘             │
+└────────────────────────────┬────────────────────────────────────┘
+                             │ WebSocket
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                   Management Dashboard                          │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐             │
+│  │   React     │  │   Node.js   │  │ PostgreSQL  │             │
+│  │  Frontend   │◄─┤   Backend   │◄─┤  Database   │             │
+│  └─────────────┘  └─────────────┘  └─────────────┘             │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## 📖 Documentation
+
+| Guide | Description |
+|-------|-------------|
+| [📘 User Guide](docs/guides/user-guide.md) | End-user instructions |
+| [📗 Admin Guide](docs/guides/administrator-guide.md) | IT administrator setup |
+| [📙 Deployment Guide](docs/guides/deployment-guide.md) | Large-scale rollout |
+| [📕 API Reference](docs/api/README.md) | REST & WebSocket APIs |
+| [🗺️ Roadmap](docs/roadmap/enterprise-roadmap.md) | Future development plans |
+
+### Product Requirements
+- [PRD-001: Management Dashboard](docs/prd/001-management-dashboard.md)
+- [PRD-005: Touch Screen UI](docs/prd/005-touch-screen-room-ui.md)
+- [PRD-006: Edge AI Features](docs/prd/006-edge-ai-features.md)
+- [PRD-008: Cross-Platform Architecture](docs/prd/008-cross-platform-architecture.md)
+
+## 🤝 Contributing
+
+We love contributions! PiMeet is built by the community, for the community.
+
+### Ways to Contribute
+
+- 🐛 **Report Bugs** - Found an issue? [Open a bug report](https://github.com/amirhmoradi/pimeet-enhanced/issues/new?template=bug_report.md)
+- 💡 **Request Features** - Have an idea? [Submit a feature request](https://github.com/amirhmoradi/pimeet-enhanced/issues/new?template=feature_request.md)
+- 📝 **Improve Docs** - Help us make documentation better
+- 💻 **Submit PRs** - Code contributions are welcome!
+- ⭐ **Star the Repo** - Show your support!
+
+See our [Contributing Guide](CONTRIBUTING.md) for detailed instructions.
+
+### Development Setup
+
+```bash
+# Clone and setup
+git clone https://github.com/amirhmoradi/pimeet-enhanced.git
+cd pimeet-enhanced
+
+# Install dev dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Start development servers
+make dev
+```
+
+## 🌟 Community
+
+- 💬 [GitHub Discussions](https://github.com/amirhmoradi/pimeet-enhanced/discussions) - Ask questions, share ideas
+- 🐛 [Issue Tracker](https://github.com/amirhmoradi/pimeet-enhanced/issues) - Report bugs, request features
+- 📧 [Mailing List](mailto:pimeet-help@googlegroups.com) - Stay updated
+
+### Contributors
+
+<a href="https://github.com/amirhmoradi/pimeet-enhanced/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=amirhmoradi/pimeet-enhanced" />
+</a>
+
+## 📜 License
+
+PiMeet Enterprise is [MIT licensed](LICENSE). Use it freely in personal and commercial projects.
+
+## 🙏 Acknowledgments
+
+- Built on the foundation of the original [PiMeet](https://github.com/pmansour/pimeet) project
+- Inspired by enterprise solutions like Cisco Webex Room Kit and Poly Studio
+- Thanks to all [contributors](https://github.com/amirhmoradi/pimeet-enhanced/graphs/contributors) who make this possible
 
 ---
 
-## Background
+<div align="center">
 
-### Origins
-This project builds on the original PiMeet, which uses a Raspberry Pi 4 to turn any room into a cheap conference room that can automatically join meetings on its calendar.
+**⭐ Star us on GitHub — it motivates us a lot!**
 
-### The Enterprise Challenge
-While the original PiMeet solved the cost problem brilliantly, enterprise deployments need additional capabilities:
-- Fleet management across many rooms
-- Multi-platform support (not just Google Meet)
-- AI features for professional meeting quality
-- Touch UI for non-technical users
-- Remote monitoring and troubleshooting
+[Report Bug](https://github.com/amirhmoradi/pimeet-enhanced/issues) · [Request Feature](https://github.com/amirhmoradi/pimeet-enhanced/issues) · [Join Discussion](https://github.com/amirhmoradi/pimeet-enhanced/discussions)
 
-### Why Raspberry Pi?
-Existing enterprise devices cost $3,000-15,000+ per room. For organizations with 10-50 meeting rooms, that's $30,000-750,000 just for hardware. PiMeet Enterprise delivers comparable features for under $250 per room.
+Made with ❤️ by the PiMeet Community
 
-## Design goals
-This solution was designed to solve the above issues. Specifically, we aim to create a solution that is:
-
-- Easy to deploy to several rooms within an organization.
-- Cheap (ideally <$100 per room, excluding the TV and webcam).
-- Automated / easy to use.
-- Easy to maintain over time.
-
-## PiMeet
-### Overview
-To solve the above issues, we've built a system that uses a combination of cheap hardware and custom software to turn any room into a meeting room. This system has been tested extensively and has been through several iterations to produce the current fleet, which has been powering the Sunday School classes at St George Coptic Orthodox Church in Kirkland, WA since fall of 2021.
-
-The current name for this device is PiMeet.
-
-### User Experience
-One of the goals is to make this dead-simple to use, and hard to get wrong. As such, the UX is incredibly simple:
-- When someone enters a room, they turn on the PiMeet device and wait for it to join the next meeting on its calendar.
-- When they’re done, they hit the power button again to turn it off.
-- *That’s it!*
-
-See these [Quickstart instructions](https://docs.google.com/document/d/11bFKDRnKby4PvWUyqYbBlXx3mhg-zHjduksk8KyJA5A/view), which were printed, laminated and hung in the rooms at St George Coptic Orthodox Church, Kirkland.
-
-<p align="center">
-<img src="/docs/room-demo.png" alt="Room configured with PiMeet" />
-<br />
-<strong>Figure A</strong>: A meeting room configured with PiMeet. Note the raspberry pi mounted directly under the TV and the quickstart instructions laminated next to it.
-</p>
-
-Each PiMeet device has its own Google account[^1] with its own calendar, and the device will just join the next meeting on its calendar. Anybody within the organization can schedule a Google Meet[^2] meeting and invite the room’s account to it, and when they turn on the PiMeet it will just automagically join that new meeting.
-
-[^1]: For example, `mezzanine-room@{your-domain}.org`
-[^2]: The system already has experimental Zoom support (through Zoom Web), but the performance of Zoom Web is not very responsive when content is being presented. This will hopefully get better over time.
-
-PiMeet achieves those goals by configuring a Raspberry PI 4B to be a 1-click meeting room device. In a nutshell, each device runs [Raspberry PI OS](https://www.raspberrypi.com/software/) (a Debian Linux fork), specially configured to run Chromium on startup with the [Minimeet extension](https://github.com/pmansour/minimeet). This extension logs into its configured Google account and joins the next available meeting on its calendar.
-
-<p align="center">
-<img src="/docs/create-meeting.png" alt="Creating a meeting using Google Calendar" />
-<br />
-<strong>Figure B</strong>: Inviting a room's account (<code>grade3-room@{your-domain}.org</code>) to a new meeting. This works for ad-hoc as well as recurring (e.g. weekly or daily) meetings.
-</p>
-
-### Hardware components
-As of today, a typical deployment consists of the following hardware:
-- **Raspberry Pi 4B 4GB**. This model costs $55 MSRP[^3] (see [official resellers](https://www.raspberrypi.com/products/raspberry-pi-4-model-b#find-reseller)), and has powerful-enough specs[^4] to produce smooth, lag-free meetings consistently.
-- **Raspberry Pi accessories**. This includes a 32GB microSD card (~$6 on [Amazon](https://www.amazon.com/dp/B07NP96DX5)), a HDMI-to-HDMI cable ($5 on [Amazon](https://www.amazon.com/dp/B01H7M6YKI)), and a USB-C power supply ($10 on [Amazon](https://www.amazon.com/dp/B07TYQRXTK)).
-- **ArgonOne V.2 case**. This case costs $25 on [Amazon](https://www.amazon.com/dp/B07WP8WC3V), and has excellent cooling, ports, form-factor as well as a physical safe-shutdown power button and an IR sensor that allows use of a remote control.
-- **Logitech C920x Webcam**. This webcam costs $60 on [Amazon](https://www.amazon.com/dp/B085TFF7M1), and produces smooth 1080p video while also including a dual-microphone. In most small rooms, this mic is good enough that no external audio solution is needed.
-
-Aside from the camera, the essentials total about $100 USD at current prices. You can often get discounts when buying in bulk (especially for cables and microSD cards).
-
-In addition to these basics, some optional additions may make for a better UX in some rooms:
-- **JabraSpeak 510 bluetooth speaker**. This wireless speaker/microphone combo costs $115 on [Amazon](https://www.amazon.com/dp/B00C3XW5L4). It produces great echo-free audio and has reliable wireless connectivity through the provided dongle. For larger rooms, consider buying multiple [Jabra 710](https://www.amazon.com/dp/B071CGH8YF)s since they can daisy-chain together.
-- **Sparkfun IR remote**. This little remote-control costs $4.50 at [Sparkfun](https://www.sparkfun.com/products/14865). It allows for operating the PiMeet device wirelessly without having to press the physical power button.
-- **Cheap bluetooth mouse**. You can buy a pack of 10 for $45 (~$4.50 each) on [Amazon](https://www.amazon.com/gp/product/B087CR8RD1). Having a dedicated mouse in each room not only allows for troubleshooting as necessary, but enables some advanced room controls such as explicitly admitting people into each meeting.
-
-[^3]: Due to the current supply-chain crisis, it may be hard to procure these at MSRP in large quantities right now. However, stock is constantly being replenished, so hopefully soon this will not be an issue in a few months.
-[^4]: Quad-core CPU, 4GB RAM, USB-3 controller and ports, 2x [micro-]HDMI ports with HDMI-CEC.
-
-### Software components
-The PiMeet system consists of a 64-bit Raspberry Pi OS image, with several customizations and configurations to enable smooth video conferencing, various credentials (WiFi networks, fleet admin account, room-specific meeting account), some systemd services and autostart applications to enable complete automation, as well as a copy of the [Minimeet Chrome extension](https://github.com/pmansour/minimeet). The latter is an extension that automates the process of logging in to Google Meet and joining a meeting hands-free.
-
-The process of imaging a new microSD card and configuring its credentials is automated through the three [build scripts](build/) in the PiMeet GitHub repository. Imaging a new device only takes a few minutes and requires no specialized knowledge other than the ability to execute bash scripts.
-
-## Set up
-Installing this system in a room involves a few steps:
-1. Mount a TV in a good location.
-1. Assemble a new raspberry pi in the ArgonOne V2 case, write a new image onto a microSD card and insert it. Now you have a PiMeet device.
-1. Attach the PiMeet device to the bottom of the TV using these command stickers. See the pictures in the Quickstart guide above for inspiration.
-1. Attach the webcam either on top of the TV, or at the bottom (using more command stickers).
-1. Connect the webcam, HDMI and power cables to the PiMeet device, and use cable fasteners and sleeves to hide the complexity.
-1. Turn on the power.
-
-## Feedback
-If you have questions, feedback or suggestions, you're welcome to file issues on GitHub or send an email to `pimeet-help@googlegroups.com`.
+</div>
