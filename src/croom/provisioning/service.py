@@ -17,6 +17,7 @@ from croom.provisioning.usb_config import USBConfigReader, DeviceConfig
 from croom.provisioning.setup_wizard import SetupWizard, WizardConfig
 from croom.provisioning.network import NetworkManager, WiFiConfig, WiFiSecurity
 from croom.provisioning.enrollment import DashboardEnrollment, EnrollmentStatus
+from croom.security.encryption import EncryptionService, create_key_storage
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +65,12 @@ class ProvisioningService:
         self._setup_wizard: Optional[SetupWizard] = None
         self._usb_reader = USBConfigReader()
         self._enrollment: Optional[DashboardEnrollment] = None
+
+        # Encryption for secure credential storage
+        self._key_storage = create_key_storage(
+            storage_type="auto",
+            storage_path=Path(self.config.config_path) / "keys",
+        )
 
         # Callbacks
         self._on_state_change: Optional[Callable[[ProvisioningState], None]] = None
@@ -386,12 +393,99 @@ class ProvisioningService:
 
         logger.info(f"Configuration saved to {config_file}")
 
-        # Save credentials separately (should be encrypted)
-        # This is a placeholder - real implementation should use secure storage
+        # Save credentials separately with encryption
+        await self._save_credentials(config_dir, config_data)
+
+    async def _save_credentials(self, config_dir: Path, config_data: Dict) -> None:
+        """
+        Save credentials with AES-256-GCM encryption.
+
+        Credentials are stored encrypted using the system's secure key storage
+        (keyring, TPM, or encrypted file depending on availability).
+        """
+        credentials = {}
+
+        # Collect credentials from config data
         if config_data.get('meeting', {}).get('password'):
-            cred_dir = config_dir / "credentials"
-            cred_dir.mkdir(exist_ok=True)
-            # TODO: Encrypt credentials
+            credentials['meeting_password'] = config_data['meeting']['password']
+
+        if config_data.get('meeting', {}).get('email'):
+            credentials['meeting_email'] = config_data['meeting']['email']
+
+        if config_data.get('wifi', {}).get('password'):
+            credentials['wifi_password'] = config_data['wifi']['password']
+
+        if config_data.get('dashboard', {}).get('enrollment_token'):
+            credentials['enrollment_token'] = config_data['dashboard']['enrollment_token']
+
+        if not credentials:
+            return
+
+        # Get or create encryption key
+        key_id = "croom_credentials"
+        encryption_key = self._key_storage.retrieve_key(key_id)
+
+        if encryption_key is None:
+            # Generate new key and store it
+            encryption_key = EncryptionService.generate_key()
+            self._key_storage.store_key(key_id, encryption_key)
+
+        # Create encryption service
+        cipher = EncryptionService(encryption_key)
+
+        # Encrypt and save each credential
+        cred_dir = config_dir / "credentials"
+        cred_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
+
+        for cred_name, cred_value in credentials.items():
+            encrypted = cipher.encrypt_to_base64(cred_value)
+            cred_file = cred_dir / f"{cred_name}.enc"
+
+            with open(cred_file, 'w') as f:
+                f.write(encrypted)
+
+            # Set restrictive permissions
+            cred_file.chmod(0o600)
+
+        logger.info(f"Saved {len(credentials)} encrypted credentials")
+
+    async def load_credential(self, credential_name: str) -> Optional[str]:
+        """
+        Load and decrypt a stored credential.
+
+        Args:
+            credential_name: Name of the credential (e.g., 'meeting_password')
+
+        Returns:
+            Decrypted credential value or None if not found
+        """
+        config_dir = Path(self.config.config_path)
+        cred_file = config_dir / "credentials" / f"{credential_name}.enc"
+
+        if not cred_file.exists():
+            return None
+
+        try:
+            # Get encryption key
+            key_id = "croom_credentials"
+            encryption_key = self._key_storage.retrieve_key(key_id)
+
+            if encryption_key is None:
+                logger.error("Encryption key not found")
+                return None
+
+            # Decrypt
+            cipher = EncryptionService(encryption_key)
+
+            with open(cred_file, 'r') as f:
+                encrypted = f.read()
+
+            decrypted = cipher.decrypt_from_base64(encrypted)
+            return decrypted.decode('utf-8')
+
+        except Exception as e:
+            logger.error(f"Failed to load credential {credential_name}: {e}")
+            return None
 
     def _set_state(self, state: ProvisioningState) -> None:
         """Update provisioning state and notify listeners."""

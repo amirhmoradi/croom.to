@@ -11,7 +11,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple, TYPE_CHECKING
 
 logger = logging.getLogger(__name__)
 
@@ -100,6 +100,8 @@ class RaspberryPiGPIO(GPIOInterface):
 
     def __init__(self):
         self._gpio = None
+        self._pwm_instances: Dict[int, Any] = {}  # Track PWM instances per pin
+        self._event_callbacks: Dict[int, Callable[[int], None]] = {}
         try:
             import RPi.GPIO as GPIO
             self._gpio = GPIO
@@ -135,13 +137,59 @@ class RaspberryPiGPIO(GPIOInterface):
             self._gpio.output(pin, value)
 
     def pwm_start(self, pin: int, frequency: int, duty_cycle: float) -> None:
+        """
+        Start PWM on a GPIO pin.
+
+        Args:
+            pin: BCM GPIO pin number
+            frequency: PWM frequency in Hz
+            duty_cycle: Duty cycle 0.0-100.0
+        """
         if not self._gpio:
             return
-        # Would need to track PWM objects for proper implementation
-        pass
+
+        try:
+            # Stop existing PWM on this pin if any
+            if pin in self._pwm_instances:
+                self._pwm_instances[pin].stop()
+
+            # Setup pin as output if not already
+            self._gpio.setup(pin, self._gpio.OUT)
+
+            # Create and start PWM
+            pwm = self._gpio.PWM(pin, frequency)
+            pwm.start(duty_cycle)
+            self._pwm_instances[pin] = pwm
+
+            logger.debug(f"Started PWM on pin {pin}: freq={frequency}Hz, duty={duty_cycle}%")
+        except Exception as e:
+            logger.error(f"Failed to start PWM on pin {pin}: {e}")
 
     def pwm_stop(self, pin: int) -> None:
-        pass
+        """Stop PWM on a GPIO pin."""
+        if pin in self._pwm_instances:
+            try:
+                self._pwm_instances[pin].stop()
+                del self._pwm_instances[pin]
+                logger.debug(f"Stopped PWM on pin {pin}")
+            except Exception as e:
+                logger.error(f"Failed to stop PWM on pin {pin}: {e}")
+
+    def pwm_change_frequency(self, pin: int, frequency: int) -> None:
+        """Change PWM frequency on a pin."""
+        if pin in self._pwm_instances:
+            try:
+                self._pwm_instances[pin].ChangeFrequency(frequency)
+            except Exception as e:
+                logger.error(f"Failed to change PWM frequency on pin {pin}: {e}")
+
+    def pwm_change_duty_cycle(self, pin: int, duty_cycle: float) -> None:
+        """Change PWM duty cycle on a pin."""
+        if pin in self._pwm_instances:
+            try:
+                self._pwm_instances[pin].ChangeDutyCycle(duty_cycle)
+            except Exception as e:
+                logger.error(f"Failed to change PWM duty cycle on pin {pin}: {e}")
 
     def add_event_detect(
         self,
@@ -167,6 +215,11 @@ class RaspberryPiGPIO(GPIOInterface):
         )
 
     def cleanup(self) -> None:
+        """Release all GPIO resources including PWM instances."""
+        # Stop all PWM instances
+        for pin in list(self._pwm_instances.keys()):
+            self.pwm_stop(pin)
+
         if self._gpio:
             self._gpio.cleanup()
 
@@ -228,12 +281,155 @@ class StubGPIO(GPIOInterface):
         logger.debug("StubGPIO: cleanup complete")
 
 
+class SoftwarePWM:
+    """Software PWM implementation using threading."""
+
+    def __init__(self, gpio_interface: 'LinuxGPIO', pin: int, frequency: int, duty_cycle: float):
+        self._gpio = gpio_interface
+        self._pin = pin
+        self._frequency = frequency
+        self._duty_cycle = duty_cycle
+        self._running = False
+        self._thread: Optional[Any] = None
+
+    def start(self) -> None:
+        """Start software PWM."""
+        import threading
+
+        self._running = True
+        self._thread = threading.Thread(target=self._pwm_loop, daemon=True)
+        self._thread.start()
+
+    def stop(self) -> None:
+        """Stop software PWM."""
+        self._running = False
+        if self._thread:
+            self._thread.join(timeout=1.0)
+            self._thread = None
+
+    def change_frequency(self, frequency: int) -> None:
+        """Change PWM frequency."""
+        self._frequency = max(1, frequency)
+
+    def change_duty_cycle(self, duty_cycle: float) -> None:
+        """Change duty cycle (0-100)."""
+        self._duty_cycle = max(0, min(100, duty_cycle))
+
+    def _pwm_loop(self) -> None:
+        """Main PWM loop."""
+        import time
+
+        while self._running:
+            if self._frequency <= 0:
+                time.sleep(0.1)
+                continue
+
+            period = 1.0 / self._frequency
+            on_time = period * (self._duty_cycle / 100.0)
+            off_time = period - on_time
+
+            if on_time > 0:
+                self._gpio.write(self._pin, 1)
+                time.sleep(on_time)
+
+            if off_time > 0 and self._running:
+                self._gpio.write(self._pin, 0)
+                time.sleep(off_time)
+
+
+class GPIOEventMonitor:
+    """Async GPIO event monitoring using polling or inotify."""
+
+    def __init__(self, gpio_interface: 'LinuxGPIO'):
+        self._gpio = gpio_interface
+        self._callbacks: Dict[int, Tuple[GPIOEdge, Callable[[int], None], int]] = {}
+        self._running = False
+        self._thread: Optional[Any] = None
+        self._last_values: Dict[int, int] = {}
+
+    def add_callback(
+        self,
+        pin: int,
+        edge: GPIOEdge,
+        callback: Callable[[int], None],
+        bouncetime: int,
+    ) -> None:
+        """Add a callback for edge detection."""
+        self._callbacks[pin] = (edge, callback, bouncetime)
+        self._last_values[pin] = self._gpio.read(pin)
+
+        if not self._running:
+            self._start()
+
+    def remove_callback(self, pin: int) -> None:
+        """Remove callback for a pin."""
+        if pin in self._callbacks:
+            del self._callbacks[pin]
+        if pin in self._last_values:
+            del self._last_values[pin]
+
+    def _start(self) -> None:
+        """Start the monitoring thread."""
+        import threading
+
+        self._running = True
+        self._thread = threading.Thread(target=self._monitor_loop, daemon=True)
+        self._thread.start()
+
+    def stop(self) -> None:
+        """Stop the monitoring thread."""
+        self._running = False
+        if self._thread:
+            self._thread.join(timeout=1.0)
+
+    def _monitor_loop(self) -> None:
+        """Main monitoring loop."""
+        import time
+
+        last_trigger: Dict[int, float] = {}
+
+        while self._running:
+            for pin, (edge, callback, bouncetime) in list(self._callbacks.items()):
+                try:
+                    current_value = self._gpio.read(pin)
+                    last_value = self._last_values.get(pin, current_value)
+
+                    # Check for edge
+                    triggered = False
+                    if edge == GPIOEdge.RISING and last_value == 0 and current_value == 1:
+                        triggered = True
+                    elif edge == GPIOEdge.FALLING and last_value == 1 and current_value == 0:
+                        triggered = True
+                    elif edge == GPIOEdge.BOTH and last_value != current_value:
+                        triggered = True
+
+                    if triggered:
+                        # Check bounce time
+                        now = time.time()
+                        last = last_trigger.get(pin, 0)
+                        if (now - last) * 1000 >= bouncetime:
+                            last_trigger[pin] = now
+                            try:
+                                callback(pin)
+                            except Exception as e:
+                                logger.error(f"GPIO callback error for pin {pin}: {e}")
+
+                    self._last_values[pin] = current_value
+
+                except Exception as e:
+                    logger.error(f"Error monitoring pin {pin}: {e}")
+
+            time.sleep(0.01)  # 10ms polling interval
+
+
 class LinuxGPIO(GPIOInterface):
     """GPIO implementation using Linux sysfs or gpiod."""
 
     def __init__(self):
         self._pins: Dict[int, GPIOPin] = {}
         self._chip = None
+        self._pwm_instances: Dict[int, SoftwarePWM] = {}
+        self._event_monitor: Optional[GPIOEventMonitor] = None
         try:
             import gpiod
             self._chip = gpiod.Chip('gpiochip0')
@@ -304,11 +500,51 @@ class LinuxGPIO(GPIOInterface):
                 logger.error(f"Failed to write GPIO {pin}: {e}")
 
     def pwm_start(self, pin: int, frequency: int, duty_cycle: float) -> None:
-        # Software PWM would be needed
-        pass
+        """
+        Start software PWM on a GPIO pin.
+
+        Args:
+            pin: GPIO pin number
+            frequency: PWM frequency in Hz
+            duty_cycle: Duty cycle 0.0-100.0
+        """
+        try:
+            # Stop existing PWM on this pin if any
+            if pin in self._pwm_instances:
+                self._pwm_instances[pin].stop()
+
+            # Setup pin as output
+            self.setup(pin, GPIOMode.OUTPUT)
+
+            # Create and start software PWM
+            pwm = SoftwarePWM(self, pin, frequency, duty_cycle)
+            pwm.start()
+            self._pwm_instances[pin] = pwm
+
+            logger.debug(f"Started software PWM on pin {pin}: freq={frequency}Hz, duty={duty_cycle}%")
+        except Exception as e:
+            logger.error(f"Failed to start software PWM on pin {pin}: {e}")
 
     def pwm_stop(self, pin: int) -> None:
-        pass
+        """Stop software PWM on a GPIO pin."""
+        if pin in self._pwm_instances:
+            try:
+                self._pwm_instances[pin].stop()
+                del self._pwm_instances[pin]
+                self.write(pin, 0)  # Ensure pin is low
+                logger.debug(f"Stopped software PWM on pin {pin}")
+            except Exception as e:
+                logger.error(f"Failed to stop software PWM on pin {pin}: {e}")
+
+    def pwm_change_frequency(self, pin: int, frequency: int) -> None:
+        """Change PWM frequency on a pin."""
+        if pin in self._pwm_instances:
+            self._pwm_instances[pin].change_frequency(frequency)
+
+    def pwm_change_duty_cycle(self, pin: int, duty_cycle: float) -> None:
+        """Change PWM duty cycle on a pin."""
+        if pin in self._pwm_instances:
+            self._pwm_instances[pin].change_duty_cycle(duty_cycle)
 
     def add_event_detect(
         self,
@@ -317,16 +553,54 @@ class LinuxGPIO(GPIOInterface):
         callback: Callable[[int], None],
         bouncetime: int = 200,
     ) -> None:
-        # Would need async monitoring implementation
-        pass
+        """
+        Add edge detection callback for a GPIO pin.
+
+        Args:
+            pin: GPIO pin number
+            edge: Edge type to detect (RISING, FALLING, BOTH)
+            callback: Function to call when edge is detected
+            bouncetime: Minimum time between callbacks in milliseconds
+        """
+        try:
+            # Setup pin as input if not already
+            if pin not in self._pins or self._pins[pin].mode != GPIOMode.INPUT:
+                self.setup(pin, GPIOMode.INPUT)
+
+            # Create event monitor if needed
+            if self._event_monitor is None:
+                self._event_monitor = GPIOEventMonitor(self)
+
+            self._event_monitor.add_callback(pin, edge, callback, bouncetime)
+            logger.debug(f"Added event detection on pin {pin} for {edge.value} edge")
+        except Exception as e:
+            logger.error(f"Failed to add event detection on pin {pin}: {e}")
+
+    def remove_event_detect(self, pin: int) -> None:
+        """Remove edge detection callback for a GPIO pin."""
+        if self._event_monitor:
+            self._event_monitor.remove_callback(pin)
 
     def cleanup(self) -> None:
+        """Release all GPIO resources."""
+        # Stop all PWM instances
+        for pin in list(self._pwm_instances.keys()):
+            self.pwm_stop(pin)
+
+        # Stop event monitor
+        if self._event_monitor:
+            self._event_monitor.stop()
+            self._event_monitor = None
+
+        # Unexport GPIO pins
         for pin in self._pins:
             unexport_path = Path("/sys/class/gpio/unexport")
             try:
                 unexport_path.write_text(str(pin))
             except Exception:
                 pass
+
+        self._pins.clear()
 
 
 class I2CInterface(ABC):

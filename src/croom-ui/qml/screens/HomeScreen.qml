@@ -9,6 +9,7 @@ Item {
     signal joinMeetingRequested()
     signal settingsRequested()
     signal calendarRequested()
+    signal quickMeetRequested()
 
     ColumnLayout {
         anchors.centerIn: parent
@@ -70,15 +71,15 @@ Item {
             }
         }
 
-        // Action buttons
+        // Action buttons - First row
         Row {
             Layout.alignment: Qt.AlignHCenter
             spacing: 24
 
             // Join Meeting button
             Rectangle {
-                width: 200
-                height: 120
+                width: 180
+                height: 110
                 color: "#e94560"
                 radius: 16
 
@@ -99,15 +100,53 @@ Item {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "📹"
-                        font.pixelSize: 36
+                        text: "\ud83d\udcf9"
+                        font.pixelSize: 32
                     }
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Join Meeting"
                         color: "#ffffff"
-                        font.pixelSize: 18
+                        font.pixelSize: 16
+                        font.bold: true
+                    }
+                }
+            }
+
+            // Quick Meet button
+            Rectangle {
+                width: 180
+                height: 110
+                color: "#4caf50"
+                radius: 16
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: homeScreen.quickMeetRequested()
+                    onPressed: parent.scale = 0.95
+                    onReleased: parent.scale = 1.0
+                }
+
+                Behavior on scale {
+                    NumberAnimation { duration: 100 }
+                }
+
+                Column {
+                    anchors.centerIn: parent
+                    spacing: 8
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "\u26a1"
+                        font.pixelSize: 32
+                    }
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "Quick Meet"
+                        color: "#ffffff"
+                        font.pixelSize: 16
                         font.bold: true
                     }
                 }
@@ -115,8 +154,8 @@ Item {
 
             // Calendar button
             Rectangle {
-                width: 200
-                height: 120
+                width: 180
+                height: 110
                 color: "#0f3460"
                 radius: 16
 
@@ -137,15 +176,15 @@ Item {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "📅"
-                        font.pixelSize: 36
+                        text: "\ud83d\udcc5"
+                        font.pixelSize: 32
                     }
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Calendar"
                         color: "#ffffff"
-                        font.pixelSize: 18
+                        font.pixelSize: 16
                         font.bold: true
                     }
                 }
@@ -153,8 +192,8 @@ Item {
 
             // Settings button
             Rectangle {
-                width: 200
-                height: 120
+                width: 180
+                height: 110
                 color: "#16213e"
                 radius: 16
                 border.color: "#0f3460"
@@ -177,15 +216,15 @@ Item {
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        text: "⚙️"
-                        font.pixelSize: 36
+                        text: "\u2699\ufe0f"
+                        font.pixelSize: 32
                     }
 
                     Text {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Settings"
                         color: "#ffffff"
-                        font.pixelSize: 18
+                        font.pixelSize: 16
                         font.bold: true
                     }
                 }

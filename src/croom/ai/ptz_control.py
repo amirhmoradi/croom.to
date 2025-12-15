@@ -612,6 +612,718 @@ class SoftwarePTZController(PTZController):
         return (x1, y1, x2, y2)
 
 
+class ONVIFController(PTZController):
+    """ONVIF protocol PTZ controller for IP cameras."""
+
+    def __init__(
+        self,
+        host: str,
+        port: int = 80,
+        username: str = "admin",
+        password: str = "",
+        profile_token: Optional[str] = None,
+    ):
+        super().__init__()
+        self._host = host
+        self._port = port
+        self._username = username
+        self._password = password
+        self._profile_token = profile_token
+
+        # ONVIF services
+        self._device_service = None
+        self._ptz_service = None
+        self._media_service = None
+        self._imaging_service = None
+
+        self._capabilities = [
+            PTZCapability.PAN,
+            PTZCapability.TILT,
+            PTZCapability.ZOOM,
+            PTZCapability.PRESET,
+            PTZCapability.HOME,
+        ]
+
+    @property
+    def protocol(self) -> PTZProtocol:
+        return PTZProtocol.ONVIF
+
+    async def connect(self) -> bool:
+        """Connect to ONVIF camera and discover services."""
+        try:
+            from onvif import ONVIFCamera
+        except ImportError:
+            logger.error("onvif-zeep library not installed. Install with: pip install onvif-zeep")
+            return False
+
+        try:
+            # Create ONVIF camera instance
+            loop = asyncio.get_event_loop()
+            self._camera = await loop.run_in_executor(
+                None,
+                lambda: ONVIFCamera(
+                    self._host,
+                    self._port,
+                    self._username,
+                    self._password,
+                )
+            )
+
+            # Get services
+            self._device_service = self._camera.devicemgmt
+            self._media_service = await loop.run_in_executor(
+                None, self._camera.create_media_service
+            )
+            self._ptz_service = await loop.run_in_executor(
+                None, self._camera.create_ptz_service
+            )
+
+            # Get profile token if not provided
+            if not self._profile_token:
+                profiles = await loop.run_in_executor(
+                    None, self._media_service.GetProfiles
+                )
+                if profiles:
+                    self._profile_token = profiles[0].token
+
+            # Get PTZ configuration space for limits
+            try:
+                config_options = await loop.run_in_executor(
+                    None,
+                    lambda: self._ptz_service.GetConfigurationOptions({
+                        'ConfigurationToken': self._profile_token
+                    })
+                )
+                if config_options:
+                    spaces = config_options.Spaces
+                    if hasattr(spaces, 'AbsolutePanTiltPositionSpace'):
+                        space = spaces.AbsolutePanTiltPositionSpace[0]
+                        self._limits.pan_min = space.XRange.Min
+                        self._limits.pan_max = space.XRange.Max
+                        self._limits.tilt_min = space.YRange.Min
+                        self._limits.tilt_max = space.YRange.Max
+            except Exception:
+                pass
+
+            self._connected = True
+            logger.info(f"Connected to ONVIF camera at {self._host}:{self._port}")
+
+            # Get initial position
+            await self.get_position()
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to connect to ONVIF camera: {e}")
+            return False
+
+    async def disconnect(self) -> None:
+        """Disconnect from camera."""
+        self._connected = False
+        self._camera = None
+        self._ptz_service = None
+        logger.info("Disconnected from ONVIF camera")
+
+    async def move_to(
+        self,
+        pan: Optional[float] = None,
+        tilt: Optional[float] = None,
+        zoom: Optional[float] = None,
+        speed: float = 0.5,
+    ) -> bool:
+        if not self._connected or not self._ptz_service:
+            return False
+
+        try:
+            loop = asyncio.get_event_loop()
+
+            request = {
+                'ProfileToken': self._profile_token,
+                'Position': {},
+                'Speed': {},
+            }
+
+            if pan is not None or tilt is not None:
+                request['Position']['PanTilt'] = {
+                    'x': pan if pan is not None else self._position.pan,
+                    'y': tilt if tilt is not None else self._position.tilt,
+                }
+                request['Speed']['PanTilt'] = {'x': speed, 'y': speed}
+
+            if zoom is not None:
+                request['Position']['Zoom'] = {'x': zoom}
+                request['Speed']['Zoom'] = {'x': speed}
+
+            await loop.run_in_executor(
+                None,
+                lambda: self._ptz_service.AbsoluteMove(request)
+            )
+
+            await self.get_position()
+            return True
+
+        except Exception as e:
+            logger.error(f"ONVIF move_to error: {e}")
+            return False
+
+    async def move_relative(
+        self,
+        pan_delta: float = 0,
+        tilt_delta: float = 0,
+        zoom_delta: float = 0,
+        speed: float = 0.5,
+    ) -> bool:
+        if not self._connected or not self._ptz_service:
+            return False
+
+        try:
+            loop = asyncio.get_event_loop()
+
+            request = {
+                'ProfileToken': self._profile_token,
+                'Translation': {},
+                'Speed': {},
+            }
+
+            if pan_delta != 0 or tilt_delta != 0:
+                request['Translation']['PanTilt'] = {'x': pan_delta, 'y': tilt_delta}
+                request['Speed']['PanTilt'] = {'x': speed, 'y': speed}
+
+            if zoom_delta != 0:
+                request['Translation']['Zoom'] = {'x': zoom_delta}
+                request['Speed']['Zoom'] = {'x': speed}
+
+            await loop.run_in_executor(
+                None,
+                lambda: self._ptz_service.RelativeMove(request)
+            )
+
+            await self.get_position()
+            return True
+
+        except Exception as e:
+            logger.error(f"ONVIF move_relative error: {e}")
+            return False
+
+    async def move_continuous(
+        self,
+        pan_speed: float = 0,
+        tilt_speed: float = 0,
+        zoom_speed: float = 0,
+    ) -> bool:
+        if not self._connected or not self._ptz_service:
+            return False
+
+        try:
+            loop = asyncio.get_event_loop()
+
+            request = {
+                'ProfileToken': self._profile_token,
+                'Velocity': {},
+            }
+
+            if pan_speed != 0 or tilt_speed != 0:
+                request['Velocity']['PanTilt'] = {'x': pan_speed, 'y': tilt_speed}
+
+            if zoom_speed != 0:
+                request['Velocity']['Zoom'] = {'x': zoom_speed}
+
+            await loop.run_in_executor(
+                None,
+                lambda: self._ptz_service.ContinuousMove(request)
+            )
+            return True
+
+        except Exception as e:
+            logger.error(f"ONVIF move_continuous error: {e}")
+            return False
+
+    async def stop(self) -> bool:
+        if not self._connected or not self._ptz_service:
+            return False
+
+        try:
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(
+                None,
+                lambda: self._ptz_service.Stop({
+                    'ProfileToken': self._profile_token,
+                    'PanTilt': True,
+                    'Zoom': True,
+                })
+            )
+            return True
+        except Exception as e:
+            logger.error(f"ONVIF stop error: {e}")
+            return False
+
+    async def go_home(self) -> bool:
+        if not self._connected or not self._ptz_service:
+            return False
+
+        try:
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(
+                None,
+                lambda: self._ptz_service.GotoHomePosition({
+                    'ProfileToken': self._profile_token,
+                })
+            )
+            await self.get_position()
+            return True
+        except Exception as e:
+            logger.error(f"ONVIF go_home error: {e}")
+            return False
+
+    async def get_position(self) -> PTZPosition:
+        if not self._connected or not self._ptz_service:
+            return self._position
+
+        try:
+            loop = asyncio.get_event_loop()
+            status = await loop.run_in_executor(
+                None,
+                lambda: self._ptz_service.GetStatus({
+                    'ProfileToken': self._profile_token,
+                })
+            )
+
+            if status and hasattr(status, 'Position'):
+                pos = status.Position
+                if hasattr(pos, 'PanTilt'):
+                    self._position.pan = pos.PanTilt.x
+                    self._position.tilt = pos.PanTilt.y
+                if hasattr(pos, 'Zoom'):
+                    self._position.zoom = pos.Zoom.x
+
+            self._position.timestamp = datetime.utcnow()
+
+        except Exception as e:
+            logger.error(f"ONVIF get_position error: {e}")
+
+        return self._position
+
+
+class PelcoDController(PTZController):
+    """Pelco-D protocol PTZ controller for serial cameras."""
+
+    # Pelco-D commands
+    CMD_PAN_LEFT = 0x04
+    CMD_PAN_RIGHT = 0x02
+    CMD_TILT_UP = 0x08
+    CMD_TILT_DOWN = 0x10
+    CMD_ZOOM_TELE = 0x20
+    CMD_ZOOM_WIDE = 0x40
+    CMD_PRESET_SET = 0x03
+    CMD_PRESET_CALL = 0x07
+    CMD_PRESET_CLEAR = 0x05
+
+    def __init__(
+        self,
+        port: str = "/dev/ttyUSB0",
+        baudrate: int = 9600,
+        camera_address: int = 1,
+    ):
+        super().__init__()
+        self._port = port
+        self._baudrate = baudrate
+        self._camera_address = camera_address
+        self._serial = None
+
+        self._capabilities = [
+            PTZCapability.PAN,
+            PTZCapability.TILT,
+            PTZCapability.ZOOM,
+            PTZCapability.PRESET,
+        ]
+
+    @property
+    def protocol(self) -> PTZProtocol:
+        return PTZProtocol.PELCO_D
+
+    async def connect(self) -> bool:
+        try:
+            import serial
+        except ImportError:
+            logger.error("pyserial library not installed. Install with: pip install pyserial")
+            return False
+
+        try:
+            loop = asyncio.get_event_loop()
+            self._serial = await loop.run_in_executor(
+                None,
+                lambda: serial.Serial(
+                    self._port,
+                    self._baudrate,
+                    timeout=1,
+                )
+            )
+            self._connected = True
+            logger.info(f"Connected to Pelco-D camera on {self._port}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to connect to Pelco-D camera: {e}")
+            return False
+
+    async def disconnect(self) -> None:
+        if self._serial:
+            self._serial.close()
+            self._serial = None
+        self._connected = False
+        logger.info("Disconnected from Pelco-D camera")
+
+    def _build_command(self, cmd1: int, cmd2: int, data1: int = 0, data2: int = 0) -> bytes:
+        """Build Pelco-D command packet."""
+        sync = 0xFF
+        addr = self._camera_address
+        checksum = (addr + cmd1 + cmd2 + data1 + data2) % 256
+        return bytes([sync, addr, cmd1, cmd2, data1, data2, checksum])
+
+    async def _send_command(self, cmd1: int, cmd2: int, data1: int = 0, data2: int = 0) -> bool:
+        if not self._serial:
+            return False
+
+        try:
+            packet = self._build_command(cmd1, cmd2, data1, data2)
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, self._serial.write, packet)
+            return True
+        except Exception as e:
+            logger.error(f"Pelco-D command error: {e}")
+            return False
+
+    async def move_to(
+        self,
+        pan: Optional[float] = None,
+        tilt: Optional[float] = None,
+        zoom: Optional[float] = None,
+        speed: float = 0.5,
+    ) -> bool:
+        # Pelco-D doesn't support absolute positioning
+        # We'll move continuously for a calculated time
+        pan_speed = int(speed * 0x3F)
+        tilt_speed = int(speed * 0x3F)
+
+        if pan is not None:
+            delta = pan - self._position.pan
+            if abs(delta) > 0.01:
+                cmd = self.CMD_PAN_RIGHT if delta > 0 else self.CMD_PAN_LEFT
+                await self._send_command(0x00, cmd, pan_speed, 0)
+                await asyncio.sleep(abs(delta) * 2)  # Approximate timing
+                await self.stop()
+
+        if tilt is not None:
+            delta = tilt - self._position.tilt
+            if abs(delta) > 0.01:
+                cmd = self.CMD_TILT_UP if delta > 0 else self.CMD_TILT_DOWN
+                await self._send_command(0x00, cmd, 0, tilt_speed)
+                await asyncio.sleep(abs(delta) * 2)
+                await self.stop()
+
+        if zoom is not None:
+            delta = zoom - self._position.zoom
+            if abs(delta) > 0.01:
+                cmd = self.CMD_ZOOM_TELE if delta > 0 else self.CMD_ZOOM_WIDE
+                await self._send_command(0x00, cmd, 0, 0)
+                await asyncio.sleep(abs(delta) * 3)
+                await self.stop()
+
+        # Update estimated position
+        if pan is not None:
+            self._position.pan = pan
+        if tilt is not None:
+            self._position.tilt = tilt
+        if zoom is not None:
+            self._position.zoom = zoom
+
+        return True
+
+    async def move_relative(
+        self,
+        pan_delta: float = 0,
+        tilt_delta: float = 0,
+        zoom_delta: float = 0,
+        speed: float = 0.5,
+    ) -> bool:
+        return await self.move_to(
+            pan=self._position.pan + pan_delta if pan_delta else None,
+            tilt=self._position.tilt + tilt_delta if tilt_delta else None,
+            zoom=self._position.zoom + zoom_delta if zoom_delta else None,
+            speed=speed,
+        )
+
+    async def move_continuous(
+        self,
+        pan_speed: float = 0,
+        tilt_speed: float = 0,
+        zoom_speed: float = 0,
+    ) -> bool:
+        cmd2 = 0
+        data1 = 0
+        data2 = 0
+
+        if pan_speed > 0:
+            cmd2 |= self.CMD_PAN_RIGHT
+            data1 = int(abs(pan_speed) * 0x3F)
+        elif pan_speed < 0:
+            cmd2 |= self.CMD_PAN_LEFT
+            data1 = int(abs(pan_speed) * 0x3F)
+
+        if tilt_speed > 0:
+            cmd2 |= self.CMD_TILT_UP
+            data2 = int(abs(tilt_speed) * 0x3F)
+        elif tilt_speed < 0:
+            cmd2 |= self.CMD_TILT_DOWN
+            data2 = int(abs(tilt_speed) * 0x3F)
+
+        if zoom_speed > 0:
+            cmd2 |= self.CMD_ZOOM_TELE
+        elif zoom_speed < 0:
+            cmd2 |= self.CMD_ZOOM_WIDE
+
+        return await self._send_command(0x00, cmd2, data1, data2)
+
+    async def stop(self) -> bool:
+        return await self._send_command(0x00, 0x00, 0x00, 0x00)
+
+    async def go_home(self) -> bool:
+        # Call preset 0 (usually home)
+        return await self._send_command(0x00, self.CMD_PRESET_CALL, 0x00, 0x00)
+
+    async def get_position(self) -> PTZPosition:
+        # Pelco-D doesn't support position queries
+        return self._position
+
+    async def save_preset(self, preset_id: int, name: str = "") -> bool:
+        success = await self._send_command(0x00, self.CMD_PRESET_SET, 0x00, preset_id)
+        if success:
+            await super().save_preset(preset_id, name)
+        return success
+
+    async def recall_preset(self, preset_id: int) -> bool:
+        return await self._send_command(0x00, self.CMD_PRESET_CALL, 0x00, preset_id)
+
+
+class HTTPPTZController(PTZController):
+    """HTTP/REST API PTZ controller for IP cameras."""
+
+    def __init__(
+        self,
+        base_url: str,
+        username: Optional[str] = None,
+        password: Optional[str] = None,
+        endpoints: Optional[Dict[str, str]] = None,
+    ):
+        super().__init__()
+        self._base_url = base_url.rstrip('/')
+        self._username = username
+        self._password = password
+        self._session: Optional[Any] = None
+
+        # Default endpoint patterns (can be customized per camera model)
+        self._endpoints = endpoints or {
+            'move_to': '/ptz/move',
+            'move_relative': '/ptz/relative',
+            'move_continuous': '/ptz/continuous',
+            'stop': '/ptz/stop',
+            'home': '/ptz/home',
+            'position': '/ptz/position',
+            'preset_set': '/ptz/preset/set',
+            'preset_call': '/ptz/preset/call',
+        }
+
+        self._capabilities = [
+            PTZCapability.PAN,
+            PTZCapability.TILT,
+            PTZCapability.ZOOM,
+            PTZCapability.PRESET,
+            PTZCapability.HOME,
+        ]
+
+    @property
+    def protocol(self) -> PTZProtocol:
+        return PTZProtocol.HTTP
+
+    async def connect(self) -> bool:
+        try:
+            import aiohttp
+
+            auth = None
+            if self._username and self._password:
+                auth = aiohttp.BasicAuth(self._username, self._password)
+
+            self._session = aiohttp.ClientSession(auth=auth)
+
+            # Test connection by getting position
+            async with self._session.get(
+                f"{self._base_url}{self._endpoints['position']}",
+                timeout=aiohttp.ClientTimeout(total=5),
+            ) as response:
+                if response.status == 200:
+                    self._connected = True
+                    logger.info(f"Connected to HTTP PTZ camera at {self._base_url}")
+                    await self.get_position()
+                    return True
+                else:
+                    logger.error(f"HTTP PTZ connection failed: {response.status}")
+                    return False
+
+        except Exception as e:
+            logger.error(f"Failed to connect to HTTP PTZ camera: {e}")
+            return False
+
+    async def disconnect(self) -> None:
+        if self._session:
+            await self._session.close()
+            self._session = None
+        self._connected = False
+        logger.info("Disconnected from HTTP PTZ camera")
+
+    async def _post(self, endpoint: str, data: Dict[str, Any]) -> bool:
+        if not self._session:
+            return False
+
+        try:
+            import aiohttp
+            async with self._session.post(
+                f"{self._base_url}{endpoint}",
+                json=data,
+                timeout=aiohttp.ClientTimeout(total=10),
+            ) as response:
+                return response.status in (200, 201, 204)
+        except Exception as e:
+            logger.error(f"HTTP PTZ request error: {e}")
+            return False
+
+    async def _get(self, endpoint: str) -> Optional[Dict[str, Any]]:
+        if not self._session:
+            return None
+
+        try:
+            import aiohttp
+            async with self._session.get(
+                f"{self._base_url}{endpoint}",
+                timeout=aiohttp.ClientTimeout(total=10),
+            ) as response:
+                if response.status == 200:
+                    return await response.json()
+        except Exception as e:
+            logger.error(f"HTTP PTZ request error: {e}")
+        return None
+
+    async def move_to(
+        self,
+        pan: Optional[float] = None,
+        tilt: Optional[float] = None,
+        zoom: Optional[float] = None,
+        speed: float = 0.5,
+    ) -> bool:
+        data = {'speed': speed}
+        if pan is not None:
+            data['pan'] = pan
+        if tilt is not None:
+            data['tilt'] = tilt
+        if zoom is not None:
+            data['zoom'] = zoom
+
+        success = await self._post(self._endpoints['move_to'], data)
+        if success:
+            await self.get_position()
+        return success
+
+    async def move_relative(
+        self,
+        pan_delta: float = 0,
+        tilt_delta: float = 0,
+        zoom_delta: float = 0,
+        speed: float = 0.5,
+    ) -> bool:
+        data = {
+            'pan_delta': pan_delta,
+            'tilt_delta': tilt_delta,
+            'zoom_delta': zoom_delta,
+            'speed': speed,
+        }
+        success = await self._post(self._endpoints['move_relative'], data)
+        if success:
+            await self.get_position()
+        return success
+
+    async def move_continuous(
+        self,
+        pan_speed: float = 0,
+        tilt_speed: float = 0,
+        zoom_speed: float = 0,
+    ) -> bool:
+        data = {
+            'pan_speed': pan_speed,
+            'tilt_speed': tilt_speed,
+            'zoom_speed': zoom_speed,
+        }
+        return await self._post(self._endpoints['move_continuous'], data)
+
+    async def stop(self) -> bool:
+        return await self._post(self._endpoints['stop'], {})
+
+    async def go_home(self) -> bool:
+        success = await self._post(self._endpoints['home'], {})
+        if success:
+            await self.get_position()
+        return success
+
+    async def get_position(self) -> PTZPosition:
+        data = await self._get(self._endpoints['position'])
+        if data:
+            self._position.pan = data.get('pan', self._position.pan)
+            self._position.tilt = data.get('tilt', self._position.tilt)
+            self._position.zoom = data.get('zoom', self._position.zoom)
+        self._position.timestamp = datetime.utcnow()
+        return self._position
+
+    async def save_preset(self, preset_id: int, name: str = "") -> bool:
+        success = await self._post(self._endpoints['preset_set'], {
+            'preset_id': preset_id,
+            'name': name,
+        })
+        if success:
+            await super().save_preset(preset_id, name)
+        return success
+
+    async def recall_preset(self, preset_id: int) -> bool:
+        success = await self._post(self._endpoints['preset_call'], {
+            'preset_id': preset_id,
+        })
+        if success:
+            await self.get_position()
+        return success
+
+
+def create_ptz_controller(
+    protocol: PTZProtocol,
+    **kwargs,
+) -> PTZController:
+    """
+    Factory function to create PTZ controller by protocol.
+
+    Args:
+        protocol: PTZ protocol type
+        **kwargs: Protocol-specific arguments
+
+    Returns:
+        Configured PTZController instance
+    """
+    controllers = {
+        PTZProtocol.VISCA: VISCAController,
+        PTZProtocol.ONVIF: ONVIFController,
+        PTZProtocol.PELCO_D: PelcoDController,
+        PTZProtocol.HTTP: HTTPPTZController,
+        PTZProtocol.USB: SoftwarePTZController,
+    }
+
+    controller_cls = controllers.get(protocol, SoftwarePTZController)
+    return controller_cls(**kwargs)
+
+
 class PTZService:
     """High-level PTZ control service with auto-framing integration."""
 

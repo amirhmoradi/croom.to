@@ -50,6 +50,7 @@ Window {
     StackView {
         id: stackView
         anchors.fill: parent
+        anchors.bottomMargin: statusBar.height
         initialItem: homeScreen
 
         // Transition animations
@@ -94,6 +95,7 @@ Window {
             onJoinMeetingRequested: stackView.push(joinMeetingScreen)
             onSettingsRequested: stackView.push(settingsScreen)
             onCalendarRequested: stackView.push(calendarScreen)
+            onQuickMeetRequested: stackView.push(quickMeetScreen)
         }
     }
 
@@ -102,6 +104,14 @@ Window {
         JoinMeetingScreen {
             onBackRequested: stackView.pop()
             onMeetingJoined: stackView.replace(inMeetingScreen)
+        }
+    }
+
+    Component {
+        id: quickMeetScreen
+        QuickMeetScreen {
+            onBackRequested: stackView.pop()
+            onMeetingStarted: stackView.replace(inMeetingScreen)
         }
     }
 
@@ -126,6 +136,30 @@ Window {
         id: settingsScreen
         SettingsScreen {
             onBackRequested: stackView.pop()
+            onNetworkSettingsRequested: stackView.push(networkSettingsScreen)
+            onAudioVideoSettingsRequested: stackView.push(audioVideoSettingsScreen)
+            onDiagnosticsRequested: stackView.push(diagnosticsScreen)
+        }
+    }
+
+    Component {
+        id: networkSettingsScreen
+        NetworkSettingsScreen {
+            onBackRequested: stackView.pop()
+        }
+    }
+
+    Component {
+        id: audioVideoSettingsScreen
+        AudioVideoSettingsScreen {
+            onBackRequested: stackView.pop()
+        }
+    }
+
+    Component {
+        id: diagnosticsScreen
+        DiagnosticsScreen {
+            onBackPressed: stackView.pop()
         }
     }
 
@@ -163,15 +197,60 @@ Window {
                 font.pixelSize: Theme.fontSizeSmall
             }
 
+            // Network status
+            Row {
+                spacing: 6
+
+                Text {
+                    text: networkController.isConnected ? "\ud83d\udcf6" : "\u274c"
+                    font.pixelSize: 14
+                }
+
+                Text {
+                    text: networkController.isConnected ?
+                          (networkController.connectionType === "wifi" ?
+                           (networkController.currentNetwork ? networkController.currentNetwork.ssid : "WiFi") : "Ethernet") :
+                          "No network"
+                    color: networkController.isConnected ? Theme.successColor : Theme.errorColor
+                    font.pixelSize: Theme.fontSizeSmall
+                }
+            }
+
             // Occupancy (if AI enabled)
             Text {
                 visible: roomController.aiEnabled
-                text: "👥 " + roomController.occupancy + " people"
+                text: "\ud83d\udc65 " + roomController.occupancy + " people"
                 color: Theme.textSecondary
                 font.pixelSize: Theme.fontSizeSmall
             }
 
             Item { Layout.fillWidth: true }
+
+            // Meeting status indicator
+            Row {
+                spacing: 8
+                visible: meetingController.meetingState === "connected"
+
+                Rectangle {
+                    width: 10
+                    height: 10
+                    radius: 5
+                    color: Theme.successColor
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    SequentialAnimation on opacity {
+                        loops: Animation.Infinite
+                        NumberAnimation { to: 0.3; duration: 500 }
+                        NumberAnimation { to: 1.0; duration: 500 }
+                    }
+                }
+
+                Text {
+                    text: "In Meeting"
+                    color: Theme.successColor
+                    font.pixelSize: Theme.fontSizeSmall
+                }
+            }
 
             // Time
             Text {
@@ -191,6 +270,31 @@ Window {
                     }
                 }
             }
+        }
+    }
+
+    // Virtual keyboard (shown when needed)
+    VirtualKeyboard {
+        id: virtualKeyboard
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: statusBar.top
+        visible: false
+
+        onKeyPressed: function(key) {
+            // Forward to focused input
+        }
+
+        onSpacePressed: {
+            // Forward space
+        }
+
+        onBackspacePressed: {
+            // Forward backspace
+        }
+
+        onEnterPressed: {
+            virtualKeyboard.visible = false
         }
     }
 }
