@@ -33,14 +33,14 @@ Quick reference for all planned features with their status, priority, and docume
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| One-line installer | P0 | Planned | [PRD-007](../prd/007-modern-installation.md) | `curl \| bash` |
-| APT package repository | P0 | Planned | [PRD-007](../prd/007-modern-installation.md) | Debian packages |
-| Bookworm OS support | P0 | Planned | [PRD-007](../prd/007-modern-installation.md) | Debian 12 |
+| One-line installer | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | `curl \| bash` |
+| APT package repository | P0 | In Progress | [PRD-007](../prd/007-modern-installation.md) | Debian packages |
+| Bookworm OS support | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | Debian 12 |
 | Trixie OS support | P1 | Planned | [PRD-007](../prd/007-modern-installation.md) | Debian 13 (2025) |
-| Raspberry Pi 5 support | P0 | Planned | [PRD-007](../prd/007-modern-installation.md) | Primary target |
-| Raspberry Pi 4B support | P0 | Planned | [PRD-007](../prd/007-modern-installation.md) | Primary target |
-| Non-destructive install | P0 | Planned | [PRD-007](../prd/007-modern-installation.md) | Preserve user data |
-| apt update system | P1 | Planned | [PRD-007](../prd/007-modern-installation.md) | Standard updates |
+| Raspberry Pi 5 support | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | Primary target |
+| Raspberry Pi 4B support | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | Primary target |
+| Non-destructive install | P0 | Complete | [PRD-007](../prd/007-modern-installation.md) | Preserve user data |
+| apt update system | P1 | In Progress | [PRD-007](../prd/007-modern-installation.md) | Standard updates |
 | Rollback support | P2 | Planned | [PRD-007](../prd/007-modern-installation.md) | Version downgrade |
 | Legacy migration tool | P2 | Planned | [PRD-007](../prd/007-modern-installation.md) | Image→Package |
 
@@ -48,14 +48,14 @@ Quick reference for all planned features with their status, priority, and docume
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| Official Pi Display support | P0 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | 7" DSI |
-| HDMI touch display support | P1 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Various sizes |
-| Home/status screen | P0 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Room status |
-| Meeting controls | P0 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Mute, camera, leave |
-| Quick join screen | P0 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Ad-hoc meetings |
-| On-screen keyboard | P0 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Touch input |
-| Settings screens | P1 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Room/network config |
-| Diagnostics screen | P1 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | System health |
+| Official Pi Display support | P0 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | 7" DSI |
+| HDMI touch display support | P1 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Various sizes |
+| Home/status screen | P0 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Room status |
+| Meeting controls | P0 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Mute, camera, leave |
+| Quick join screen | P0 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Ad-hoc meetings |
+| On-screen keyboard | P0 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Touch input |
+| Settings screens | P1 | Complete | [PRD-005](../prd/005-touch-screen-room-ui.md) | Room/network config |
+| Diagnostics screen | P1 | In Progress | [PRD-005](../prd/005-touch-screen-room-ui.md) | System health |
 | Local web interface | P1 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Browser access |
 | IR remote navigation | P2 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | TV remote support |
 | Admin PIN protection | P1 | Planned | [PRD-005](../prd/005-touch-screen-room-ui.md) | Secure settings |
@@ -64,24 +64,24 @@ Quick reference for all planned features with their status, priority, and docume
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| Device registration | P0 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Add devices |
-| Device inventory | P0 | Planned | [PRD-001](../prd/001-management-dashboard.md) | List/search |
-| Real-time status | P0 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Online/offline |
-| Configuration management | P0 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Remote config |
-| Credential vault | P0 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Encrypted storage |
+| Device registration | P0 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Add devices |
+| Device inventory | P0 | Complete | [PRD-001](../prd/001-management-dashboard.md) | List/search |
+| Real-time status | P0 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Online/offline |
+| Configuration management | P0 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Remote config |
+| Credential vault | P0 | In Progress | [PRD-001](../prd/001-management-dashboard.md) | Encrypted storage |
 | Basic alerting | P1 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Email/Slack |
-| User management | P1 | Planned | [PRD-001](../prd/001-management-dashboard.md) | RBAC |
+| User management | P1 | In Progress | [PRD-001](../prd/001-management-dashboard.md) | RBAC |
 
 ### Multi-Platform Support
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| Google Meet | P0 | Existing | [PRD-002](../prd/002-multi-platform-support.md) | Enhancement needed |
-| Microsoft Teams | P0 | Planned | [PRD-002](../prd/002-multi-platform-support.md) | Browser-based |
-| Zoom | P1 | Planned | [PRD-002](../prd/002-multi-platform-support.md) | Browser-based |
+| Google Meet | P0 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | Playwright-based |
+| Microsoft Teams | P0 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | Browser-based |
+| Zoom | P1 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | Browser-based |
 | Webex | P2 | Planned | [PRD-002](../prd/002-multi-platform-support.md) | Browser-based |
-| Platform auto-detection | P0 | Planned | [PRD-002](../prd/002-multi-platform-support.md) | From calendar |
-| Provider architecture | P0 | Planned | [PRD-002](../prd/002-multi-platform-support.md) | Modular design |
+| Platform auto-detection | P0 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | From calendar |
+| Provider architecture | P0 | Complete | [PRD-002](../prd/002-multi-platform-support.md) | Modular design |
 
 ### Device Provisioning
 
@@ -111,19 +111,19 @@ Quick reference for all planned features with their status, priority, and docume
 
 | Feature | Priority | Status | PRD | Hardware |
 |---------|----------|--------|-----|----------|
-| Person detection | P0 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | All |
-| Noise reduction | P0 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | CPU (RNNoise) |
-| Echo cancellation | P0 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | CPU (WebRTC) |
-| Face detection | P1 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | All |
+| Person detection | P0 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | All |
+| Noise reduction | P0 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | CPU (RNNoise) |
+| Echo cancellation | P0 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | CPU (Speex) |
+| Face detection | P1 | In Progress | [PRD-006](../prd/006-edge-ai-features.md) | All |
 | Auto-framing (digital) | P1 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | All |
-| Speaker detection | P1 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | All |
-| Occupancy counting | P2 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | All |
+| Speaker detection | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | All |
+| Occupancy counting | P2 | In Progress | [PRD-006](../prd/006-edge-ai-features.md) | All |
 | Hand raise detection | P2 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | AI accelerator |
 | PTZ speaker tracking | P2 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | AI + PTZ camera |
 | Gesture recognition | P3 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | AI accelerator |
-| Pi AI Kit (Hailo) support | P0 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | 13 TOPS |
-| Coral USB support | P1 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | 4 TOPS |
-| CPU fallback | P1 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | Basic features |
+| Pi AI Kit (Hailo) support | P0 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | 13 TOPS |
+| Coral USB support | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | 4 TOPS |
+| CPU fallback | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | Basic features |
 | Privacy mode | P1 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | Disable AI |
 
 ### Security & Compliance
@@ -191,8 +191,8 @@ Quick reference for all planned features with their status, priority, and docume
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| Google Calendar | P0 | Existing | [Roadmap](enterprise-roadmap.md) | Current |
-| Microsoft 365 | P2 | Planned | [Roadmap](enterprise-roadmap.md) | Exchange/Graph |
+| Google Calendar | P0 | Complete | [Roadmap](enterprise-roadmap.md) | OAuth2 + Service Account |
+| Microsoft 365 | P2 | Complete | [Roadmap](enterprise-roadmap.md) | Graph API + MSAL |
 | Booking displays | P3 | Planned | [Roadmap](enterprise-roadmap.md) | External displays |
 | Occupancy release | P3 | Planned | [Roadmap](enterprise-roadmap.md) | Auto-release empty |
 
@@ -275,3 +275,7 @@ Quick reference for all planned features with their status, priority, and docume
 |------|---------|
 | 2025-12-15 | Initial feature index creation |
 | 2025-12-15 | Added Touch UI, Edge AI, Modern Installation features |
+| 2025-12-15 | Implemented core services: Calendar, Audio, Video, Display, Dashboard Client |
+| 2025-12-15 | Completed Phase 1 implementation (Touch UI, Dashboard, Multi-Platform) |
+| 2025-12-15 | Completed AI backends (Hailo, Coral, ONNX CPU) |
+| 2025-12-15 | Completed Calendar integration (Google + Microsoft 365) |
