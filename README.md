@@ -1,19 +1,63 @@
-# pimeet
-This project uses a Raspberry Pi 4 to turn any room into a cheap conference room that can automatically join meetings on its calendar.
+# PiMeet Enterprise
+
+Transform a Raspberry Pi into an enterprise-grade video conferencing appliance comparable to Cisco Webex Room Kit — at a fraction of the cost.
+
+> **Note**: This is an enhanced enterprise version building on the original [PiMeet project](https://github.com/pmansour/pimeet).
+
+## Features
+
+- **Multi-Platform Support**: Google Meet, Microsoft Teams, Zoom
+- **Edge AI Processing**: Auto-framing, noise reduction, occupancy counting (with optional AI accelerator)
+- **Touch Screen UI**: Local room management interface
+- **Fleet Management**: Centralized dashboard for managing all devices
+- **Zero-Touch Provisioning**: Easy deployment at scale
+- **Modern Installation**: Non-destructive install on existing Raspberry Pi OS
+- **Cross-Platform Architecture**: Pi-first with abstraction for future PC support
+
+## Quick Start
+
+### One-Line Installation
+
+```bash
+curl -sSL https://raw.githubusercontent.com/your-org/pimeet-enhanced/main/installer/install.sh | sudo bash
+```
+
+### Manual Installation
+
+```bash
+git clone https://github.com/your-org/pimeet-enhanced.git
+cd pimeet-enhanced
+pip install -e .
+pimeet -c /etc/pimeet/config.yaml
+```
+
+## Cost Comparison
+
+| Feature | Cisco Room Kit | PiMeet Enterprise |
+|---------|---------------|-------------------|
+| Hardware Cost | $3,000-15,000 | <$250 (with AI) |
+| Multi-Platform | Limited | Yes (Meet, Teams, Zoom) |
+| Central Management | Control Hub | Dashboard |
+| AI Features | Yes | Yes (with accelerator) |
+| Monthly Fee | $15/device | Free (open source) |
+
+---
 
 ## Background
-### Hybrid meetings
-The COVID-19 pandemic that started in 2020 took many organizations and businesses by surprise, forcing many to move to a work-from-home model and turn in-person meetings into digital ones. Many small organizations without dedicated IT organizations, such as churches, also had to scramble to use an online solution (e.g. Zoom, Google Meet, Microsoft Teams) for their regular meetings.
 
-As society has gone back-and-forth between different waves of the pandemic, one thing became clear: **hybrid meetings are here to stay**. Even as many organizations return to in-person meetings, there is still a sizable chunk of the volunteer and workforce that will remain remote. The reasons for this are no longer limited to just COVID-19 precautions; they now also include convenience, physical relocation, and many other reasons.
+### Origins
+This project builds on the original PiMeet, which uses a Raspberry Pi 4 to turn any room into a cheap conference room that can automatically join meetings on its calendar.
 
-### Cost of existing devices
-There are some existing devices on the market for turning regular rooms with a TV into “meeting rooms”. Unfortunately, such devices are expensive enough to be infeasible for most small businesses and nonprofits. For example, Logitech has [a suite](https://www.logitech.com/en-us/products/video-conferencing/room-solutions/google-meet.html) of Google Meet video conferencing hardware, but prices start at around $1,500-$2,000 **per room**. For a small organization looking to configure 6-12 meeting rooms (e.g. for each Sunday School class at a church), the cost of this hardware alone (without wiring or installation) can easily approach $20,000, which is often well above the available budgets.
+### The Enterprise Challenge
+While the original PiMeet solved the cost problem brilliantly, enterprise deployments need additional capabilities:
+- Fleet management across many rooms
+- Multi-platform support (not just Google Meet)
+- AI features for professional meeting quality
+- Touch UI for non-technical users
+- Remote monitoring and troubleshooting
 
-### Why not a laptop?
-A common way to solve the hybrid meeting problem is to have someone bring over a laptop, connect it to a TV through a HDMI cable, join the meeting from there and share their screen. Not only is this approach limited (weak laptop microphone and camera, echo), but it’s also ad-hoc and hard to repeat consistently since it requires some level of technical proficiency to get everything set up and troubleshoot common issues. It also has several failure modes, such as missing or incorrect cables, spotty connections, different instructions for Windows/Mac/Linux and so on.
-
-While this can work in some cases where the presenter knows what they’re doing and is prepared, it creates a lot of friction for individuals without a ton of technical proficiency. It also makes for a difficult “IT support” journey due to the inconsistent hardware used.
+### Why Raspberry Pi?
+Existing enterprise devices cost $3,000-15,000+ per room. For organizations with 10-50 meeting rooms, that's $30,000-750,000 just for hardware. PiMeet Enterprise delivers comparable features for under $250 per room.
 
 ## Design goals
 This solution was designed to solve the above issues. Specifically, we aim to create a solution that is:

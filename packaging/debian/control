@@ -1,0 +1,41 @@
+Source: pimeet
+Section: video
+Priority: optional
+Maintainer: PiMeet Team <pimeet@example.com>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               python3-all,
+               python3-setuptools,
+               python3-pip
+Standards-Version: 4.6.2
+Homepage: https://github.com/your-org/pimeet-enhanced
+Rules-Requires-Root: no
+
+Package: pimeet
+Architecture: any
+Depends: ${python3:Depends},
+         ${misc:Depends},
+         python3 (>= 3.10),
+         python3-pip,
+         python3-venv,
+         chromium-browser,
+         pulseaudio,
+         v4l-utils,
+         cec-utils
+Recommends: libcamera-apps,
+            python3-pyside6.qtcore,
+            python3-pyside6.qtgui,
+            python3-pyside6.qtwidgets,
+            python3-pyside6.qtqml,
+            python3-pyside6.qtquick
+Suggests: hailo-firmware,
+          libedgetpu1-std
+Description: Enterprise video conferencing for Raspberry Pi
+ PiMeet transforms a Raspberry Pi into an enterprise-grade
+ video conferencing appliance with support for Google Meet,
+ Microsoft Teams, and Zoom. Features include:
+  - Multi-platform meeting support
+  - Edge AI for auto-framing and noise reduction
+  - Touch screen room management UI
+  - Central fleet management dashboard
+  - Zero-touch device provisioning
