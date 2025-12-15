@@ -24,6 +24,9 @@ Welcome to the PiMeet Enterprise documentation. This documentation covers the en
 - [PRD-002: Multi-Platform Support](prd/002-multi-platform-support.md)
 - [PRD-003: Device Provisioning](prd/003-device-provisioning.md)
 - [PRD-004: Security & Compliance](prd/004-security-compliance.md)
+- [PRD-005: Touch Screen Room UI](prd/005-touch-screen-room-ui.md) - Local management interface
+- [PRD-006: Edge AI Features](prd/006-edge-ai-features.md) - AI for Raspberry Pi hardware
+- [PRD-007: Modern Installation](prd/007-modern-installation.md) - Non-destructive install on existing OS
 
 ---
 
@@ -35,12 +38,16 @@ docs/
 ├── roadmap/
 │   ├── enterprise-roadmap.md    # Vision and phases
 │   ├── feature-index.md         # Feature tracking
-│   └── upstream-contributions.md # Upstream PR/issue tracking
+│   ├── upstream-contributions.md # Upstream PR/issue tracking
+│   └── dashboard-implementation.md # Technical architecture
 ├── prd/
 │   ├── 001-management-dashboard.md
 │   ├── 002-multi-platform-support.md
 │   ├── 003-device-provisioning.md
-│   └── 004-security-compliance.md
+│   ├── 004-security-compliance.md
+│   ├── 005-touch-screen-room-ui.md   # Local touch interface
+│   ├── 006-edge-ai-features.md       # AI on Pi hardware
+│   └── 007-modern-installation.md    # Non-destructive install
 └── guides/
     ├── user-guide.md            # End user documentation
     ├── administrator-guide.md   # IT admin documentation
@@ -53,49 +60,59 @@ docs/
 
 ### Goal
 Transform PiMeet from a simple conference room automation tool into an enterprise-grade video conferencing solution that:
+- **Installs on existing Raspberry Pi OS** without reformatting
+- **Supports modern OS versions** (Bookworm, Trixie)
+- Provides **local touch screen management UI** for room control
+- Features **edge AI processing** for auto-framing and noise reduction
 - Supports multiple meeting platforms (Google Meet, Teams, Zoom, Webex)
 - Provides centralized fleet management
 - Meets enterprise security requirements
 - Scales to hundreds of devices
-- Costs <$200 per room vs $3,000-15,000 for Cisco
+- Costs <$250 per room (with AI) vs $3,000-15,000 for Cisco
 
 ### Target Users
 - **End Users:** Meeting room participants
+- **Room Administrators:** Local room management via touch UI
 - **IT Administrators:** Device and fleet managers
 - **Facilities Managers:** Room utilization tracking
 
 ### Competitive Position
 | Feature | Cisco Room Kit | PiMeet Enterprise |
 |---------|---------------|-------------------|
-| Hardware Cost | $3,000-15,000 | <$200 |
+| Hardware Cost | $3,000-15,000 | <$250 (with AI) |
 | Multi-Platform | Yes | Yes (Phase 1) |
 | Central Management | Control Hub | Dashboard (Phase 1) |
-| AI Features | Yes | Phase 3 |
+| Local Touch UI | Yes | Yes (Phase 1) |
+| AI Features | Yes | Yes (Phase 2) |
+| Non-Destructive Install | N/A | Yes (Phase 1) |
 | Monthly Fee | $15/device | Free (open source) |
 
 ---
 
 ## Roadmap Summary
 
-### Phase 1: Foundation (Current)
+### Phase 1: Modern Foundation (Current)
+- **Modern Installation System** - apt packages, non-destructive install
+- **Touch Screen Room UI** - Local management interface
 - Management Dashboard MVP
 - Multi-platform support (Teams, Zoom)
 - Zero-touch device provisioning
-- IR remote control support
+- Bookworm/Trixie OS support
 
-### Phase 2: Enterprise
+### Phase 2: Enterprise & AI
+- **Edge AI Features** - Auto-framing, noise reduction, speaker detection
 - Advanced monitoring & analytics
 - Remote troubleshooting
 - Security hardening
 - Wireless content sharing
 
-### Phase 3: AI & Advanced
-- Speaker tracking
-- Auto-framing
+### Phase 3: Advanced Features
+- PTZ speaker tracking
 - Voice control
 - Room booking integration
+- Digital signage mode
 
-### Phase 4: Scale
+### Phase 4: Scale & Polish
 - High availability
 - Multi-tenant support
 - Mobile applications

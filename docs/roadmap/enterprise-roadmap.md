@@ -12,199 +12,233 @@ Transform PiMeet from a simple, cost-effective conference room solution into an 
 - Healthcare facilities
 - Government offices with budget constraints
 
+## Core Design Principles
+
+1. **Non-Destructive Installation:** Install on existing Raspberry Pi OS without reformatting
+2. **Modern OS Support:** Compatible with latest Raspberry Pi OS (Bookworm/Trixie)
+3. **Hardware Adaptive:** Features scale based on available hardware (Pi 4/5, AI accelerators)
+4. **Privacy First:** All AI processing happens locally, no cloud dependency
+5. **Simple Updates:** Standard apt package management, OTA updates
+
 ## Competitive Analysis
 
 ### Cisco Webex Room Kit (Enterprise Standard)
 | Feature | Cisco Room Kit | PiMeet Current | PiMeet Target |
 |---------|---------------|----------------|---------------|
-| Hardware Cost | $3,000-15,000 | <$100 | <$150 |
-| AI Speaker Tracking | Yes | No | Phase 3 |
+| Hardware Cost | $3,000-15,000 | <$100 | <$250 (with AI) |
+| AI Speaker Tracking | Yes | No | Phase 2 |
+| Auto-Framing | Yes | No | Phase 2 |
 | Multi-Platform Support | Yes | Google Meet only | Phase 1 |
 | Central Management | Control Hub | None | Phase 1 |
+| Local Touch UI | Yes | No | Phase 1 |
 | Analytics/Monitoring | Yes | None | Phase 2 |
 | Remote Troubleshooting | Yes | SSH only | Phase 2 |
-| Wireless Content Sharing | Yes | No | Phase 2 |
-| IR Remote Control | Yes | Experimental | Phase 1 |
+| Noise Reduction | Yes | No | Phase 2 |
+| Modern OS Support | N/A | Bullseye only | Phase 1 |
+| Non-Destructive Install | N/A | No (requires imaging) | Phase 1 |
 
 ---
 
-## Phase 1: Foundation & Multi-Platform Support (Q1)
+## Phase 1: Modern Foundation (Q1)
 
-### 1.1 Management Dashboard MVP
-**Priority: Critical**
+### 1.1 Modern Installation System ⭐ NEW
+**Priority: P0 - Critical** | **PRD:** [PRD-007](../prd/007-modern-installation.md)
 
-Build a web-based management dashboard for fleet management:
+Replace image-based deployment with modern package installation:
+- **One-line installer:** `curl -fsSL https://get.pimeet.io | bash`
+- **APT packages:** Standard Debian package management
+- **Non-destructive:** Install on existing Raspberry Pi OS
+- **OS Support:** Bookworm (Debian 12), Trixie (Debian 13) ready
+- **Hardware Support:** Raspberry Pi 4B and Pi 5 (primary targets)
+- **Update system:** apt-based updates, rollback support
+- **Migration:** Tools for legacy (image-based) to modern installation
+
+**Packages:**
+- `pimeet-core` - Agent and meeting functionality
+- `pimeet-browser` - Chromium configuration and extensions
+- `pimeet-ui` - Touch screen interface (optional)
+- `pimeet-ai` - AI features (optional)
+
+### 1.2 Touch Screen Room UI ⭐ NEW
+**Priority: P1 - High** | **PRD:** [PRD-005](../prd/005-touch-screen-room-ui.md)
+
+Local management interface for room administrators:
+- **Display Support:** Official Raspberry Pi Touch Display (7"), HDMI touch displays
+- **Features:**
+  - Room status at a glance (next meeting, system health)
+  - Meeting controls (mute, camera, leave)
+  - Quick join for ad-hoc meetings
+  - WiFi and network configuration
+  - Audio/video device selection
+  - Diagnostics and troubleshooting
+- **Framework:** Qt6/QML with PySide6
+- **Accessibility:** Touch-first design, remote/keyboard navigation
+- **Local Web Interface:** Same UI accessible via browser at `http://pimeet.local:8080`
+
+### 1.3 Management Dashboard MVP
+**Priority: P0 - Critical** | **PRD:** [PRD-001](../prd/001-management-dashboard.md)
+
+Web-based fleet management:
 - Device registration and inventory
 - Real-time device status monitoring
 - Remote configuration management
-- Credential management (secure vault)
+- Credential management (encrypted)
 - Bulk device provisioning
 - Basic alerting (device offline, errors)
 
 **Technical Stack:**
-- Backend: Node.js/Express or Python/FastAPI
-- Frontend: React or Vue.js
-- Database: PostgreSQL or SQLite (embedded)
-- Communication: MQTT or WebSocket for real-time updates
+- Backend: Node.js/Express
+- Frontend: React + TypeScript
+- Database: PostgreSQL
+- Real-time: WebSocket/Socket.IO
 
-### 1.2 Multi-Platform Meeting Support
-**Priority: High**
+### 1.4 Multi-Platform Meeting Support
+**Priority: P0 - Critical** | **PRD:** [PRD-002](../prd/002-multi-platform-support.md)
 
-Extend beyond Google Meet to support:
-- [x] Google Meet (current)
-- [ ] Microsoft Teams (via browser)
-- [ ] Zoom (via browser)
-- [ ] Webex (via browser)
-- [ ] Generic SIP/H.323 (future consideration)
+Extend beyond Google Meet:
+- [x] Google Meet (current - enhancement needed)
+- [ ] Microsoft Teams (browser-based)
+- [ ] Zoom (browser-based)
+- [ ] Webex (browser-based)
 
 **Implementation:**
 - Modular meeting provider architecture
-- Calendar integration for automatic platform detection
-- Per-room platform preference configuration
+- Calendar integration for auto-detection
+- Per-room platform preference
 
-### 1.3 IR Remote Control Support
-**Priority: Medium**
+### 1.5 Zero-Touch Device Provisioning
+**Priority: P1 - High** | **PRD:** [PRD-003](../prd/003-device-provisioning.md)
 
-Implement PR #15 (Samsung keymap) and extend:
-- Universal remote support framework
+Simple device setup:
+- Captive portal WiFi setup
+- QR code scanning for configuration
+- Dashboard-based remote provisioning
+- USB configuration file support
+
+### 1.6 IR Remote Control Support
+**Priority: P2 - Medium** | **Related:** Upstream PR #15
+
+Universal remote support:
+- Samsung, LG, Sony, Vizio keymaps
 - Configurable key mappings
-- Support for common TV remotes (Samsung, LG, Sony, Vizio)
-- Meeting control via remote (mute, end call, volume)
-
-### 1.4 Dynamic Device Setup
-**Priority: High**
-
-Address upstream Issue #6:
-- Web-based initial device setup (no pre-imaging)
-- WiFi configuration via captive portal
-- Credential input via local web interface
-- QR code scanning for quick setup
-
-### 1.5 Improved Build System
-**Priority: Medium**
-
-Address upstream Issue #5:
-- Migrate to pi-gen for image building
-- Create apt packages for components (Issue #9)
-- Support for OTA updates
-- Version management and rollback
+- Meeting control via remote
 
 ---
 
-## Phase 2: Enterprise Features (Q2)
+## Phase 2: Enterprise & AI Features (Q2)
 
-### 2.1 Advanced Monitoring & Analytics
-**Priority: High**
+### 2.1 Edge AI Features ⭐ NEW
+**Priority: P1 - High** | **PRD:** [PRD-006](../prd/006-edge-ai-features.md)
 
-Comprehensive monitoring system:
-- Device health metrics (CPU, memory, temperature, network)
-- Meeting quality metrics (audio/video quality, latency)
-- Usage statistics (meetings per day, duration, participants)
+Local AI processing on Raspberry Pi hardware:
+
+**Hardware Support:**
+| Hardware | TOPS | Features |
+|----------|------|----------|
+| Pi 5 + AI Kit (Hailo-8L) | 13 | Full AI features |
+| Pi 4/5 + Coral USB | 4 | Most AI features |
+| CPU only | ~1 | Basic features |
+
+**AI Features (by priority):**
+- **P0:** Person detection, noise reduction, echo cancellation
+- **P1:** Auto-framing (digital zoom), speaker detection
+- **P2:** PTZ speaker tracking, hand raise detection, occupancy analytics
+- **P3:** Gesture recognition
+
+**Privacy:**
+- All processing local (no cloud)
+- No data stored or transmitted
+- Privacy mode toggle in UI
+
+### 2.2 Advanced Monitoring & Analytics
+**Priority: P1 - High** | **PRD:** [PRD-001](../prd/001-management-dashboard.md)
+
+Comprehensive monitoring:
+- Device health metrics (CPU, memory, temperature)
+- Meeting quality metrics (audio/video quality)
 - Room utilization analytics
 - Historical data and trends
+- Exportable reports
 
-**Dashboard Features:**
-- Real-time device status map
-- Meeting history and logs
-- Performance graphs and charts
-- Exportable reports (PDF, CSV)
+### 2.3 Security Hardening
+**Priority: P0 - Critical** | **PRD:** [PRD-004](../prd/004-security-compliance.md)
 
-### 2.2 Remote Management & Troubleshooting
-**Priority: High**
+Enterprise security:
+- Encrypted credential storage (AES-256)
+- TLS everywhere (1.3 required)
+- LDAP/Active Directory integration
+- SSO support (SAML, OIDC)
+- MFA for dashboard
+- Comprehensive audit logging
+- SOC 2 Type II readiness
+
+### 2.4 Remote Management & Troubleshooting
+**Priority: P1 - High**
 
 Enterprise-grade remote management:
-- Remote reboot and shutdown
+- Remote reboot/shutdown
 - Log collection and analysis
 - Remote shell access (secure, audited)
 - Configuration push (bulk updates)
-- Firmware/software updates
-- Screen mirroring for troubleshooting
+- OTA software updates
+- Screen capture for troubleshooting
 
-### 2.3 Wireless Content Sharing
-**Priority: Medium**
+### 2.5 Wireless Content Sharing
+**Priority: P2 - Medium**
 
-Enable wireless presentation:
+Wireless presentation:
 - Miracast support
-- AirPlay support (via open-source implementations)
-- Chrome/Edge casting support
-- HDMI input passthrough for wired sources
-
-### 2.4 Enhanced Audio/Video
-**Priority: Medium**
-
-Improve AV quality:
-- Automatic audio device detection and configuration
-- Echo cancellation optimization
-- Noise reduction (software-based)
-- Multiple camera support
-- USB audio interface support (for larger rooms)
-
-### 2.5 Security Hardening
-**Priority: Critical**
-
-Enterprise security requirements:
-- Encrypted credential storage
-- TLS everywhere
-- Certificate management
-- LDAP/Active Directory integration
-- SSO support for dashboard
-- Audit logging
-- Compliance reporting (SOC2, HIPAA considerations)
+- AirPlay support
+- Chrome/Edge casting
+- HDMI input passthrough
 
 ---
 
-## Phase 3: AI & Advanced Features (Q3-Q4)
+## Phase 3: Advanced Features (Q3-Q4)
 
-### 3.1 AI-Powered Camera Features
-**Priority: Medium**
+### 3.1 Advanced AI Features
+**Priority: P2 - Medium** | **PRD:** [PRD-006](../prd/006-edge-ai-features.md)
 
-Leverage AI for improved meeting experience:
-- Speaker tracking (software-based with PTZ cameras)
-- Auto-framing (crop and zoom to participants)
+Enhanced AI capabilities:
+- PTZ camera speaker tracking
+- Advanced pose estimation
 - Meeting zone detection
-- Gesture recognition (raise hand detection)
-
-**Requirements:**
-- PTZ camera support (USB-based)
-- Edge AI processing (Coral TPU or similar)
-- or Cloud AI processing option
+- Gesture recognition (wave to start meeting)
 
 ### 3.2 Voice Control Integration
-**Priority: Low**
+**Priority: P3 - Low**
 
-Hands-free meeting control:
-- Wake word detection
-- Voice commands (join, leave, mute, unmute)
-- Integration with existing assistants (optional)
-- Privacy-first local processing
+Hands-free control (optional):
+- Wake word detection (local processing)
+- Voice commands (join, leave, mute)
+- Privacy-first design
 
 ### 3.3 Room Booking Integration
-**Priority: Medium**
+**Priority: P2 - Medium**
 
-Connect with room booking systems:
+Calendar and booking systems:
 - Google Calendar (current)
 - Microsoft 365/Exchange
-- Room booking displays integration
-- Occupancy sensing
-- Automatic room release
+- Room booking displays
+- Occupancy-based room release
+- Integration with booking platforms
 
 ### 3.4 Digital Signage Mode
-**Priority: Low**
+**Priority: P3 - Low**
 
-When not in meetings:
-- Display company announcements
-- Show upcoming meetings
+Idle display features:
+- Company announcements
+- Upcoming meetings
 - Room availability status
 - Custom content management
 
 ### 3.5 Advanced Interoperability
-**Priority: Medium**
+**Priority: P2 - Medium**
 
-Connect with enterprise systems:
+Enterprise integrations:
 - SIP/H.323 gateway support
-- Integration with PBX systems
-- Interop with legacy video conferencing
-- Recording and streaming integration
+- PBX system integration
+- Recording/streaming integration
 
 ---
 
@@ -220,31 +254,56 @@ Connect with enterprise systems:
 - Organization isolation
 - Role-based access control
 - White-label dashboard
-- Reseller support
+- Reseller/MSP support
 
 ### 4.3 Mobile Applications
-- iOS and Android apps for:
-  - Device management
-  - Remote control
-  - Meeting join via mobile
+- iOS and Android apps
+- Device management
+- Remote control
+- Meeting join via mobile
 
-### 4.4 Hardware Partnerships
-- Pre-configured hardware bundles
+### 4.4 Hardware Ecosystem
 - Certified peripheral list
+- Hardware bundles/kits
 - OEM partnerships
+
+---
+
+## Hardware Requirements
+
+### Minimum Hardware
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| Raspberry Pi | Pi 4B 2GB | Pi 5 4GB |
+| Storage | 16GB microSD | 32GB microSD |
+| Camera | Any USB webcam | Logitech C920/C922 |
+| Display (optional) | 7" touch | Official Pi Touch Display |
+
+### For AI Features
+| Feature Level | Hardware Required | Cost |
+|---------------|-------------------|------|
+| Basic (no AI) | Pi 4B 2GB | ~$55 |
+| Standard (limited AI) | Pi 5 4GB | ~$60 |
+| Full AI | Pi 5 + AI Kit | ~$130 |
+| Alternative | Pi 4/5 + Coral USB | ~$115-120 |
+
+### Supported Operating Systems
+- Raspberry Pi OS Bookworm 64-bit (primary)
+- Raspberry Pi OS Trixie 64-bit (coming 2025)
+- Ubuntu 24.04 arm64 (secondary)
 
 ---
 
 ## Upstream Contributions
 
 ### PRs to Implement
-1. **PR #15: Samsung keymap** - IR remote support foundation
+1. **PR #15:** Samsung keymap - IR remote support foundation
 
 ### Issues to Address
-1. **Issue #17: WiFi module / ad hoc setup** - Phase 1.4
-2. **Issue #9: Convert to apt packages** - Phase 1.5
-3. **Issue #6: Dynamic device setup** - Phase 1.4
-4. **Issue #5: Re-base on pi-gen** - Phase 1.5
+1. **Issue #17:** WiFi module / ad hoc setup → PRD-003, PRD-007
+2. **Issue #9:** Convert to apt packages → PRD-007
+3. **Issue #6:** Dynamic device setup → PRD-003
+4. **Issue #5:** Re-base on pi-gen → PRD-007 (alternative approach)
 
 ### Fork Integration (xaghy/pimeet)
 - On-Pi setup functionality
@@ -255,43 +314,50 @@ Connect with enterprise systems:
 ## Success Metrics
 
 ### Phase 1
-- [ ] Management dashboard deployed and managing 10+ devices
+- [ ] Installation works on existing Raspberry Pi OS (no reformat)
+- [ ] Touch UI functional on official Pi display
+- [ ] Management dashboard managing 10+ devices
 - [ ] Support for 3+ meeting platforms
-- [ ] IR remote working with 5+ TV brands
 - [ ] Zero-touch device provisioning working
 
 ### Phase 2
+- [ ] AI features running on Pi 5 + AI Kit
+- [ ] Auto-framing accuracy > 90%
+- [ ] Noise reduction measurably improves quality
 - [ ] 99.9% device uptime achieved
-- [ ] < 5 minute mean time to detect issues
-- [ ] Wireless content sharing working
 - [ ] Security audit passed
 
 ### Phase 3
-- [ ] AI features working on standard hardware
+- [ ] PTZ speaker tracking functional
 - [ ] Voice control accuracy > 95%
 - [ ] Room booking integration with 3+ platforms
 
 ### Phase 4
 - [ ] Supporting 1000+ devices per installation
 - [ ] Multi-tenant deployment active
-- [ ] Mobile apps with 4+ star ratings
+- [ ] Mobile apps launched
 
 ---
 
 ## Resource Requirements
 
 ### Development Team (Recommended)
-- 1 Full-stack Developer (Dashboard)
-- 1 Embedded/Systems Developer (Device software)
-- 1 DevOps Engineer (Infrastructure, CI/CD)
+- 1 Full-stack Developer (Dashboard, Touch UI)
+- 1 Systems Developer (Device software, AI integration)
+- 1 DevOps Engineer (Infrastructure, CI/CD, packages)
 - 0.5 QA Engineer
 - 0.5 Technical Writer
 
 ### Infrastructure
-- Cloud hosting for management dashboard
+- Package repository (apt)
+- Cloud hosting for dashboard
 - CI/CD pipeline
-- Device testing lab (5+ Raspberry Pi units)
-- Various webcams and audio devices for testing
+- Device testing lab:
+  - Raspberry Pi 4B (2GB, 4GB)
+  - Raspberry Pi 5 (4GB, 8GB)
+  - Pi AI Kit, Coral USB
+  - Various touch displays
+  - Multiple webcam models
 
 ---
 
@@ -299,11 +365,22 @@ Connect with enterprise systems:
 
 | Risk | Impact | Likelihood | Mitigation |
 |------|--------|------------|------------|
-| Hardware supply issues | High | Medium | Multiple vendor options |
-| Browser API changes | High | Medium | Abstraction layer, monitoring |
-| Security vulnerabilities | Critical | Medium | Security audits, bug bounty |
-| Performance on Pi | Medium | Low | Optimization, Pi 5 support |
-| Platform API changes | High | Medium | Modular architecture |
+| AI accelerator availability | Medium | Medium | Support multiple (Hailo, Coral, CPU) |
+| OS/API breaking changes | High | Medium | CI testing, version pinning |
+| Security vulnerabilities | Critical | Medium | Security audits, rapid patching |
+| Hardware performance limits | Medium | Low | Feature scaling, Pi 5 focus |
+| Browser platform changes | High | Medium | Modular provider architecture |
+
+---
+
+## Timeline Summary
+
+| Phase | Focus | Key Deliverables |
+|-------|-------|------------------|
+| **Phase 1** | Foundation | Modern install, Touch UI, Dashboard MVP, Multi-platform |
+| **Phase 2** | Enterprise | Edge AI, Security, Monitoring, Remote Management |
+| **Phase 3** | Advanced | PTZ tracking, Voice control, Room booking |
+| **Phase 4** | Scale | HA, Multi-tenant, Mobile apps |
 
 ---
 
@@ -312,3 +389,4 @@ Connect with enterprise systems:
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 1.0 | 2025-12-15 | Claude | Initial roadmap creation |
+| 2.0 | 2025-12-15 | Claude | Added Touch UI, Edge AI, Modern Installation |
