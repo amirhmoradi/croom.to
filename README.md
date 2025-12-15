@@ -11,8 +11,10 @@
 [![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5%20|%204-red.svg)](https://www.raspberrypi.com/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![GitHub Stars](https://img.shields.io/github/stars/amirhmoradi/pimeet-enhanced?style=social)](https://github.com/amirhmoradi/pimeet-enhanced)
+[![Made in France](https://img.shields.io/badge/Made%20in-France-blue.svg)](https://en.wikipedia.org/wiki/French_Tech)
+[![Digital Sovereignty](https://img.shields.io/badge/Digital-Sovereignty-purple.svg)](#-digital-sovereignty--data-privacy)
 
-[Features](#-features) • [Quick Start](#-quick-start) • [Documentation](#-documentation) • [Contributing](#-contributing) • [Community](#-community)
+[Features](#-features) • [Quick Start](#-quick-start) • [Sovereignty](#-digital-sovereignty--data-privacy) • [Documentation](#-documentation) • [Contributing](#-contributing)
 
 ---
 
@@ -21,6 +23,37 @@
 *Transform conference rooms with enterprise-grade video conferencing at a fraction of the cost*
 
 </div>
+
+---
+
+## 🇫🇷 Digital Sovereignty & Data Privacy
+
+> **PiMeet is a French initiative** committed to digital resilience, data privacy, and technological independence.
+
+In a world where video conferencing has become critical infrastructure, organizations deserve **control over their communication systems**. PiMeet was created to break free from:
+
+- **Vendor Lock-in**: No dependency on single cloud providers
+- **Data Exploitation**: Your meetings, your data — processed locally on your hardware
+- **Unpredictable Pricing**: No per-seat licenses that scale against you
+- **Opaque Systems**: Fully open source, audit everything
+
+### Our Principles
+
+| Principle | How PiMeet Delivers |
+|-----------|---------------------|
+| **Data Sovereignty** | All processing happens on YOUR hardware. No cloud required. |
+| **Privacy by Design** | AI runs locally via Hailo/Coral. No data leaves your network. |
+| **Open Source** | MIT licensed. Inspect, modify, and audit every line of code. |
+| **Vendor Independence** | Works with Meet, Teams, Zoom — switch platforms freely. |
+| **European Values** | GDPR-ready architecture. Built with privacy regulations in mind. |
+
+### Self-Hosted & Air-Gapped Ready
+
+PiMeet can operate **completely offline** in air-gapped environments:
+- No internet required for core functionality
+- Local AI processing with Hailo-8L or Coral TPU
+- On-premise management dashboard
+- Full functionality without external dependencies
 
 ## 💰 Why PiMeet?
 
@@ -99,6 +132,53 @@
 </td>
 </tr>
 </table>
+
+## 🎙️ Meeting Intelligence with Vexa Integration
+
+PiMeet integrates with [**Vexa**](https://github.com/Vexa-ai/vexa) — the open-source, self-hosted meeting transcription platform — for advanced meeting intelligence features while keeping **all data on your infrastructure**.
+
+### What Vexa Adds to PiMeet
+
+| Feature | Description |
+|---------|-------------|
+| **Real-time Transcription** | Live transcripts during meetings (100+ languages) |
+| **Meeting Summaries** | AI-generated summaries and action items |
+| **Searchable Archives** | Find any discussion across all your meetings |
+| **Translation** | Real-time translation between 100 languages |
+| **Self-Hosted** | Run on your infrastructure — no cloud dependency |
+
+### Why Vexa + PiMeet?
+
+Both projects share the same values:
+- **Open Source** (Vexa: Apache 2.0, PiMeet: MIT)
+- **Self-Hosted First** — Your data never leaves your network
+- **Privacy by Design** — No third-party data processing
+- **Enterprise Ready** — Built for organizations that take security seriously
+
+```bash
+# Deploy Vexa alongside PiMeet
+git clone https://github.com/Vexa-ai/vexa
+cd vexa && make all  # CPU mode (add GPU=1 for GPU acceleration)
+```
+
+### Integration Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Your Infrastructure                          │
+│                                                                 │
+│  ┌─────────────┐          ┌─────────────┐                      │
+│  │   PiMeet    │◄────────►│    Vexa     │                      │
+│  │   Device    │ WebSocket│  Instance   │                      │
+│  │             │          │             │                      │
+│  │ • Camera    │          │ • Whisper   │                      │
+│  │ • Audio     │──────────│ • Transcr.  │                      │
+│  │ • Display   │  Audio   │ • Summarize │                      │
+│  └─────────────┘  Stream  └─────────────┘                      │
+│                                                                 │
+│  No data leaves your network. Everything runs locally.         │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ## 🚀 Quick Start
 
@@ -234,6 +314,43 @@ make dev
   <img src="https://contrib.rocks/image?repo=amirhmoradi/pimeet-enhanced" />
 </a>
 
+## 🏢 Enterprise Offerings (Coming Soon)
+
+While PiMeet is and will always be **100% open source**, we're planning optional enterprise services for organizations that need additional support:
+
+### Open Source (Free Forever)
+- Full PiMeet functionality
+- Community support via GitHub
+- Self-hosted deployment
+- All core features included
+
+### Enterprise Support (Planned)
+| Service | Description |
+|---------|-------------|
+| **Priority Support** | SLA-backed response times, dedicated support channel |
+| **Professional Services** | Deployment assistance, custom integrations |
+| **Training** | Administrator and end-user training programs |
+| **Managed Updates** | Tested update packages, security patches |
+
+### Enterprise Features (Planned)
+| Feature | Description |
+|---------|-------------|
+| **SSO Integration** | SAML/OIDC with your identity provider |
+| **Advanced Analytics** | Meeting quality scoring, usage reports, ROI dashboards |
+| **Compliance Packages** | Pre-configured for GDPR, HIPAA, SOC 2 |
+| **Multi-Tenant Management** | MSP/reseller dashboard for managing multiple orgs |
+| **Hardware Bundles** | Pre-configured, tested hardware kits |
+
+### Vexa Enterprise Integration (Planned)
+| Feature | Description |
+|---------|-------------|
+| **Managed Vexa Cluster** | Hosted transcription infrastructure |
+| **Meeting Intelligence Suite** | Advanced analytics, sentiment analysis, coaching |
+| **Compliance Recording** | Automated retention policies, legal hold |
+| **API Access** | Programmatic access to transcripts and insights |
+
+> **Interested in enterprise offerings?** [Contact us](mailto:enterprise@pimeet.dev) or [open a discussion](https://github.com/amirhmoradi/pimeet-enhanced/discussions) to share your requirements.
+
 ## 📜 License
 
 PiMeet Enterprise is [MIT licensed](LICENSE). Use it freely in personal and commercial projects.
@@ -242,6 +359,7 @@ PiMeet Enterprise is [MIT licensed](LICENSE). Use it freely in personal and comm
 
 - Built on the foundation of the original [PiMeet](https://github.com/pmansour/pimeet) project
 - Inspired by enterprise solutions like Cisco Webex Room Kit and Poly Studio
+- Meeting intelligence powered by [Vexa](https://github.com/Vexa-ai/vexa) — open-source transcription
 - Thanks to all [contributors](https://github.com/amirhmoradi/pimeet-enhanced/graphs/contributors) who make this possible
 
 ---
@@ -251,6 +369,12 @@ PiMeet Enterprise is [MIT licensed](LICENSE). Use it freely in personal and comm
 **⭐ Star us on GitHub — it motivates us a lot!**
 
 [Report Bug](https://github.com/amirhmoradi/pimeet-enhanced/issues) · [Request Feature](https://github.com/amirhmoradi/pimeet-enhanced/issues) · [Join Discussion](https://github.com/amirhmoradi/pimeet-enhanced/discussions)
+
+---
+
+🇫🇷 **A French Initiative for Digital Sovereignty**
+
+*Breaking vendor lock-in. Protecting data privacy. Empowering organizations.*
 
 Made with ❤️ by the PiMeet Community
 
