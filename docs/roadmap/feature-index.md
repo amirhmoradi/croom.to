@@ -68,9 +68,9 @@ Quick reference for all planned features with their status, priority, and docume
 | Device inventory | P0 | Complete | [PRD-001](../prd/001-management-dashboard.md) | List/search |
 | Real-time status | P0 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Online/offline |
 | Configuration management | P0 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Remote config |
-| Credential vault | P0 | In Progress | [PRD-001](../prd/001-management-dashboard.md) | Encrypted storage |
-| Basic alerting | P1 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Email/Slack |
-| User management | P1 | In Progress | [PRD-001](../prd/001-management-dashboard.md) | RBAC |
+| Credential vault | P0 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Encrypted storage |
+| Basic alerting | P1 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Email/Slack/Teams/MQTT |
+| User management | P1 | Complete | [PRD-001](../prd/001-management-dashboard.md) | RBAC |
 
 ### Multi-Platform Support
 
@@ -87,11 +87,11 @@ Quick reference for all planned features with their status, priority, and docume
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| Captive portal setup | P0 | Planned | [PRD-003](../prd/003-device-provisioning.md) | WiFi AP mode |
-| USB configuration | P1 | Planned | [PRD-003](../prd/003-device-provisioning.md) | Config file |
-| QR code setup | P2 | Planned | [PRD-003](../prd/003-device-provisioning.md) | Scan to configure |
-| Dashboard registration | P1 | Planned | [PRD-003](../prd/003-device-provisioning.md) | Auto-register |
-| 802.1X WiFi support | P2 | Planned | [PRD-003](../prd/003-device-provisioning.md) | Enterprise WiFi |
+| Captive portal setup | P0 | Complete | [PRD-003](../prd/003-device-provisioning.md) | WiFi AP mode |
+| USB configuration | P1 | Complete | [PRD-003](../prd/003-device-provisioning.md) | Config file |
+| QR code setup | P2 | Complete | [PRD-003](../prd/003-device-provisioning.md) | Scan to configure |
+| Dashboard registration | P1 | Complete | [PRD-003](../prd/003-device-provisioning.md) | Auto-register |
+| 802.1X WiFi support | P2 | Complete | [PRD-003](../prd/003-device-provisioning.md) | Enterprise WiFi |
 
 ### IR Remote Control
 
@@ -114,12 +114,12 @@ Quick reference for all planned features with their status, priority, and docume
 | Person detection | P0 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | All |
 | Noise reduction | P0 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | CPU (RNNoise) |
 | Echo cancellation | P0 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | CPU (Speex) |
-| Face detection | P1 | In Progress | [PRD-006](../prd/006-edge-ai-features.md) | All |
-| Auto-framing (digital) | P1 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | All |
+| Face detection | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | All |
+| Auto-framing (digital) | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | All |
 | Speaker detection | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | All |
-| Occupancy counting | P2 | In Progress | [PRD-006](../prd/006-edge-ai-features.md) | All |
-| Hand raise detection | P2 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | AI accelerator |
-| PTZ speaker tracking | P2 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | AI + PTZ camera |
+| Occupancy counting | P2 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | All |
+| Hand raise detection | P2 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | AI accelerator |
+| PTZ speaker tracking | P2 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | AI + PTZ camera |
 | Gesture recognition | P3 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | AI accelerator |
 | Pi AI Kit (Hailo) support | P0 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | 13 TOPS |
 | Coral USB support | P1 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | 4 TOPS |
@@ -146,21 +146,25 @@ Quick reference for all planned features with their status, priority, and docume
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| Device health metrics | P1 | Planned | [PRD-001](../prd/001-management-dashboard.md) | CPU/memory/temp |
-| Meeting quality metrics | P1 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Audio/video |
-| Room utilization | P2 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Analytics |
-| Report generation | P2 | Planned | [PRD-001](../prd/001-management-dashboard.md) | PDF/CSV |
+| Device health metrics | P1 | Complete | [PRD-001](../prd/001-management-dashboard.md) | CPU/memory/temp |
+| Meeting quality metrics | P1 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Audio/video |
+| Room utilization | P2 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Analytics |
+| Report generation | P2 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Daily/Weekly |
 | SIEM integration | P2 | Complete | [PRD-004](../prd/004-security-compliance.md) | CEF/LEEF/JSON |
+| Alerting system | P1 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Email/Slack/Teams/MQTT |
+| Performance trends | P2 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Time-series analysis |
 
 ### Remote Management
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| Remote reboot | P1 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Device control |
-| Remote shell | P2 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Audited access |
-| Log collection | P1 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Troubleshooting |
-| Screen capture | P2 | Planned | [PRD-001](../prd/001-management-dashboard.md) | Remote view |
-| OTA updates | P1 | Planned | [PRD-007](../prd/007-modern-installation.md) | Remote deploy |
+| Remote reboot | P1 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Device control |
+| Remote shell | P2 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Whitelisted commands |
+| Log collection | P1 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Support bundles |
+| Screen capture | P2 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Remote view |
+| OTA updates | P1 | Complete | [PRD-007](../prd/007-modern-installation.md) | Remote deploy |
+| Diagnostics | P1 | Complete | [PRD-001](../prd/001-management-dashboard.md) | System tests |
+| Service restart | P1 | Complete | [PRD-001](../prd/001-management-dashboard.md) | Remote control |
 
 ### Wireless Content Sharing
 
@@ -178,8 +182,8 @@ Quick reference for all planned features with their status, priority, and docume
 
 | Feature | Priority | Status | PRD | Notes |
 |---------|----------|--------|-----|-------|
-| PTZ speaker tracking | P2 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | Requires PTZ |
-| Meeting zones | P2 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | Region detection |
+| PTZ speaker tracking | P2 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | VISCA protocol |
+| Meeting zones | P2 | Complete | [PRD-006](../prd/006-edge-ai-features.md) | Region detection |
 | Advanced gestures | P3 | Planned | [PRD-006](../prd/006-edge-ai-features.md) | Wave to start |
 
 ### Voice Control
@@ -283,3 +287,9 @@ Quick reference for all planned features with their status, priority, and docume
 | 2025-12-15 | Completed Calendar integration (Google + Microsoft 365) |
 | 2025-12-15 | Implemented PRD-003: Device Provisioning (captive portal, USB config, setup wizard) |
 | 2025-12-15 | Implemented PRD-004: Security & Compliance (encryption, MFA, SSO, RBAC, audit) |
+| 2025-12-15 | Completed PRD-001: Monitoring & Alerting (alerting system, remote ops, analytics) |
+| 2025-12-15 | Completed PRD-002: Meeting Controls (screen share, reactions, recording, quality) |
+| 2025-12-15 | Completed PRD-005: Touch UI Components (buttons, cards, meeting controls, keyboard) |
+| 2025-12-15 | Completed PRD-006: AI Features (auto-framing, speaker tracking, PTZ control) |
+| 2025-12-15 | Completed PRD-007: Installation System (component installer, dependency management) |
+| 2025-12-15 | Completed PRD-008: Cross-Platform HAL (GPIO, I2C, Camera, Display abstraction) |
