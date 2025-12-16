@@ -1,0 +1,223 @@
+---
+layout: default
+title: Contact Us
+description: Get in touch with the Croom team
+---
+
+<!-- Contact Section -->
+<section class="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-gradient-to-br from-gray-50 via-white to-primary-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6">
+        Get in Touch
+      </h1>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Have a question, suggestion, or just want to say hello? We'd love to hear from you.
+      </p>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-8 lg:p-12">
+      <form id="contactForm" class="space-y-6">
+        <!-- Name -->
+        <div>
+          <label for="name" class="block text-sm font-semibold text-gray-900 mb-2">Name *</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            placeholder="Your name"
+          >
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-semibold text-gray-900 mb-2">Email *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            placeholder="your@email.com"
+          >
+        </div>
+
+        <!-- Subject -->
+        <div>
+          <label for="subject" class="block text-sm font-semibold text-gray-900 mb-2">Subject *</label>
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            placeholder="What's this about?"
+          >
+        </div>
+
+        <!-- Message -->
+        <div>
+          <label for="message" class="block text-sm font-semibold text-gray-900 mb-2">Message *</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="6"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
+            placeholder="Tell us more..."
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button
+            type="submit"
+            id="submitBtn"
+            class="w-full inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl hover:from-primary-700 hover:to-primary-800 shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span id="submitText">Send Message</span>
+            <svg id="submitIcon" class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+            <svg id="loadingIcon" class="hidden w-5 h-5 ml-2 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden p-4 bg-green-50 border border-green-200 rounded-xl">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h3 class="font-semibold text-green-900 mb-1">Message sent successfully!</h3>
+              <p class="text-sm text-green-700">Thank you for contacting us. We'll get back to you soon.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden p-4 bg-red-50 border border-red-200 rounded-xl">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h3 class="font-semibold text-red-900 mb-1">Failed to send message</h3>
+              <p class="text-sm text-red-700" id="errorText">Something went wrong. Please try again later.</p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Alternative Contact Methods -->
+    <div class="mt-16">
+      <h2 class="text-2xl font-bold text-gray-900 text-center mb-8">Other Ways to Connect</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <a href="https://github.com/amirhmoradi/croom.to/discussions" target="_blank" rel="noopener" class="block p-6 bg-white rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">GitHub Discussions</h3>
+              <p class="text-gray-600 text-sm">Join our community for questions, ideas, and general discussion.</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://github.com/amirhmoradi/croom.to/issues" target="_blank" rel="noopener" class="block p-6 bg-white rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-all">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Report Issues</h3>
+              <p class="text-gray-600 text-sm">Found a bug or have a feature request? Open an issue on GitHub.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const submitText = document.getElementById('submitText');
+  const submitIcon = document.getElementById('submitIcon');
+  const loadingIcon = document.getElementById('loadingIcon');
+  const successMessage = document.getElementById('successMessage');
+  const errorMessage = document.getElementById('errorMessage');
+  const errorText = document.getElementById('errorText');
+
+  // Cloudflare Worker endpoint - configure this with your actual worker URL
+  const WORKER_URL = 'https://contact.croom.to/submit';
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Hide previous messages
+    successMessage.classList.add('hidden');
+    errorMessage.classList.add('hidden');
+
+    // Show loading state
+    submitBtn.disabled = true;
+    submitText.textContent = 'Sending...';
+    submitIcon.classList.add('hidden');
+    loadingIcon.classList.remove('hidden');
+
+    // Get form data
+    const formData = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      subject: document.getElementById('subject').value,
+      message: document.getElementById('message').value,
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent
+    };
+
+    try {
+      const response = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        // Success
+        successMessage.classList.remove('hidden');
+        form.reset();
+      } else {
+        // Error response from server
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `Server error: ${response.status}`);
+      }
+    } catch (error) {
+      // Network or other error
+      console.error('Contact form error:', error);
+      errorText.textContent = error.message || 'Failed to send message. Please try again later or use an alternative contact method below.';
+      errorMessage.classList.remove('hidden');
+    } finally {
+      // Reset button state
+      submitBtn.disabled = false;
+      submitText.textContent = 'Send Message';
+      submitIcon.classList.remove('hidden');
+      loadingIcon.classList.add('hidden');
+    }
+  });
+</script>

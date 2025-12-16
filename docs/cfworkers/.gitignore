@@ -1,0 +1,23 @@
+# Wrangler build output
+.wrangler/
+dist/
+worker/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+
+# Environment files (NEVER commit these!)
+.env
+.env.local
+.env.*.local
+.dev.vars
+
+# OS files
+.DS_Store
+Thumbs.db

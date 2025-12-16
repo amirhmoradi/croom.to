@@ -54,6 +54,17 @@
 
   <style>
     [x-cloak] { display: none !important; }
+
+    /* Account for fixed banner + header */
+    body {
+      padding-top: 36px; /* Banner height */
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding-top: 32px; /* Smaller banner on mobile */
+      }
+    }
   </style>
 </head>
 <body class="font-sans antialiased text-gray-900 bg-white">

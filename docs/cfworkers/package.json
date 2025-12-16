@@ -1,0 +1,25 @@
+{
+  "name": "croom-contact-handler",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker for handling Croom contact form submissions",
+  "main": "contact-handler.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "tail": "wrangler tail",
+    "secret:list": "wrangler secret list",
+    "secret:put:bot": "wrangler secret put TELEGRAM_BOT_TOKEN",
+    "secret:put:chat": "wrangler secret put TELEGRAM_CHAT_ID"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "contact-form",
+    "telegram"
+  ],
+  "author": "Croom Team",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

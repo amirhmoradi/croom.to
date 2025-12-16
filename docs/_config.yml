@@ -1,6 +1,6 @@
 # Croom Website Configuration
 title: Croom
-description: "Turn Any Raspberry Pi Into a Professional Video Conferencing System. Open-source, self-hosted, privacy-first."
+description: "Turn Any Linux Device Into a Professional Video Conferencing System. Works on Raspberry Pi, x86, ARM, and more. Open-source, self-hosted, privacy-first."
 baseurl: ""
 url: "https://croom.to"
 
@@ -28,7 +28,7 @@ nav:
   - title: Documentation
     url: /docs/
   - title: GitHub
-    url: https://github.com/amirhmoradi/croom
+    url: https://github.com/amirhmoradi/croom.to
     external: true
 
 # Footer links
@@ -36,11 +36,11 @@ footer_links:
   - title: Documentation
     url: /docs/
   - title: GitHub
-    url: https://github.com/amirhmoradi/croom
+    url: https://github.com/amirhmoradi/croom.to
   - title: Discussions
-    url: https://github.com/amirhmoradi/croom/discussions
+    url: https://github.com/amirhmoradi/croom.to/discussions
   - title: Issues
-    url: https://github.com/amirhmoradi/croom/issues
+    url: https://github.com/amirhmoradi/croom.to/issues
 
 # Social
 social:
