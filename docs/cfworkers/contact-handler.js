@@ -37,18 +37,34 @@ async function sendToTelegram(botToken, chatId, message) {
 }
 
 /**
+ * Map inquiry type values to human-readable labels
+ */
+const inquiryTypeLabels = {
+  general: 'General Question',
+  technical: 'Technical Support',
+  enterprise: 'Enterprise Inquiry',
+  partnership: 'Partnership Opportunity',
+  contribution: 'Contributing to Project',
+  other: 'Other',
+};
+
+/**
  * Format contact form data as Telegram message
  * @param {Object} data - Contact form data
  * @returns {string}
  */
 function formatTelegramMessage(data) {
-  const { name, email, subject, message, timestamp, userAgent } = data;
+  const { name, email, inquiryType, organization, subject, message, timestamp, userAgent } = data;
+
+  const inquiryLabel = inquiryTypeLabels[inquiryType] || inquiryType;
+  const orgLine = organization ? `\n<b>Organization:</b> ${escapeHtml(organization)}` : '';
 
   return `
 🔔 <b>New Contact Form Submission</b>
 
 <b>From:</b> ${escapeHtml(name)}
 <b>Email:</b> ${escapeHtml(email)}
+<b>Type:</b> ${escapeHtml(inquiryLabel)}${orgLine}
 <b>Subject:</b> ${escapeHtml(subject)}
 
 <b>Message:</b>
@@ -77,6 +93,11 @@ function escapeHtml(text) {
 }
 
 /**
+ * Valid inquiry types
+ */
+const validInquiryTypes = ['general', 'technical', 'enterprise', 'partnership', 'contribution', 'other'];
+
+/**
  * Validate contact form data
  * @param {Object} data
  * @returns {Object} { valid: boolean, error?: string }
@@ -86,7 +107,7 @@ function validateContactData(data) {
     return { valid: false, error: 'No data provided' };
   }
 
-  const { name, email, subject, message } = data;
+  const { name, email, inquiryType, organization, subject, message } = data;
 
   // Check required fields
   if (!name || name.trim().length === 0) {
@@ -101,6 +122,15 @@ function validateContactData(data) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return { valid: false, error: 'Invalid email format' };
+  }
+
+  if (!inquiryType || !validInquiryTypes.includes(inquiryType)) {
+    return { valid: false, error: 'Invalid inquiry type' };
+  }
+
+  // Organization is required for enterprise and partnership inquiries
+  if ((inquiryType === 'enterprise' || inquiryType === 'partnership') && (!organization || organization.trim().length === 0)) {
+    return { valid: false, error: 'Organization is required for enterprise and partnership inquiries' };
   }
 
   if (!subject || subject.trim().length === 0) {
@@ -118,6 +148,10 @@ function validateContactData(data) {
 
   if (email.length > 100) {
     return { valid: false, error: 'Email is too long (max 100 characters)' };
+  }
+
+  if (organization && organization.length > 200) {
+    return { valid: false, error: 'Organization is too long (max 200 characters)' };
   }
 
   if (subject.length > 200) {
