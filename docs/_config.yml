@@ -1,6 +1,6 @@
 # Croom Website Configuration
 title: Croom
-description: "Turn Any Raspberry Pi Into a Professional Video Conferencing System. Open-source, self-hosted, privacy-first."
+description: "Turn Any Linux Device Into a Professional Video Conferencing System. Works on Raspberry Pi, x86, ARM, and more. Open-source, self-hosted, privacy-first."
 baseurl: ""
 url: "https://croom.to"
 
