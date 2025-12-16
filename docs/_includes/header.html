@@ -1,85 +1,21 @@
-<!-- Top Banner Marquee -->
-<div class="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-primary-600 via-purple-600 to-primary-600 text-white overflow-hidden">
-  <div class="marquee-container py-2">
-    <div class="marquee-content">
-      <span class="inline-flex items-center gap-2 mx-8">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/>
-        </svg>
-        <strong>Open Source Initiative</strong> • Making professional video conferencing accessible to everyone
-      </span>
-      <span class="inline-flex items-center gap-2 mx-8">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-        </svg>
-        <strong>Made in France 🇫🇷</strong> • Privacy-first • GDPR-ready
-      </span>
-      <span class="inline-flex items-center gap-2 mx-8">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
-          <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
-        </svg>
-        Save 90%+ vs Cisco • Under $250 per room • 100% transparent
-      </span>
-      <span class="inline-flex items-center gap-2 mx-8">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/>
-        </svg>
-        <strong>Open Source Initiative</strong> • Making professional video conferencing accessible to everyone
-      </span>
-      <span class="inline-flex items-center gap-2 mx-8">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/>
-        </svg>
-        <strong>Made in France 🇫🇷</strong> • Privacy-first • GDPR-ready
-      </span>
-      <span class="inline-flex items-center gap-2 mx-8">
-        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
-          <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
-        </svg>
-        Save 90%+ vs Cisco • Under $250 per room • 100% transparent
-      </span>
-    </div>
+<!-- French Initiative Banner -->
+<div class="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-blue-900 via-white/10 to-red-900 py-3">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <p class="text-sm text-white/90">
+      A French Initiative for Digital Resiliency &mdash; Breaking vendor lock-in. Protecting data privacy. Empowering organizations.
+    </p>
   </div>
 </div>
 
 <style>
-  .marquee-container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .marquee-content {
-    display: flex;
-    width: fit-content;
-    animation: marquee 45s linear infinite;
-    font-size: 0.875rem;
-    font-weight: 500;
-  }
-
-  @keyframes marquee {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  .marquee-content:hover {
-    animation-play-state: paused;
-  }
-
   /* Adjust header positioning to account for banner */
   header {
-    top: 36px !important;
+    top: 48px !important;
   }
 
   @media (max-width: 640px) {
     header {
-      top: 32px !important;
+      top: 44px !important;
     }
   }
 </style>
