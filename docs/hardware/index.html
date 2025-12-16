@@ -1,0 +1,775 @@
+---
+layout: default
+title: Hardware Guide
+description: Complete hardware recommendations for building professional Croom video conferencing systems on any budget.
+---
+
+<!-- Hero -->
+<section class="pt-32 pb-16 lg:pt-40 lg:pb-20 bg-gradient-to-br from-gray-50 via-white to-primary-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6">
+        Hardware Guide
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Build professional video conferencing systems for under $250 per room. Choose the right hardware for your space, from small huddle rooms to large conference rooms.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Platform Support -->
+<section class="py-12 bg-white border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-6 lg:p-8">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+          <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-lg font-bold text-blue-900 mb-2">Platform Flexibility</h3>
+          <p class="text-blue-800 mb-4">While this guide focuses on Raspberry Pi for affordability, Croom runs on any Linux system: x86/x64 desktops, ARM single-board computers, mini PCs, or virtual machines. Use any compatible hardware you prefer!</p>
+          <p class="text-sm text-blue-700"><strong>Minimum requirements:</strong> 2GB RAM, 8GB storage, ARM or x86 64-bit processor, Linux kernel 5.4+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Reference -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Room Size Recommendations</h2>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Small Room -->
+      <div class="bg-white rounded-2xl p-8 border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-all">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Small Room</h3>
+          <p class="text-gray-600 mb-4">1-4 people</p>
+          <div class="text-3xl font-extrabold text-primary-600">$180-$220</div>
+        </div>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            Raspberry Pi 4B (4GB)
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            1080p USB webcam
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            USB speakerphone
+          </li>
+        </ul>
+      </div>
+
+      <!-- Medium Room -->
+      <div class="bg-white rounded-2xl p-8 border-2 border-primary-500 shadow-lg relative">
+        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+          <span class="bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</span>
+        </div>
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 bg-primary-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Medium Room</h3>
+          <p class="text-gray-600 mb-4">5-8 people</p>
+          <div class="text-3xl font-extrabold text-primary-600">$280-$350</div>
+        </div>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            Raspberry Pi 4B (8GB)
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            4K USB webcam
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            Conference speakerphone
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            Optional: 7" touchscreen
+          </li>
+        </ul>
+      </div>
+
+      <!-- Large Room -->
+      <div class="bg-white rounded-2xl p-8 border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-all">
+        <div class="text-center mb-6">
+          <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Large Room</h3>
+          <p class="text-gray-600 mb-4">9-16 people</p>
+          <div class="text-3xl font-extrabold text-primary-600">$420-$550</div>
+        </div>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            Mini PC or Pi 5 (8GB)
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            4K PTZ camera
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            Ceiling microphone array
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            10" touchscreen controller
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Detailed Component Guide -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-12">Detailed Component Guide</h2>
+
+    <!-- Compute Units -->
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold text-gray-900 mb-6">1. Compute Unit</h3>
+      <div class="space-y-6">
+        <!-- Raspberry Pi 4B -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">Raspberry Pi 4 Model B</h4>
+              <p class="text-sm text-gray-600">Best value for most rooms</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$35-$75</span>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <p class="text-sm font-semibold text-gray-700 mb-2">Specifications:</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Quad-core ARM Cortex-A72 @ 1.5GHz</li>
+                <li>• 4GB or 8GB RAM options</li>
+                <li>• Gigabit Ethernet, Wi-Fi 5, Bluetooth 5.0</li>
+                <li>• 2× USB 3.0, 2× USB 2.0</li>
+                <li>• Dual 4K display support via micro HDMI</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-gray-700 mb-2">Recommendations:</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• <strong>4GB RAM:</strong> Small rooms (1-4 people)</li>
+                <li>• <strong>8GB RAM:</strong> Medium rooms (5-8 people)</li>
+                <li>• Requires USB power supply (5V/3A minimum)</li>
+                <li>• Add heatsink/fan for continuous operation</li>
+              </ul>
+            </div>
+          </div>
+          <p class="text-sm text-gray-500">Where to buy: <a href="https://www.raspberrypi.com/products/raspberry-pi-4-model-b/" target="_blank" rel="noopener" class="text-primary-600 hover:text-primary-700 underline">Official Pi Store</a>, Amazon, Adafruit, CanaKit</p>
+        </div>
+
+        <!-- Raspberry Pi 5 -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">Raspberry Pi 5</h4>
+              <p class="text-sm text-gray-600">Latest generation with better performance</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$60-$80</span>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <p class="text-sm font-semibold text-gray-700 mb-2">Specifications:</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Quad-core ARM Cortex-A76 @ 2.4GHz</li>
+                <li>• 4GB or 8GB RAM options</li>
+                <li>• Gigabit Ethernet, Wi-Fi 6, Bluetooth 5.0</li>
+                <li>• 2× USB 3.0, 2× USB 2.0</li>
+                <li>• PCIe 2.0 interface for M.2 HAT</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-gray-700 mb-2">Benefits:</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• 2-3× faster than Pi 4</li>
+                <li>• Better 4K video performance</li>
+                <li>• Enhanced AI processing capabilities</li>
+                <li>• Ideal for medium-to-large rooms</li>
+              </ul>
+            </div>
+          </div>
+          <p class="text-sm text-gray-500">Where to buy: <a href="https://www.raspberrypi.com/products/raspberry-pi-5/" target="_blank" rel="noopener" class="text-primary-600 hover:text-primary-700 underline">Official Pi Store</a>, Approved resellers</p>
+        </div>
+
+        <!-- Mini PC -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">x86 Mini PC</h4>
+              <p class="text-sm text-gray-600">Maximum performance and compatibility</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$150-$300</span>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <p class="text-sm font-semibold text-gray-700 mb-2">Recommended specs:</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Intel N100/N305 or AMD Ryzen 3</li>
+                <li>• 8GB+ RAM</li>
+                <li>• 128GB+ SSD storage</li>
+                <li>• Gigabit Ethernet</li>
+                <li>• Multiple USB ports, HDMI</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-gray-700 mb-2">Use cases:</p>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• Large conference rooms (9+ people)</li>
+                <li>• Multiple 4K displays</li>
+                <li>• Advanced AI features</li>
+                <li>• Enterprise deployments</li>
+              </ul>
+            </div>
+          </div>
+          <p class="text-sm text-gray-500">Brands: Beelink, GMKtec, MINISFORUM, Intel NUC</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cameras -->
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold text-gray-900 mb-6">2. Cameras</h3>
+      <div class="space-y-6">
+        <!-- Budget 1080p -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">1080p USB Webcam</h4>
+              <p class="text-sm text-gray-600">Basic quality for small rooms</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$25-$50</span>
+          </div>
+          <ul class="text-sm text-gray-600 space-y-2 mb-4">
+            <li>• 1920×1080 @ 30fps</li>
+            <li>• 90° field of view</li>
+            <li>• USB-A connection (UVC compatible)</li>
+            <li>• Suitable for 1-4 people</li>
+          </ul>
+          <p class="text-sm text-gray-500">Models: Logitech C920, C922, C925e; Microsoft LifeCam</p>
+        </div>
+
+        <!-- 4K Webcam -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">4K USB Webcam</h4>
+              <p class="text-sm text-gray-600">Professional quality for medium rooms</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$80-$150</span>
+          </div>
+          <ul class="text-sm text-gray-600 space-y-2 mb-4">
+            <li>• 3840×2160 @ 30fps (or 1080p @ 60fps)</li>
+            <li>• 90-120° field of view</li>
+            <li>• Better low-light performance</li>
+            <li>• Suitable for 4-8 people</li>
+          </ul>
+          <p class="text-sm text-gray-500">Models: Logitech Brio 4K, Razer Kiyo Pro, Anker PowerConf C300</p>
+        </div>
+
+        <!-- PTZ Camera -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">PTZ Camera (Pan-Tilt-Zoom)</h4>
+              <p class="text-sm text-gray-600">Best for large rooms with speaker tracking</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$200-$400</span>
+          </div>
+          <ul class="text-sm text-gray-600 space-y-2 mb-4">
+            <li>• 1080p or 4K resolution</li>
+            <li>• Mechanical pan/tilt with 10-20× zoom</li>
+            <li>• Auto-framing and speaker tracking</li>
+            <li>• HDMI and USB outputs</li>
+            <li>• Suitable for 8+ people</li>
+          </ul>
+          <p class="text-sm text-gray-500">Models: Logitech Rally, AVer CAM520, PTZOptics 12X/20X</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio -->
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold text-gray-900 mb-6">3. Audio Equipment</h3>
+      <div class="space-y-6">
+        <!-- USB Speakerphone -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">USB Speakerphone</h4>
+              <p class="text-sm text-gray-600">All-in-one solution for small rooms</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$50-$120</span>
+          </div>
+          <ul class="text-sm text-gray-600 space-y-2 mb-4">
+            <li>• Built-in microphone and speaker</li>
+            <li>• 360° microphone pickup</li>
+            <li>• Echo cancellation and noise reduction</li>
+            <li>• 6-10 ft pickup range</li>
+            <li>• Suitable for 1-4 people</li>
+          </ul>
+          <p class="text-sm text-gray-500">Models: Jabra Speak 510, Anker PowerConf S3, eMeet M2</p>
+        </div>
+
+        <!-- Conference Speakerphone -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">Conference Speakerphone</h4>
+              <p class="text-sm text-gray-600">Professional audio for medium rooms</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$150-$300</span>
+          </div>
+          <ul class="text-sm text-gray-600 space-y-2 mb-4">
+            <li>• Multiple microphone arrays</li>
+            <li>• Wider pickup range (15-20 ft)</li>
+            <li>• Better echo cancellation</li>
+            <li>• Daisy-chain capability</li>
+            <li>• Suitable for 4-8 people</li>
+          </ul>
+          <p class="text-sm text-gray-500">Models: Jabra Speak 750, Poly Sync 40/60, Anker PowerConf+</p>
+        </div>
+
+        <!-- Ceiling Microphone -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">Ceiling Microphone Array</h4>
+              <p class="text-sm text-gray-600">Best audio quality for large rooms</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$250-$600</span>
+          </div>
+          <ul class="text-sm text-gray-600 space-y-2 mb-4">
+            <li>• Ceiling-mounted for clean installation</li>
+            <li>• Beamforming microphone arrays</li>
+            <li>• 20+ ft pickup range</li>
+            <li>• Professional audio processing</li>
+            <li>• Requires separate speakers</li>
+            <li>• Suitable for 8-16 people</li>
+          </ul>
+          <p class="text-sm text-gray-500">Models: ClearOne CHAT 150, Yamaha ADECIA, Shure MXA910</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Displays and Accessories -->
+    <div class="mb-16">
+      <h3 class="text-2xl font-bold text-gray-900 mb-6">4. Display & Accessories</h3>
+      <div class="space-y-6">
+        <!-- Touchscreen Controller -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">Touchscreen Controller</h4>
+              <p class="text-sm text-gray-600">Optional room control interface</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$60-$200</span>
+          </div>
+          <ul class="text-sm text-gray-600 space-y-2 mb-4">
+            <li>• <strong>7" display:</strong> $60-$80 (budget option)</li>
+            <li>• <strong>10" display:</strong> $100-$150 (standard)</li>
+            <li>• <strong>15" display:</strong> $150-$200 (premium)</li>
+            <li>• Mount on wall or desk stand</li>
+            <li>• Shows calendar, join meetings, control room</li>
+          </ul>
+          <p class="text-sm text-gray-500">Options: Official Pi touchscreen, USB touchscreen monitors</p>
+        </div>
+
+        <!-- Storage and Power -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">Storage & Power</h4>
+              <p class="text-sm text-gray-600">Essential accessories</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$20-$40</span>
+          </div>
+          <ul class="text-sm text-gray-600 space-y-2 mb-4">
+            <li>• <strong>MicroSD card:</strong> 32GB minimum (Class 10/U3) - $8-$15</li>
+            <li>• <strong>Power supply:</strong> Official Pi adapter or USB-C PD - $10-$15</li>
+            <li>• <strong>Case:</strong> Passive or active cooling - $5-$20</li>
+            <li>• <strong>Ethernet cable:</strong> Cat6 recommended - $5-$10</li>
+          </ul>
+        </div>
+
+        <!-- Optional: AI Accelerators -->
+        <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">AI Accelerator (Optional)</h4>
+              <p class="text-sm text-gray-600">For enhanced edge AI features</p>
+            </div>
+            <span class="text-2xl font-bold text-primary-600">$25-$75</span>
+          </div>
+          <ul class="text-sm text-gray-600 space-y-2 mb-4">
+            <li>• <strong>Coral USB Accelerator:</strong> $25-$30 (if available)</li>
+            <li>• <strong>Hailo-8 AI Kit:</strong> $50-$75</li>
+            <li>• Enables faster auto-framing and speaker tracking</li>
+            <li>• Background blur and noise reduction</li>
+            <li>• Optional but recommended for best experience</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Complete Configurations -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Complete Room Configurations</h2>
+
+    <div class="space-y-8">
+      <!-- Budget Configuration -->
+      <div class="bg-white rounded-2xl p-8 border border-gray-200">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Budget Huddle Room</h3>
+            <p class="text-gray-600">Perfect for small offices and home offices (1-4 people)</p>
+          </div>
+          <div class="text-right">
+            <div class="text-3xl font-extrabold text-primary-600 mb-1">$180</div>
+            <p class="text-sm text-gray-500">Total cost</p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h4 class="font-bold text-gray-900 mb-4">Components:</h4>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-700">Raspberry Pi 4B (4GB)</span>
+                <span class="font-semibold text-gray-900">$55</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-700">Logitech C920 1080p webcam</span>
+                <span class="font-semibold text-gray-900">$70</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-700">Jabra Speak 510 speakerphone</span>
+                <span class="font-semibold text-gray-900">$120</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-700">32GB microSD + power + case</span>
+                <span class="font-semibold text-gray-900">$25</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-gray-900 mb-4">Features & Capabilities:</h4>
+            <ul class="space-y-2 text-sm text-gray-600">
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                1080p video quality at 30fps
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                360° audio pickup up to 8 ft
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                One-tap join with Meet, Teams, Zoom, Webex
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                Calendar integration for meeting visibility
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                Plug-and-play setup in 15 minutes
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standard Configuration -->
+      <div class="bg-gradient-to-br from-primary-50 to-purple-50 rounded-2xl p-8 border-2 border-primary-300">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-600 text-white rounded-full text-sm font-semibold mb-3">
+              Recommended
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Standard Conference Room</h3>
+            <p class="text-gray-600">Ideal for most meeting rooms (5-8 people)</p>
+          </div>
+          <div class="text-right">
+            <div class="text-3xl font-extrabold text-primary-600 mb-1">$315</div>
+            <p class="text-sm text-gray-500">Total cost</p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h4 class="font-bold text-gray-900 mb-4">Components:</h4>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center py-2 border-b border-primary-100">
+                <span class="text-gray-700">Raspberry Pi 4B (8GB)</span>
+                <span class="font-semibold text-gray-900">$75</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-primary-100">
+                <span class="text-gray-700">Logitech Brio 4K webcam</span>
+                <span class="font-semibold text-gray-900">$150</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-primary-100">
+                <span class="text-gray-700">Jabra Speak 750 speakerphone</span>
+                <span class="font-semibold text-gray-900">$200</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-primary-100">
+                <span class="text-gray-700">7" touchscreen (optional)</span>
+                <span class="font-semibold text-gray-900">$75</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-primary-100">
+                <span class="text-gray-700">64GB microSD + power + case</span>
+                <span class="font-semibold text-gray-900">$35</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-gray-900 mb-4">Features & Capabilities:</h4>
+            <ul class="space-y-2 text-sm text-gray-600">
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                4K video quality (or 1080p @ 60fps)
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                360° audio pickup up to 15 ft
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                Touch interface for calendar and controls
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                Advanced noise cancellation
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-primary-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                Optional AI accelerator for auto-framing
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Premium Configuration -->
+      <div class="bg-white rounded-2xl p-8 border border-gray-200">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Premium Boardroom</h3>
+            <p class="text-gray-600">Executive-grade setup for large spaces (9-16 people)</p>
+          </div>
+          <div class="text-right">
+            <div class="text-3xl font-extrabold text-primary-600 mb-1">$730</div>
+            <p class="text-sm text-gray-500">Total cost</p>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h4 class="font-bold text-gray-900 mb-4">Components:</h4>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-700">Intel N100 Mini PC (8GB/128GB)</span>
+                <span class="font-semibold text-gray-900">$180</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-700">PTZOptics 12X 4K PTZ camera</span>
+                <span class="font-semibold text-gray-900">$599</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-700">ClearOne CHAT 150 ceiling mic</span>
+                <span class="font-semibold text-gray-900">$299</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-700">Active speakers (pair)</span>
+                <span class="font-semibold text-gray-900">$100</span>
+              </div>
+              <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-gray-700">10" touchscreen controller</span>
+                <span class="font-semibold text-gray-900">$120</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-gray-900 mb-4">Features & Capabilities:</h4>
+            <ul class="space-y-2 text-sm text-gray-600">
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-purple-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                4K PTZ camera with auto-tracking
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-purple-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                Professional ceiling microphone array
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-purple-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                20+ ft audio pickup range
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-purple-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                Dual display support
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-5 h-5 text-purple-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                Enterprise-grade performance
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Comparison with Traditional Systems -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-900 text-center mb-4">Cost Comparison</h2>
+    <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      See how much you save with Croom compared to traditional enterprise solutions
+    </p>
+
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-200">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Configuration</th>
+            <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">Cisco Room Kit</th>
+            <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">Poly G7500</th>
+            <th class="px-6 py-4 text-center bg-primary-50 text-sm font-semibold text-primary-700 border-x border-primary-100">Croom</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">Small Room (1-4 people)</td>
+            <td class="px-6 py-4 text-center text-gray-600">$3,200</td>
+            <td class="px-6 py-4 text-center text-gray-600">$2,800</td>
+            <td class="px-6 py-4 text-center bg-primary-50 font-bold text-primary-700 border-x border-primary-100">$180</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">Medium Room (5-8 people)</td>
+            <td class="px-6 py-4 text-center text-gray-600">$5,500</td>
+            <td class="px-6 py-4 text-center text-gray-600">$4,200</td>
+            <td class="px-6 py-4 text-center bg-primary-50 font-bold text-primary-700 border-x border-primary-100">$315</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">Large Room (9-16 people)</td>
+            <td class="px-6 py-4 text-center text-gray-600">$15,000+</td>
+            <td class="px-6 py-4 text-center text-gray-600">$11,000+</td>
+            <td class="px-6 py-4 text-center bg-primary-50 font-bold text-primary-700 border-x border-primary-100">$730</td>
+          </tr>
+          <tr class="bg-gray-50">
+            <td class="px-6 py-4 font-bold text-gray-900">10 Medium Rooms</td>
+            <td class="px-6 py-4 text-center text-gray-600 font-semibold">$55,000+</td>
+            <td class="px-6 py-4 text-center text-gray-600 font-semibold">$42,000+</td>
+            <td class="px-6 py-4 text-center bg-primary-50 font-bold text-primary-700 border-x border-primary-100 text-xl">$3,150</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">Annual Licensing (per device)</td>
+            <td class="px-6 py-4 text-center text-gray-600">$180/year</td>
+            <td class="px-6 py-4 text-center text-gray-600">$144/year</td>
+            <td class="px-6 py-4 text-center bg-primary-50 font-bold text-primary-700 border-x border-primary-100">$0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-8 text-center">
+      <p class="text-lg text-gray-700">
+        <strong class="text-primary-600">Save $51,850+</strong> on a 10-room deployment (94% savings)
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Buying Tips -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Buying Tips & Best Practices</h2>
+
+    <div class="space-y-6">
+      <div class="bg-white rounded-xl p-6 border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-900 mb-3">🛒 Where to Buy</h3>
+        <ul class="text-gray-600 space-y-2">
+          <li>• <strong>Raspberry Pi:</strong> Official store, Adafruit, CanaKit, PiShop.us, The Pi Hut</li>
+          <li>• <strong>Cameras:</strong> Amazon, B&H Photo, Newegg, manufacturer websites</li>
+          <li>• <strong>Audio:</strong> Amazon, B&H Photo, CDW, manufacturer direct</li>
+          <li>• <strong>Touchscreens:</strong> Amazon, AliExpress, manufacturer stores</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-900 mb-3">✅ Compatibility Checklist</h3>
+        <ul class="text-gray-600 space-y-2">
+          <li>• Ensure cameras are UVC (USB Video Class) compatible</li>
+          <li>• Audio devices should be UAC (USB Audio Class) compatible</li>
+          <li>• Use quality microSD cards (SanDisk, Samsung) - avoid cheap brands</li>
+          <li>• Get official or high-quality power supplies (minimum 3A for Pi 4)</li>
+          <li>• Consider active cooling (heatsink + fan) for 24/7 operation</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-900 mb-3">💡 Pro Tips</h3>
+        <ul class="text-gray-600 space-y-2">
+          <li>• Start with one room to test before large deployment</li>
+          <li>• Buy equipment in bulk for better pricing (10+ units)</li>
+          <li>• Keep spare microSD cards and power supplies on hand</li>
+          <li>• Label all equipment with room names and asset tags</li>
+          <li>• Document your configuration for reproducibility</li>
+        </ul>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-900 mb-3">🔄 Future-Proofing</h3>
+        <ul class="text-gray-600 space-y-2">
+          <li>• Choose USB-C cameras and audio for better compatibility</li>
+          <li>• Consider 8GB RAM models for longevity</li>
+          <li>• Plan for AI accelerators even if not using initially</li>
+          <li>• Buy quality components - they'll last 5+ years</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 bg-gradient-to-br from-primary-600 to-purple-700 text-white">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl font-bold mb-6">Ready to Build Your System?</h2>
+    <p class="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+      Start with our quick installation guide and have your first room running in 15 minutes.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="{{ '/docs/' | relative_url }}" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white text-primary-700 font-semibold rounded-2xl hover:bg-primary-50 transition-colors text-lg">
+        Installation Guide
+        <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+      </a>
+      <a href="{{ '/contact/?type=enterprise' | relative_url }}" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white/10 text-white font-semibold rounded-2xl border-2 border-white/30 hover:bg-white/20 transition-colors text-lg">
+        Need Help? Contact Us
+      </a>
+    </div>
+  </div>
+</section>

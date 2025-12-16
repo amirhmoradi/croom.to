@@ -223,8 +223,12 @@ description: Croom documentation
     }
 
     try {
+      // Construct the full path to the markdown file
+      // The markdown files are in the /docs/ directory
+      const fullPath = `{{ site.baseurl | default: '' }}/${docPath}`;
+
       // Fetch the markdown file
-      const response = await fetch(docPath);
+      const response = await fetch(fullPath);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

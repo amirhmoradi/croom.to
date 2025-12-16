@@ -45,6 +45,37 @@ description: Get in touch with the Croom team
           >
         </div>
 
+        <!-- Inquiry Type -->
+        <div>
+          <label for="inquiryType" class="block text-sm font-semibold text-gray-900 mb-2">Inquiry Type *</label>
+          <select
+            id="inquiryType"
+            name="inquiryType"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+          >
+            <option value="">Select an option...</option>
+            <option value="general">General Question</option>
+            <option value="technical">Technical Support</option>
+            <option value="enterprise">Enterprise Inquiry</option>
+            <option value="partnership">Partnership Opportunity</option>
+            <option value="contribution">Contributing to Project</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <!-- Organization (shown for enterprise inquiries) -->
+        <div id="orgField" class="hidden">
+          <label for="organization" class="block text-sm font-semibold text-gray-900 mb-2">Organization</label>
+          <input
+            type="text"
+            id="organization"
+            name="organization"
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            placeholder="Your organization name"
+          >
+        </div>
+
         <!-- Subject -->
         <div>
           <label for="subject" class="block text-sm font-semibold text-gray-900 mb-2">Subject *</label>
@@ -69,6 +100,23 @@ description: Get in touch with the Croom team
             class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
             placeholder="Tell us more..."
           ></textarea>
+        </div>
+
+        <!-- Captcha -->
+        <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+          <label for="captcha" class="block text-sm font-semibold text-gray-900 mb-2">
+            Security Check: What is <span id="captchaQuestion" class="font-mono text-primary-600"></span>? *
+          </label>
+          <input
+            type="text"
+            id="captcha"
+            name="captcha"
+            required
+            autocomplete="off"
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+            placeholder="Enter the answer"
+          >
+          <p class="text-xs text-gray-500 mt-2">This helps us prevent spam and ensure you're a real person.</p>
         </div>
 
         <!-- Submit Button -->
@@ -162,9 +210,46 @@ description: Get in touch with the Croom team
   const successMessage = document.getElementById('successMessage');
   const errorMessage = document.getElementById('errorMessage');
   const errorText = document.getElementById('errorText');
+  const inquiryTypeSelect = document.getElementById('inquiryType');
+  const orgField = document.getElementById('orgField');
+  const captchaQuestionEl = document.getElementById('captchaQuestion');
+  const captchaInput = document.getElementById('captcha');
 
   // Cloudflare Worker endpoint - configure this with your actual worker URL
   const WORKER_URL = 'https://contact.croom.to/submit';
+
+  // Captcha variables
+  let captchaAnswer = 0;
+
+  // Generate a simple math captcha
+  function generateCaptcha() {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    captchaAnswer = num1 + num2;
+    captchaQuestionEl.textContent = `${num1} + ${num2}`;
+  }
+
+  // Show/hide organization field based on inquiry type
+  inquiryTypeSelect.addEventListener('change', (e) => {
+    if (e.target.value === 'enterprise' || e.target.value === 'partnership') {
+      orgField.classList.remove('hidden');
+      document.getElementById('organization').required = true;
+    } else {
+      orgField.classList.add('hidden');
+      document.getElementById('organization').required = false;
+    }
+  });
+
+  // Check URL parameters for pre-selected inquiry type
+  const urlParams = new URLSearchParams(window.location.search);
+  const typeParam = urlParams.get('type');
+  if (typeParam && inquiryTypeSelect.querySelector(`option[value="${typeParam}"]`)) {
+    inquiryTypeSelect.value = typeParam;
+    inquiryTypeSelect.dispatchEvent(new Event('change'));
+  }
+
+  // Initialize captcha on page load
+  generateCaptcha();
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -172,6 +257,16 @@ description: Get in touch with the Croom team
     // Hide previous messages
     successMessage.classList.add('hidden');
     errorMessage.classList.add('hidden');
+
+    // Validate captcha
+    const userAnswer = parseInt(captchaInput.value);
+    if (userAnswer !== captchaAnswer) {
+      errorText.textContent = 'Incorrect answer to the security question. Please try again.';
+      errorMessage.classList.remove('hidden');
+      generateCaptcha();
+      captchaInput.value = '';
+      return;
+    }
 
     // Show loading state
     submitBtn.disabled = true;
@@ -183,6 +278,8 @@ description: Get in touch with the Croom team
     const formData = {
       name: document.getElementById('name').value,
       email: document.getElementById('email').value,
+      inquiryType: document.getElementById('inquiryType').value,
+      organization: document.getElementById('organization').value || null,
       subject: document.getElementById('subject').value,
       message: document.getElementById('message').value,
       timestamp: new Date().toISOString(),
@@ -202,6 +299,8 @@ description: Get in touch with the Croom team
         // Success
         successMessage.classList.remove('hidden');
         form.reset();
+        generateCaptcha();
+        captchaInput.value = '';
       } else {
         // Error response from server
         const errorData = await response.json().catch(() => ({}));
