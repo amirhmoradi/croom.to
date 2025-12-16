@@ -1,0 +1,48 @@
+<header class="site-header">
+  <div class="container">
+    <nav class="nav">
+      <a href="{{ '/' | relative_url }}" class="logo">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="url(#logo-gradient)"/>
+          <path d="M12 14C12 12.8954 12.8954 12 14 12H26C27.1046 12 28 12.8954 28 14V26C28 27.1046 27.1046 28 26 28H14C12.8954 28 12 27.1046 12 26V14Z" fill="white" fill-opacity="0.9"/>
+          <circle cx="16" cy="18" r="2" fill="#6366f1"/>
+          <circle cx="24" cy="18" r="2" fill="#6366f1"/>
+          <path d="M16 23C16 23 18 25 20 25C22 25 24 23 24 23" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="logo-gradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#6366f1"/>
+              <stop offset="1" stop-color="#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="logo-text">Croom</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links">
+        {% for item in site.nav %}
+        <li>
+          <a href="{{ item.url | relative_url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}{% if page.url == item.url %} class="active"{% endif %}>
+            {{ item.title }}
+            {% if item.external %}
+            <svg class="external-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"/>
+              <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"/>
+            </svg>
+            {% endif %}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <div class="nav-actions">
+        <a href="{{ '/docs/quickstart/' | relative_url }}" class="btn btn-primary">Get Started</a>
+      </div>
+    </nav>
+  </div>
+</header>

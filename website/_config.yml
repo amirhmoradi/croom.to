@@ -1,0 +1,65 @@
+# Croom Website Configuration
+title: Croom
+description: "Turn Any Raspberry Pi Into a Professional Video Conferencing System"
+tagline: "The open-source alternative to Cisco Webex Room Kit — for 1/50th the price"
+url: "https://croom.to"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Sass configuration
+sass:
+  style: compressed
+  sass_dir: _sass
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "docs"
+
+# Social links
+github_username: amirhmoradi
+repository: amirhmoradi/croom
+
+# Navigation
+nav:
+  - title: Features
+    url: /features/
+  - title: Docs
+    url: /docs/
+  - title: Pricing
+    url: /pricing/
+  - title: About
+    url: /about/
+  - title: GitHub
+    url: https://github.com/amirhmoradi/croom
+    external: true
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
