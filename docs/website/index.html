@@ -1,0 +1,401 @@
+---
+layout: default
+title: Open-Source Video Conferencing for Raspberry Pi
+description: Turn any Raspberry Pi into a professional video conferencing system. Self-hosted, privacy-first, and 90% cheaper than Cisco or Poly.
+---
+
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+  <!-- Background decoration -->
+  <div class="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-purple-50"></div>
+  <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary-100/50 to-transparent"></div>
+  <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%236366f1&quot; fill-opacity=&quot;0.03&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-4xl mx-auto">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-primary-100 to-purple-100 border border-primary-200 rounded-full text-sm font-semibold text-primary-700 mb-6">
+        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+        Open Source &bull; Self-Hosted &bull; Privacy-First
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+        Professional Video Conferencing<br>
+        <span class="bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">For Everyone</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+        Turn any Raspberry Pi into an enterprise-grade conference room system.
+        <strong class="text-gray-900">Save 90%+</strong> compared to Cisco or Poly while keeping
+        <strong class="text-gray-900">complete control of your data</strong>.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+        <a href="{{ '/docs/quickstart/' | relative_url }}" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-2xl hover:from-primary-700 hover:to-primary-800 shadow-xl shadow-primary-500/25 hover:shadow-primary-500/40 transition-all text-lg">
+          Get Started Free
+          <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+        </a>
+        <a href="https://github.com/amirhmoradi/croom" target="_blank" rel="noopener" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white text-gray-700 font-semibold rounded-2xl border-2 border-gray-200 hover:border-primary-300 hover:text-primary-600 transition-all text-lg">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          Star on GitHub
+        </a>
+      </div>
+
+      <!-- Terminal -->
+      <div class="max-w-xl mx-auto bg-gray-900 rounded-2xl shadow-2xl overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-3 bg-gray-800 border-b border-gray-700">
+          <span class="w-3 h-3 rounded-full bg-red-500"></span>
+          <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+          <span class="w-3 h-3 rounded-full bg-green-500"></span>
+          <span class="ml-2 text-sm text-gray-400">Terminal</span>
+        </div>
+        <div class="p-6 font-mono text-sm">
+          <p class="text-gray-400 mb-1"># One-line installation</p>
+          <p class="text-green-400"><span class="text-gray-500">$</span> curl -sSL https://croom.to/install.sh | sudo bash</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-16 bg-gradient-to-r from-primary-600 via-primary-700 to-purple-700">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+      <div>
+        <div class="text-4xl lg:text-5xl font-extrabold text-white mb-2">&lt;$250</div>
+        <div class="text-primary-200">Per Room Setup</div>
+      </div>
+      <div>
+        <div class="text-4xl lg:text-5xl font-extrabold text-white mb-2">90%+</div>
+        <div class="text-primary-200">Cost Savings</div>
+      </div>
+      <div>
+        <div class="text-4xl lg:text-5xl font-extrabold text-white mb-2">4+</div>
+        <div class="text-primary-200">Meeting Platforms</div>
+      </div>
+      <div>
+        <div class="text-4xl lg:text-5xl font-extrabold text-white mb-2">100%</div>
+        <div class="text-primary-200">Open Source</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission Section -->
+<section class="py-20 lg:py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto text-center mb-16">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+        Video Conferencing Should Be<br>
+        <span class="bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">Accessible to Everyone</span>
+      </h2>
+      <p class="text-xl text-gray-600">
+        Enterprise video conferencing hardware costs $3,000-15,000 per room. That's unaffordable for most schools, NGOs, small businesses, and community organizations. We believe everyone deserves professional communication tools.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- For Schools -->
+      <div class="bg-gradient-to-br from-blue-50 to-primary-50 rounded-2xl p-8 border border-blue-100">
+        <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+          <svg class="w-7 h-7 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">Schools & Universities</h3>
+        <p class="text-gray-600">Enable remote learning and collaboration in every classroom without breaking the budget.</p>
+      </div>
+
+      <!-- For NGOs -->
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-100">
+        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+          <svg class="w-7 h-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">NGOs & Non-Profits</h3>
+        <p class="text-gray-600">Connect distributed teams and volunteers globally while keeping costs minimal.</p>
+      </div>
+
+      <!-- For Businesses -->
+      <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border border-purple-100">
+        <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
+          <svg class="w-7 h-7 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-3">Small & Medium Businesses</h3>
+        <p class="text-gray-600">Get enterprise features without enterprise pricing. Scale from 1 to 500+ rooms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Overview -->
+<section class="py-20 lg:py-28 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Everything You Need, Nothing You Don't</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">Enterprise features without the enterprise complexity or price tag.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Multi-Platform -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-200 transition-all">
+        <div class="w-12 h-12 bg-gradient-to-br from-primary-100 to-purple-100 rounded-xl flex items-center justify-center mb-6">
+          <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Multi-Platform Support</h3>
+        <p class="text-gray-600">Works with Google Meet, Microsoft Teams, Zoom, and Webex. No vendor lock-in.</p>
+      </div>
+
+      <!-- AI Features -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-200 transition-all">
+        <div class="w-12 h-12 bg-gradient-to-br from-primary-100 to-purple-100 rounded-xl flex items-center justify-center mb-6">
+          <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Edge AI Processing</h3>
+        <p class="text-gray-600">Auto-framing, speaker tracking, and noise reduction. All processed locally on your device.</p>
+      </div>
+
+      <!-- Touch Screen -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-200 transition-all">
+        <div class="w-12 h-12 bg-gradient-to-br from-primary-100 to-purple-100 rounded-xl flex items-center justify-center mb-6">
+          <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Touch Screen Interface</h3>
+        <p class="text-gray-600">Beautiful room control UI. One-tap meeting join, calendar view, camera/mic controls.</p>
+      </div>
+
+      <!-- Fleet Management -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-200 transition-all">
+        <div class="w-12 h-12 bg-gradient-to-br from-primary-100 to-purple-100 rounded-xl flex items-center justify-center mb-6">
+          <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" /></svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Fleet Management</h3>
+        <p class="text-gray-600">Centralized dashboard for all devices. Real-time monitoring, remote config, and updates.</p>
+      </div>
+
+      <!-- Zero-Touch -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-200 transition-all">
+        <div class="w-12 h-12 bg-gradient-to-br from-primary-100 to-purple-100 rounded-xl flex items-center justify-center mb-6">
+          <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Zero-Touch Provisioning</h3>
+        <p class="text-gray-600">QR code enrollment. No manual setup per device. Scale to hundreds of rooms.</p>
+      </div>
+
+      <!-- Privacy -->
+      <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary-200 transition-all">
+        <div class="w-12 h-12 bg-gradient-to-br from-primary-100 to-purple-100 rounded-xl flex items-center justify-center mb-6">
+          <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Privacy by Design</h3>
+        <p class="text-gray-600">All processing happens on YOUR hardware. GDPR-ready. No cloud dependency.</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-12">
+      <a href="{{ '/features/' | relative_url }}" class="inline-flex items-center text-primary-600 font-semibold hover:text-primary-700">
+        See all features
+        <svg class="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Cost Comparison -->
+<section class="py-20 lg:py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Save 90%+ on Video Conferencing</h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">Why pay $15,000 when you can get the same features for under $250?</p>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-200">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600"></th>
+            <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">Cisco Room Kit</th>
+            <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">Poly Studio</th>
+            <th class="px-6 py-4 text-center bg-primary-50 text-sm font-semibold text-primary-700 border-x border-primary-100">Croom</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">Hardware Cost</td>
+            <td class="px-6 py-4 text-center text-gray-600">$3,000 - $15,000</td>
+            <td class="px-6 py-4 text-center text-gray-600">$2,000 - $8,000</td>
+            <td class="px-6 py-4 text-center bg-primary-50 font-bold text-primary-700 border-x border-primary-100">&lt; $250</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">Monthly License</td>
+            <td class="px-6 py-4 text-center text-gray-600">$15/device</td>
+            <td class="px-6 py-4 text-center text-gray-600">$12/device</td>
+            <td class="px-6 py-4 text-center bg-primary-50 font-bold text-primary-700 border-x border-primary-100">Free forever</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">10 Rooms (Year 1)</td>
+            <td class="px-6 py-4 text-center text-gray-600">$31,800+</td>
+            <td class="px-6 py-4 text-center text-gray-600">$21,440+</td>
+            <td class="px-6 py-4 text-center bg-primary-50 font-bold text-primary-700 border-x border-primary-100">~$2,500</td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">Multi-Platform</td>
+            <td class="px-6 py-4 text-center text-gray-400">Limited</td>
+            <td class="px-6 py-4 text-center text-gray-400">Limited</td>
+            <td class="px-6 py-4 text-center bg-primary-50 text-green-600 border-x border-primary-100">
+              <svg class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">AI Features</td>
+            <td class="px-6 py-4 text-center text-green-600">
+              <svg class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </td>
+            <td class="px-6 py-4 text-center text-green-600">
+              <svg class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </td>
+            <td class="px-6 py-4 text-center bg-primary-50 text-green-600 border-x border-primary-100">
+              <svg class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </td>
+          </tr>
+          <tr>
+            <td class="px-6 py-4 font-medium text-gray-900">Open Source</td>
+            <td class="px-6 py-4 text-center text-gray-400">
+              <svg class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </td>
+            <td class="px-6 py-4 text-center text-gray-400">
+              <svg class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </td>
+            <td class="px-6 py-4 text-center bg-primary-50 text-green-600 border-x border-primary-100">
+              <svg class="w-6 h-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-8 text-center">
+      <p class="text-lg text-gray-700">
+        <strong class="text-primary-600">Save $29,000+</strong> per year on a 10-room deployment while getting the same enterprise features.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Why Open Source -->
+<section class="py-20 lg:py-28 bg-gradient-to-br from-gray-900 via-gray-900 to-primary-900 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-500/20 border border-primary-500/30 rounded-full text-sm font-semibold text-primary-300 mb-6">
+          Digital Sovereignty
+        </div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-6">
+          Why Open Source Matters
+        </h2>
+        <p class="text-xl text-gray-300 mb-8">
+          In a world where video conferencing has become critical infrastructure, organizations deserve <strong class="text-white">control over their communication systems</strong>.
+        </p>
+
+        <div class="space-y-6">
+          <div class="flex gap-4">
+            <div class="w-10 h-10 bg-primary-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-white mb-1">Data Sovereignty</h3>
+              <p class="text-gray-400">All processing happens on YOUR hardware. No cloud required.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="w-10 h-10 bg-primary-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-white mb-1">Full Transparency</h3>
+              <p class="text-gray-400">MIT licensed. Inspect, modify, and audit every line of code.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="w-10 h-10 bg-primary-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-white mb-1">Vendor Independence</h3>
+              <p class="text-gray-400">Works with Meet, Teams, Zoom, Webex. Switch platforms freely.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <div class="w-10 h-10 bg-primary-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-white mb-1">Air-Gapped Ready</h3>
+              <p class="text-gray-400">Operate completely offline. Perfect for secure environments.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
+        <h3 class="text-xl font-bold mb-6">Our Principles</h3>
+        <div class="space-y-4">
+          <div class="flex items-start gap-4 p-4 bg-gray-800/50 rounded-xl">
+            <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">Privacy by Design</h4>
+              <p class="text-sm text-gray-400">AI runs locally via Hailo/Coral. No data leaves your network.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 bg-gray-800/50 rounded-xl">
+            <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">European Values</h4>
+              <p class="text-sm text-gray-400">GDPR-ready architecture. Built with privacy regulations in mind.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 p-4 bg-gray-800/50 rounded-xl">
+            <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white">Community Driven</h4>
+              <p class="text-sm text-gray-400">Features shaped by actual users. Contribute and shape the future.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 lg:py-28 bg-gradient-to-br from-primary-50 via-white to-purple-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+      Ready to Transform Your Meeting Rooms?
+    </h2>
+    <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+      Join hundreds of organizations using Croom to make video conferencing accessible, affordable, and private.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="{{ '/docs/quickstart/' | relative_url }}" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-2xl hover:from-primary-700 hover:to-primary-800 shadow-xl shadow-primary-500/25 hover:shadow-primary-500/40 transition-all text-lg">
+        Get Started in 15 Minutes
+        <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+      </a>
+      <a href="{{ '/pricing/' | relative_url }}" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white text-gray-700 font-semibold rounded-2xl border-2 border-gray-200 hover:border-primary-300 hover:text-primary-600 transition-all text-lg">
+        View Hardware Costs
+      </a>
+    </div>
+  </div>
+</section>
