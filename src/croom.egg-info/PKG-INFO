@@ -1,3 +1,47 @@
+Metadata-Version: 2.4
+Name: croom
+Version: 2.0.0.dev0
+Summary: Enterprise video conferencing for Raspberry Pi
+Author-email: Croom Team <croom@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/your-org/croom
+Project-URL: Documentation, https://github.com/your-org/croom/tree/main/docs
+Project-URL: Repository, https://github.com/your-org/croom.git
+Project-URL: Issues, https://github.com/your-org/croom/issues
+Keywords: raspberry-pi,video-conferencing,google-meet,microsoft-teams,zoom,conference-room,enterprise
+Classifier: Development Status :: 3 - Alpha
+Classifier: Environment :: Console
+Classifier: Environment :: X11 Applications :: Qt
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Communications :: Conferencing
+Classifier: Topic :: Multimedia :: Video
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: playwright>=1.40.0
+Requires-Dist: aiohttp>=3.9.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: opencv-python-headless>=4.8.0
+Requires-Dist: onnxruntime>=1.16.0
+Provides-Extra: ui
+Requires-Dist: PySide6>=6.6.0; extra == "ui"
+Provides-Extra: coral
+Requires-Dist: tflite-runtime>=2.14.0; extra == "coral"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.7.0; extra == "dev"
+Dynamic: license-file
+
 <div align="center">
 
 # 🎥 Croom

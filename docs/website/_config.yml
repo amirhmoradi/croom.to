@@ -1,0 +1,79 @@
+# Croom Website Configuration
+title: Croom
+description: "Turn Any Raspberry Pi Into a Professional Video Conferencing System. Open-source, self-hosted, privacy-first."
+baseurl: ""
+url: "https://croom.to"
+
+# Theme
+remote_theme: pages-themes/minimal@v0.2.0
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Navigation
+nav:
+  - title: Features
+    url: /features/
+  - title: Why Croom
+    url: /why-croom/
+  - title: Pricing
+    url: /pricing/
+  - title: Documentation
+    url: /docs/
+  - title: GitHub
+    url: https://github.com/amirhmoradi/croom
+    external: true
+
+# Footer links
+footer_links:
+  - title: Documentation
+    url: /docs/
+  - title: GitHub
+    url: https://github.com/amirhmoradi/croom
+  - title: Discussions
+    url: https://github.com/amirhmoradi/croom/discussions
+  - title: Issues
+    url: https://github.com/amirhmoradi/croom/issues
+
+# Social
+social:
+  github: amirhmoradi/croom
+
+# SEO
+author: Croom Community
+twitter:
+  card: summary_large_image
+logo: /assets/images/logo.svg
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "docs"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor

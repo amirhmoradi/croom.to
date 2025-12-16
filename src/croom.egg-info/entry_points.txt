@@ -1,0 +1,3 @@
+[console_scripts]
+croom = croom.core.agent:main
+croom-ui = croom_ui.main:main
