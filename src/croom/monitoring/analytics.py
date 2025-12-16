@@ -39,6 +39,117 @@ class AggregationType(Enum):
     P99 = "p99"
 
 
+class MetricType(Enum):
+    """Types of metrics for collection."""
+    COUNTER = "counter"
+    GAUGE = "gauge"
+    HISTOGRAM = "histogram"
+
+
+@dataclass
+class Metric:
+    """A single metric data point."""
+    name: str
+    metric_type: MetricType
+    value: float
+    timestamp: datetime = field(default_factory=datetime.now)
+    labels: Dict[str, str] = field(default_factory=dict)
+    unit: str = ""
+
+
+class AnalyticsCollector:
+    """
+    Collects and manages application metrics.
+
+    Provides methods for recording counters, gauges, and histograms.
+    """
+
+    def __init__(self):
+        self._counters: Dict[str, float] = defaultdict(float)
+        self._gauges: Dict[str, float] = {}
+        self._histograms: Dict[str, List[float]] = defaultdict(list)
+        self._metrics: List[Metric] = []
+        self._labels: Dict[str, Dict[str, str]] = {}
+
+    def increment(self, name: str, value: float = 1.0, labels: Optional[Dict[str, str]] = None) -> None:
+        """Increment a counter metric."""
+        key = self._make_key(name, labels)
+        self._counters[key] += value
+        self._metrics.append(Metric(
+            name=name,
+            metric_type=MetricType.COUNTER,
+            value=self._counters[key],
+            labels=labels or {}
+        ))
+
+    def set_gauge(self, name: str, value: float, labels: Optional[Dict[str, str]] = None) -> None:
+        """Set a gauge metric to a specific value."""
+        key = self._make_key(name, labels)
+        self._gauges[key] = value
+        self._metrics.append(Metric(
+            name=name,
+            metric_type=MetricType.GAUGE,
+            value=value,
+            labels=labels or {}
+        ))
+
+    def observe(self, name: str, value: float, labels: Optional[Dict[str, str]] = None) -> None:
+        """Record an observation for a histogram metric."""
+        key = self._make_key(name, labels)
+        self._histograms[key].append(value)
+        self._metrics.append(Metric(
+            name=name,
+            metric_type=MetricType.HISTOGRAM,
+            value=value,
+            labels=labels or {}
+        ))
+
+    def record_meeting_started(self, platform: str, meeting_id: str) -> None:
+        """Record a meeting start event."""
+        self.increment("meetings_started_total", labels={"platform": platform})
+        self.set_gauge("active_meetings", self._counters.get("active_meetings", 0) + 1)
+        logger.debug(f"Meeting started: {platform}/{meeting_id}")
+
+    def record_meeting_ended(self, platform: str, meeting_id: str, duration_seconds: int = 0) -> None:
+        """Record a meeting end event."""
+        self.increment("meetings_ended_total", labels={"platform": platform})
+        self.observe("meeting_duration_seconds", duration_seconds, labels={"platform": platform})
+        active = max(0, self._gauges.get("active_meetings", 1) - 1)
+        self.set_gauge("active_meetings", active)
+        logger.debug(f"Meeting ended: {platform}/{meeting_id}, duration={duration_seconds}s")
+
+    def get_counter(self, name: str, labels: Optional[Dict[str, str]] = None) -> float:
+        """Get current value of a counter."""
+        key = self._make_key(name, labels)
+        return self._counters.get(key, 0)
+
+    def get_gauge(self, name: str, labels: Optional[Dict[str, str]] = None) -> float:
+        """Get current value of a gauge."""
+        key = self._make_key(name, labels)
+        return self._gauges.get(key, 0)
+
+    def get_histogram_stats(self, name: str, labels: Optional[Dict[str, str]] = None) -> Dict[str, float]:
+        """Get statistics for a histogram."""
+        key = self._make_key(name, labels)
+        values = self._histograms.get(key, [])
+        if not values:
+            return {"count": 0, "sum": 0, "avg": 0, "min": 0, "max": 0}
+        return {
+            "count": len(values),
+            "sum": sum(values),
+            "avg": statistics.mean(values),
+            "min": min(values),
+            "max": max(values),
+        }
+
+    def _make_key(self, name: str, labels: Optional[Dict[str, str]] = None) -> str:
+        """Create a unique key for a metric with labels."""
+        if not labels:
+            return name
+        label_str = ",".join(f"{k}={v}" for k, v in sorted(labels.items()))
+        return f"{name}{{{label_str}}}"
+
+
 @dataclass
 class MeetingStats:
     """Statistics for a single meeting."""

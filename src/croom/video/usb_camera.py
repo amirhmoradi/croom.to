@@ -120,6 +120,9 @@ CAMERA_PROFILES = {
                        "features": [CameraFeature.AUTO_EXPOSURE, CameraFeature.WHITE_BALANCE]},
 }
 
+# Alias for backward compatibility
+KNOWN_CAMERAS = CAMERA_PROFILES
+
 
 class USBCameraManager:
     """
@@ -560,6 +563,19 @@ class USBCameraManager:
             if name_lower in camera.name.lower():
                 return camera
         return None
+
+    @property
+    def cameras(self) -> Dict[str, USBCameraInfo]:
+        """Get all detected cameras as a dictionary."""
+        return self._cameras
+
+    async def detect_cameras(self) -> None:
+        """Public method to detect cameras (alias for _detect_cameras)."""
+        await self._detect_cameras()
+
+    def list_cameras(self) -> List[USBCameraInfo]:
+        """Get list of all detected cameras."""
+        return list(self._cameras.values())
 
 
 # Singleton instance

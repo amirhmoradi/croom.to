@@ -7,9 +7,16 @@ Provides a mobile-friendly web interface for device configuration.
 import asyncio
 import logging
 import json
-import qrcode
 import io
 import base64
+
+# Optional QR code support
+try:
+    import qrcode
+    QRCODE_AVAILABLE = True
+except ImportError:
+    qrcode = None
+    QRCODE_AVAILABLE = False
 from typing import Optional, Dict, Any, Callable, List
 from dataclasses import dataclass
 
@@ -211,6 +218,12 @@ class SetupWizard:
 
     async def _handle_qrcode(self, request: web.Request) -> web.Response:
         """Generate QR code for mobile setup."""
+        if not QRCODE_AVAILABLE:
+            return web.json_response(
+                {"error": "QR code generation not available (qrcode module not installed)"},
+                status=501
+            )
+
         try:
             setup_url = f"http://{self.config.host}:{self.config.port}/setup"
 

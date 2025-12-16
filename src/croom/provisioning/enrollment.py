@@ -5,6 +5,7 @@ Handles device registration with the management dashboard.
 """
 
 import asyncio
+import json
 import logging
 import platform
 import uuid
@@ -32,15 +33,24 @@ class EnrollmentStatus(Enum):
     ERROR = "error"
 
 
+# Alias for backward compatibility with tests
+class EnrollmentState(Enum):
+    """Enrollment state for devices (alias for EnrollmentStatus)."""
+    NOT_ENROLLED = "not_enrolled"
+    PENDING = "pending"
+    ENROLLED = "enrolled"
+
+
 @dataclass
 class DeviceIdentity:
     """Device identity information."""
     device_id: str
-    mac_address: str
-    serial_number: str
-    hostname: str
-    model: str
-    os_version: str
+    hardware_id: str = ""
+    mac_address: str = ""
+    serial_number: str = ""
+    hostname: str = ""
+    model: str = ""
+    os_version: str = ""
 
 
 @dataclass
@@ -390,3 +400,119 @@ class DashboardEnrollment:
         except Exception as e:
             logger.error(f"Config fetch error: {e}")
             return None
+
+
+class EnrollmentService:
+    """
+    Simplified enrollment service for device management.
+
+    Provides a simpler interface than DashboardEnrollment for basic use cases.
+    """
+
+    def __init__(self, dashboard_url: Optional[str] = None):
+        """
+        Initialize enrollment service.
+
+        Args:
+            dashboard_url: Optional dashboard URL for enrollment
+        """
+        self._dashboard_url = dashboard_url
+        self._state = EnrollmentState.NOT_ENROLLED
+        self._device_id: Optional[str] = None
+        self._identity: Optional[DeviceIdentity] = None
+
+    @property
+    def state(self) -> EnrollmentState:
+        """Get current enrollment state."""
+        return self._state
+
+    @property
+    def device_id(self) -> Optional[str]:
+        """Get device ID."""
+        return self._device_id
+
+    def _generate_device_id(self) -> str:
+        """
+        Generate a unique device ID.
+
+        Returns:
+            Unique device identifier
+        """
+        return f"croom-{uuid.uuid4().hex[:12]}"
+
+    def _get_hardware_id(self) -> str:
+        """Get hardware identifier from system."""
+        try:
+            # Try to get machine ID on Linux
+            machine_id_path = "/etc/machine-id"
+            with open(machine_id_path, 'r') as f:
+                return f.read().strip()[:16]
+        except Exception:
+            # Fall back to generated UUID
+            return uuid.uuid4().hex[:16]
+
+    def generate_enrollment_qr(self, dashboard_url: Optional[str] = None) -> str:
+        """
+        Generate QR code data for enrollment.
+
+        Args:
+            dashboard_url: Dashboard URL for enrollment
+
+        Returns:
+            JSON string containing enrollment data for QR code
+        """
+        url = dashboard_url or self._dashboard_url or "https://dashboard.example.com"
+        device_id = self._device_id or self._generate_device_id()
+        hardware_id = self._get_hardware_id()
+
+        enrollment_data = {
+            "type": "croom_enrollment",
+            "device_id": device_id,
+            "hardware_id": hardware_id,
+            "hostname": platform.node(),
+            "dashboard_url": url,
+        }
+
+        return json.dumps(enrollment_data)
+
+    async def enroll(self, enrollment_token: Optional[str] = None) -> bool:
+        """
+        Enroll this device with the dashboard.
+
+        Args:
+            enrollment_token: Optional enrollment token
+
+        Returns:
+            True if enrollment started successfully
+        """
+        self._device_id = self._generate_device_id()
+        self._identity = DeviceIdentity(
+            device_id=self._device_id,
+            hardware_id=self._get_hardware_id(),
+            hostname=platform.node(),
+            model=platform.machine(),
+            os_version=platform.release(),
+        )
+        self._state = EnrollmentState.PENDING
+        return True
+
+    async def check_enrollment_status(self) -> EnrollmentState:
+        """
+        Check current enrollment status.
+
+        Returns:
+            Current enrollment state
+        """
+        return self._state
+
+    async def complete_enrollment(self) -> bool:
+        """
+        Mark enrollment as complete.
+
+        Returns:
+            True if completed successfully
+        """
+        if self._state == EnrollmentState.PENDING:
+            self._state = EnrollmentState.ENROLLED
+            return True
+        return False

@@ -54,7 +54,7 @@ class PasswordPolicy:
     max_length: int = 128
     require_uppercase: bool = True
     require_lowercase: bool = True
-    require_digit: bool = True
+    require_digits: bool = True
     require_special: bool = True
     special_chars: str = "!@#$%^&*()_+-=[]{}|;:',.<>?/`~"
     min_unique_chars: int = 8
@@ -97,7 +97,7 @@ class PasswordPolicy:
             violations.append("Password must contain uppercase letter")
         if self.require_lowercase and not re.search(r'[a-z]', password):
             violations.append("Password must contain lowercase letter")
-        if self.require_digit and not re.search(r'\d', password):
+        if self.require_digits and not re.search(r'\d', password):
             violations.append("Password must contain digit")
         if self.require_special and not any(c in self.special_chars for c in password):
             violations.append("Password must contain special character")
@@ -194,6 +194,152 @@ class PasswordPolicy:
             return PasswordStrength.STRONG
         else:
             return PasswordStrength.VERY_STRONG
+
+
+@dataclass
+class ValidationResult:
+    """Result of password validation."""
+    is_valid: bool
+    errors: List[str] = field(default_factory=list)
+    strength: PasswordStrength = PasswordStrength.VERY_WEAK
+    score: int = 0
+
+
+class PasswordValidator:
+    """
+    Validates passwords against a policy.
+
+    Provides a cleaner API than PasswordPolicy.validate() for simple validation.
+    """
+
+    def __init__(self, policy: Optional[PasswordPolicy] = None):
+        self.policy = policy or PasswordPolicy()
+
+    def validate(self, password: str, username: Optional[str] = None) -> ValidationResult:
+        """
+        Validate a password against the policy.
+
+        Args:
+            password: Password to validate
+            username: Optional username for similarity checking
+
+        Returns:
+            ValidationResult with is_valid, errors, strength, and score
+        """
+        is_valid, errors = self.policy.validate(password, username=username)
+        strength = self.policy.get_strength(password)
+        score = self._calculate_score(password)
+
+        return ValidationResult(
+            is_valid=is_valid,
+            errors=errors,
+            strength=strength,
+            score=score,
+        )
+
+    def _calculate_score(self, password: str) -> int:
+        """Calculate a numeric password score (0-100)."""
+        score = 0
+        # Length contribution (up to 40 points)
+        score += min(40, len(password) * 4)
+        # Character variety (up to 60 points)
+        if re.search(r'[a-z]', password):
+            score += 10
+        if re.search(r'[A-Z]', password):
+            score += 15
+        if re.search(r'\d', password):
+            score += 15
+        if re.search(r'[!@#$%^&*()_+\-=\[\]{};:\'",.<>?/`~]', password):
+            score += 20
+        return min(100, score)
+
+
+class TOTPGenerator:
+    """
+    TOTP (Time-based One-Time Password) generator.
+
+    Generates and verifies time-based 2FA codes.
+    """
+
+    def __init__(self, digits: int = 6, interval: int = 30):
+        self.digits = digits
+        self.interval = interval
+
+    def generate_secret(self, length: int = 20) -> str:
+        """
+        Generate a random TOTP secret.
+
+        Args:
+            length: Length of the raw secret in bytes
+
+        Returns:
+            Base32-encoded secret (32 characters for 20 bytes)
+        """
+        secret_bytes = secrets.token_bytes(length)
+        return base64.b32encode(secret_bytes).decode('ascii').rstrip('=')
+
+    def generate_totp(self, secret: str, timestamp: Optional[int] = None) -> str:
+        """
+        Generate a TOTP code for the given secret.
+
+        Args:
+            secret: Base32-encoded secret
+            timestamp: Unix timestamp (defaults to current time)
+
+        Returns:
+            TOTP code as string (zero-padded to digits length)
+        """
+        if timestamp is None:
+            timestamp = int(time.time())
+
+        # Pad secret if needed
+        secret_padded = secret + '=' * ((8 - len(secret) % 8) % 8)
+        key = base64.b32decode(secret_padded.upper())
+
+        # Calculate counter (number of intervals since epoch)
+        counter = timestamp // self.interval
+
+        # Generate HMAC-SHA1
+        counter_bytes = struct.pack('>Q', counter)
+        hmac_hash = hmac.new(key, counter_bytes, hashlib.sha1).digest()
+
+        # Dynamic truncation
+        offset = hmac_hash[-1] & 0x0F
+        truncated = struct.unpack('>I', hmac_hash[offset:offset + 4])[0] & 0x7FFFFFFF
+
+        # Get desired number of digits
+        code = truncated % (10 ** self.digits)
+        return str(code).zfill(self.digits)
+
+    def verify_totp(
+        self,
+        secret: str,
+        code: str,
+        window: int = 1,
+        timestamp: Optional[int] = None,
+    ) -> bool:
+        """
+        Verify a TOTP code.
+
+        Args:
+            secret: Base32-encoded secret
+            code: TOTP code to verify
+            window: Number of intervals to check before/after current
+            timestamp: Unix timestamp (defaults to current time)
+
+        Returns:
+            True if code is valid within the time window
+        """
+        if timestamp is None:
+            timestamp = int(time.time())
+
+        # Check current and adjacent intervals
+        for offset in range(-window, window + 1):
+            check_time = timestamp + (offset * self.interval)
+            expected = self.generate_totp(secret, check_time)
+            if hmac.compare_digest(code, expected):
+                return True
+        return False
 
 
 class MFAType(Enum):

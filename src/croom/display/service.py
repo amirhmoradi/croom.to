@@ -380,12 +380,16 @@ class DisplayState(Enum):
 @dataclass
 class DisplayInfo:
     """Information about a connected display."""
-    name: str
-    resolution: Tuple[int, int]
-    refresh_rate: float
-    is_connected: bool
-    is_primary: bool
-    hdmi_port: int
+    name: str = ""
+    resolution: Optional[Tuple[int, int]] = None
+    refresh_rate: float = 60.0
+    is_connected: bool = True
+    is_primary: bool = True
+    hdmi_port: int = 0
+    state: "DisplayState" = DisplayState.UNKNOWN
+    brightness: int = 100
+    manufacturer: str = ""
+    model: str = ""
 
 
 class DisplayService:
