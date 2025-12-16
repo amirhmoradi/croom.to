@@ -1,0 +1,35 @@
+# Cloudflare Workers configuration for Croom Contact Handler
+# https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "croom-contact-handler"
+main = "contact-handler.js"
+compatibility_date = "2024-01-01"
+
+# Workers Routes (configure after deployment)
+# routes = [
+#   { pattern = "contact.croom.to/*", zone_name = "croom.to" }
+# ]
+
+# Or use a workers.dev subdomain during development
+# workers_dev = true
+
+# Environment variables (secrets should be set via wrangler CLI or dashboard)
+# DO NOT commit actual secret values here!
+[vars]
+# PUBLIC_VAR = "value"
+
+# Secrets (set these via: wrangler secret put TELEGRAM_BOT_TOKEN)
+# TELEGRAM_BOT_TOKEN = "your-bot-token-here"      # Set as secret
+# TELEGRAM_CHAT_ID = "your-chat-id-here"          # Set as secret
+
+# Production environment
+[env.production]
+name = "croom-contact-handler"
+# routes = [
+#   { pattern = "contact.croom.to/*", zone_name = "croom.to" }
+# ]
+
+# Development environment
+[env.development]
+name = "croom-contact-handler-dev"
+# workers_dev = true
