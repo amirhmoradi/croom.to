@@ -129,13 +129,13 @@ TCP 443  → dashboard.yourcompany.com
 #### Option A: Pre-built Image
 Download the latest Croom image from releases:
 ```bash
-wget https://github.com/your-org/croom/releases/latest/croom.img.gz
+wget https://github.com/amirhmoradi/croom.to/releases/latest/croom.img.gz
 gunzip croom.img.gz
 ```
 
 #### Option B: Build from Source
 ```bash
-git clone https://github.com/your-org/croom.git
+git clone https://github.com/amirhmoradi/croom.to.git
 cd croom/build
 ./download-img.sh
 ./prep-img.sh
@@ -219,7 +219,7 @@ docker exec -it croom-dashboard ./manage.py createsuperuser
 #### Manual Installation
 ```bash
 # Clone repository
-git clone https://github.com/your-org/croom-dashboard.git
+git clone https://github.com/amirhmoradi/croom.to-dashboard.git
 cd croom-dashboard
 
 # Install dependencies

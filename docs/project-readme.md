@@ -146,5 +146,5 @@ Transform Croom from a simple conference room automation tool into an enterprise
 
 ## Contact
 
-- **Issues:** [GitHub Issues](https://github.com/your-org/croom/issues)
+- **Issues:** [GitHub Issues](https://github.com/amirhmoradi/croom.to/issues)
 - **Support:** croom-help@googlegroups.com

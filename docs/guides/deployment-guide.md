@@ -167,7 +167,7 @@ sudo apt install -y git wget xz-utils tree
 
 ```bash
 # Clone repository
-git clone https://github.com/your-org/croom-dashboard.git
+git clone https://github.com/amirhmoradi/croom.to-dashboard.git
 cd croom-dashboard
 
 # Configure environment
@@ -263,14 +263,14 @@ sudo certbot certonly --standalone -d croom.yourcompany.com
 **Option A: Download Pre-built Image**
 ```bash
 # Download latest release
-wget https://github.com/your-org/croom/releases/latest/download/croom-latest.img.gz
+wget https://github.com/amirhmoradi/croom.to/releases/latest/download/croom-latest.img.gz
 gunzip croom-latest.img.gz
 ```
 
 **Option B: Build Custom Image**
 ```bash
 # Clone repository
-git clone https://github.com/your-org/croom.git
+git clone https://github.com/amirhmoradi/croom.to.git
 cd croom/build
 
 # Download base OS

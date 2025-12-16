@@ -1,0 +1,275 @@
+---
+layout: default
+title: Documentation
+description: Croom documentation
+---
+
+<!-- Documentation Viewer -->
+<section class="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-gray-50 min-h-screen">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Loading State -->
+    <div id="loading" class="text-center py-20">
+      <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <p class="mt-4 text-gray-600">Loading documentation...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="error" class="hidden bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+      <svg class="w-12 h-12 text-red-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      </svg>
+      <h3 class="text-lg font-bold text-red-900 mb-2">Failed to Load Documentation</h3>
+      <p class="text-red-700 mb-4" id="error-message"></p>
+      <a href="{{ '/docs/' | relative_url }}" class="inline-flex items-center px-6 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition-colors">
+        Back to Documentation Index
+      </a>
+    </div>
+
+    <!-- Content -->
+    <div id="content" class="hidden">
+      <article class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 lg:p-12 prose prose-lg prose-primary max-w-none">
+        <div id="markdown-content"></div>
+      </article>
+
+      <div class="mt-8 text-center">
+        <a href="{{ '/docs/' | relative_url }}" class="inline-flex items-center text-primary-600 font-semibold hover:text-primary-700">
+          <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Documentation
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Markdown Rendering Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css">
+
+<style>
+  /* Custom prose styles for markdown content */
+  .prose {
+    color: #374151;
+  }
+  .prose h1 {
+    color: #111827;
+    font-weight: 800;
+    font-size: 2.25em;
+    margin-top: 0;
+    margin-bottom: 0.8888889em;
+    line-height: 1.1111111;
+  }
+  .prose h2 {
+    color: #111827;
+    font-weight: 700;
+    font-size: 1.5em;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    line-height: 1.3333333;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.5em;
+  }
+  .prose h3 {
+    color: #111827;
+    font-weight: 600;
+    font-size: 1.25em;
+    margin-top: 1.6em;
+    margin-bottom: 0.6em;
+    line-height: 1.6;
+  }
+  .prose h4 {
+    color: #111827;
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.5;
+  }
+  .prose code {
+    color: #e11d48;
+    font-weight: 600;
+    font-size: 0.875em;
+    background-color: #f9fafb;
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+  }
+  .prose pre {
+    color: #e5e7eb;
+    background-color: #1f2937;
+    overflow-x: auto;
+    font-size: 0.875em;
+    line-height: 1.7142857;
+    margin-top: 1.7142857em;
+    margin-bottom: 1.7142857em;
+    border-radius: 0.5rem;
+    padding: 1em 1.1428571em;
+  }
+  .prose pre code {
+    background-color: transparent;
+    border-width: 0;
+    border-radius: 0;
+    padding: 0;
+    font-weight: 400;
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+  }
+  .prose a {
+    color: #6366f1;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+  .prose a:hover {
+    color: #4f46e5;
+  }
+  .prose strong {
+    color: #111827;
+    font-weight: 600;
+  }
+  .prose table {
+    width: 100%;
+    table-layout: auto;
+    text-align: left;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    font-size: 0.875em;
+    line-height: 1.7142857;
+  }
+  .prose thead {
+    border-bottom-width: 1px;
+    border-bottom-color: #d1d5db;
+  }
+  .prose thead th {
+    color: #111827;
+    font-weight: 600;
+    vertical-align: bottom;
+    padding-right: 0.5714286em;
+    padding-bottom: 0.5714286em;
+    padding-left: 0.5714286em;
+  }
+  .prose tbody tr {
+    border-bottom-width: 1px;
+    border-bottom-color: #e5e7eb;
+  }
+  .prose tbody td {
+    vertical-align: baseline;
+    padding: 0.5714286em;
+  }
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.625em;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+  }
+  .prose ol {
+    list-style-type: decimal;
+    padding-left: 1.625em;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+  }
+  .prose li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  .prose blockquote {
+    font-weight: 500;
+    font-style: italic;
+    color: #111827;
+    border-left-width: 0.25rem;
+    border-left-color: #e5e7eb;
+    quotes: "\201C""\201D""\2018""\2019";
+    margin-top: 1.6em;
+    margin-bottom: 1.6em;
+    padding-left: 1em;
+  }
+  .prose img {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    border-radius: 0.5rem;
+  }
+</style>
+
+<script>
+  // Get the file path from URL parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const docPath = urlParams.get('doc');
+
+  const loadingEl = document.getElementById('loading');
+  const errorEl = document.getElementById('error');
+  const errorMessageEl = document.getElementById('error-message');
+  const contentEl = document.getElementById('content');
+  const markdownContentEl = document.getElementById('markdown-content');
+
+  // Configure marked for GitHub-flavored markdown
+  marked.setOptions({
+    gfm: true,
+    breaks: true,
+    highlight: function(code, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return hljs.highlight(code, { language: lang }).value;
+        } catch (err) {}
+      }
+      return hljs.highlightAuto(code).value;
+    }
+  });
+
+  async function loadMarkdown() {
+    if (!docPath) {
+      showError('No document specified');
+      return;
+    }
+
+    try {
+      // Fetch the markdown file
+      const response = await fetch(docPath);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const markdown = await response.text();
+
+      // Convert markdown to HTML
+      const html = marked.parse(markdown);
+
+      // Display the content
+      markdownContentEl.innerHTML = html;
+
+      // Update page title if there's an h1
+      const firstH1 = markdownContentEl.querySelector('h1');
+      if (firstH1) {
+        document.title = firstH1.textContent + ' - Croom Documentation';
+      }
+
+      // Show content, hide loading
+      loadingEl.classList.add('hidden');
+      contentEl.classList.remove('hidden');
+
+      // Highlight code blocks
+      document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block);
+      });
+
+      // Make external links open in new tab
+      markdownContentEl.querySelectorAll('a[href^="http"]').forEach(link => {
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+      });
+
+    } catch (error) {
+      showError(`Failed to load documentation: ${error.message}`);
+    }
+  }
+
+  function showError(message) {
+    loadingEl.classList.add('hidden');
+    errorMessageEl.textContent = message;
+    errorEl.classList.remove('hidden');
+  }
+
+  // Load the markdown when page loads
+  loadMarkdown();
+</script>
