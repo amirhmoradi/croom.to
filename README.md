@@ -10,7 +10,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-5%20|%204-red.svg)](https://www.raspberrypi.com/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![GitHub Stars](https://img.shields.io/github/stars/amirhmoradi/croom?style=social)](https://github.com/amirhmoradi/croom)
+[![GitHub Stars](https://img.shields.io/github/stars/amirhmoradi/croom.to?style=social)](https://github.com/amirhmoradi/croom.to)
 [![Made in France](https://img.shields.io/badge/Made%20in-France-blue.svg)](https://en.wikipedia.org/wiki/French_Tech)
 [![Digital Sovereignty](https://img.shields.io/badge/Digital-Sovereignty-purple.svg)](#-digital-sovereignty--data-privacy)
 
@@ -192,7 +192,7 @@ curl -sSL https://croom.to/install.sh | sudo bash
 
 ```bash
 # Clone the repository
-git clone https://github.com/amirhmoradi/croom.git
+git clone https://github.com/amirhmoradi/croom.to.git
 cd croom
 
 # Install Croom
@@ -277,8 +277,8 @@ We love contributions! Croom is built by the community, for the community.
 
 ### Ways to Contribute
 
-- 🐛 **Report Bugs** - Found an issue? [Open a bug report](https://github.com/amirhmoradi/croom/issues/new?template=bug_report.md)
-- 💡 **Request Features** - Have an idea? [Submit a feature request](https://github.com/amirhmoradi/croom/issues/new?template=feature_request.md)
+- 🐛 **Report Bugs** - Found an issue? [Open a bug report](https://github.com/amirhmoradi/croom.to/issues/new?template=bug_report.md)
+- 💡 **Request Features** - Have an idea? [Submit a feature request](https://github.com/amirhmoradi/croom.to/issues/new?template=feature_request.md)
 - 📝 **Improve Docs** - Help us make documentation better
 - 💻 **Submit PRs** - Code contributions are welcome!
 - ⭐ **Star the Repo** - Show your support!
@@ -289,7 +289,7 @@ See our [Contributing Guide](CONTRIBUTING.md) for detailed instructions.
 
 ```bash
 # Clone and setup
-git clone https://github.com/amirhmoradi/croom.git
+git clone https://github.com/amirhmoradi/croom.to.git
 cd croom
 
 # Install dev dependencies
@@ -304,14 +304,14 @@ make dev
 
 ## 🌟 Community
 
-- 💬 [GitHub Discussions](https://github.com/amirhmoradi/croom/discussions) - Ask questions, share ideas
-- 🐛 [Issue Tracker](https://github.com/amirhmoradi/croom/issues) - Report bugs, request features
+- 💬 [GitHub Discussions](https://github.com/amirhmoradi/croom.to/discussions) - Ask questions, share ideas
+- 🐛 [Issue Tracker](https://github.com/amirhmoradi/croom.to/issues) - Report bugs, request features
 - 📧 [Mailing List](mailto:croom-help@googlegroups.com) - Stay updated
 
 ### Contributors
 
-<a href="https://github.com/amirhmoradi/croom/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=amirhmoradi/croom" />
+<a href="https://github.com/amirhmoradi/croom.to/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=amirhmoradi/croom.to" />
 </a>
 
 ## 🏢 Enterprise Offerings (Coming Soon)
@@ -349,7 +349,7 @@ While Croom is and will always be **100% open source**, we're planning optional 
 | **Compliance Recording** | Automated retention policies, legal hold |
 | **API Access** | Programmatic access to transcripts and insights |
 
-> **Interested in enterprise offerings?** [Contact us](mailto:enterprise@croom.to) or [open a discussion](https://github.com/amirhmoradi/croom/discussions) to share your requirements.
+> **Interested in enterprise offerings?** [Contact us](mailto:enterprise@croom.to) or [open a discussion](https://github.com/amirhmoradi/croom.to/discussions) to share your requirements.
 
 ## 📜 License
 
@@ -360,7 +360,7 @@ Croom is [MIT licensed](LICENSE). Use it freely in personal and commercial proje
 - Built on the foundation of the original [PiMeet](https://github.com/pmansour/pimeet) project
 - Inspired by enterprise solutions like Cisco Webex Room Kit and Poly Studio
 - Meeting intelligence powered by [Vexa](https://github.com/Vexa-ai/vexa) — open-source transcription
-- Thanks to all [contributors](https://github.com/amirhmoradi/croom/graphs/contributors) who make this possible
+- Thanks to all [contributors](https://github.com/amirhmoradi/croom.to/graphs/contributors) who make this possible
 
 ---
 
@@ -467,7 +467,7 @@ We believe in giving back to the open-source community. Improvements that benefi
 
 **⭐ Star us on GitHub — it motivates us a lot!**
 
-[Report Bug](https://github.com/amirhmoradi/croom/issues) · [Request Feature](https://github.com/amirhmoradi/croom/issues) · [Join Discussion](https://github.com/amirhmoradi/croom/discussions)
+[Report Bug](https://github.com/amirhmoradi/croom.to/issues) · [Request Feature](https://github.com/amirhmoradi/croom.to/issues) · [Join Discussion](https://github.com/amirhmoradi/croom.to/discussions)
 
 ---
 
